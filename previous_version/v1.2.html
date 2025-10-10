@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arch/Code — 建筑 × 编程 × AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'klein-blue': '#0021A5',
+          },
+          fontFamily: {
+            sans: ['system-ui', 'sans-serif'],
+            mono: ['ui-monospace', 'Menlo', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .hero-slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      background-size: cover;
+      background-position: center;
+    }
+    .hero-slide.active {
+      opacity: 1;
+    }
+    .project-image {
+      transition: transform 0.4s ease;
+    }
+    .project-image:hover {
+      transform: translateY(-4px);
+    }
+    .mode-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 50;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.2);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .mode-toggle:hover {
+      transform: rotate(15deg);
+    }
+    .nav-scrolled {
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 1px 10px rgba(0,0,0,0.05);
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+    }
+    .dark .nav-scrolled {
+      background: rgba(15,23,42,0.9);
+      box-shadow: 0 1px 10px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body class="bg-white text-slate-900 font-sans">
+
+  <!-- Mode Toggle -->
+  <div id="modeToggle" class="mode-toggle">
+    <i id="modeIcon" class="fas fa-moon text-white"></i>
+  </div>
+
+  <!-- Hero Carousel -->
+  <header id="hero" class="relative w-full h-screen overflow-hidden">
+    <div class="hero-slide active" style="background-image: url('https://placehold.co/1920x1080/0f172a/64748b?text=Europa+Clipper+Mission');">
+      <div class="absolute inset-0 bg-black/20"></div>
+      <div class="relative h-full flex flex-col justify-center px-6 max-w-4xl mx-auto">
+        <h1 class="text-4xl md:text-6xl font-light text-white mb-4 leading-tight">
+          Europa Clipper Mission Identity
+        </h1>
+        <p class="text-xl text-slate-200 max-w-2xl">
+          Branding for NASA's mission to Jupiter's moon Europa — orbiting through radiation zones to seek signs of life.
+        </p>
+      </div>
+    </div>
+    <div class="hero-slide" style="background-image: url('https://placehold.co/1920x1080/1e293b/94a3b8?text=Generative+Facade');">
+      <div class="absolute inset-0 bg-black/20"></div>
+      <div class="relative h-full flex flex-col justify-center px-6 max-w-4xl mx-auto">
+        <h1 class="text-4xl md:text-6xl font-light text-white mb-4 leading-tight">
+          Generative Facade System
+        </h1>
+        <p class="text-xl text-slate-200 max-w-2xl">
+          Parametric facade generated with Python + Grasshopper, optimized by ML for solar gain and airflow.
+        </p>
+      </div>
+    </div>
+    <div class="hero-slide" style="background-image: url('https://placehold.co/1920x1080/0f172a/e2e8f0?text=Climber%27s+Portfolio');">
+      <div class="absolute inset-0 bg-black/20"></div>
+      <div class="relative h-full flex flex-col justify-center px-6 max-w-4xl mx-auto">
+        <h1 class="text-4xl md:text-6xl font-light text-white mb-4 leading-tight">
+          A Climber in Design
+        </h1>
+        <p class="text-xl text-slate-200 max-w-2xl">
+          Like Li Sanqiu, I believe design is a practice of persistent exploration — always seeking the next connection.
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation (appears on scroll) -->
+  <nav id="navbar" class="fixed top-0 w-full z-40 py-6 opacity-0 pointer-events-none transition-all duration-300">
+    <div class="max-w-4xl mx-auto px-6 flex justify-between items-center">
+      <div class="text-xl font-light tracking-tight text-current">
+        <span class="font-mono text-sm">01.</span> Arch<span class="font-light">/</span>Code
+      </div>
+      <div class="hidden md:flex space-x-6 text-sm">
+        <a href="/work" class="hover:text-klein-blue dark:hover:text-blue-400 transition-colors capitalize">work</a>
+        <a href="/about" class="hover:text-klein-blue dark:hover:text-blue-400 transition-colors capitalize">about</a>
+        <a href="/contact" class="hover:text-klein-blue dark:hover:text-blue-400 transition-colors capitalize">contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Projects Section -->
+  <section id="projects" class="py-20 px-6">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-3xl font-light mb-16">
+        <span class="font-mono text-sm mr-2">02.</span> Selected Work
+      </h2>
+      
+      <div class="space-y-24">
+        <!-- Project 1 -->
+        <a href="/work/europa-clipper" class="block group">
+          <div class="mb-6 overflow-hidden rounded-lg">
+            <img 
+              src="https://placehold.co/800x500/0f172a/64748b?text=Europa+Clipper"
+              alt="Europa Clipper Mission Identity"
+              class="w-full h-auto object-cover project-image"
+            />
+          </div>
+          <h3 class="text-2xl font-light mb-2 group-hover:text-klein-blue dark:group-hover:text-blue-400 transition-colors">
+            Europa Clipper Mission Identity
+          </h3>
+          <p class="text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
+            Branding for NASA's mission to Jupiter's moon Europa — orbiting through radiation zones to seek signs of life.
+          </p>
+          <div class="flex flex-wrap gap-2">
+            <span class="text-xs text-slate-500 dark:text-slate-400 font-mono bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">Branding</span>
+            <span class="text-xs text-slate-500 dark:text-slate-400 font-mono bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">Space</span>
+            <span class="text-xs text-slate-500 dark:text-slate-400 font-mono bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">NASA</span>
+            <span class="text-xs text-slate-500 dark:text-slate-400 font-mono bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">HOVS</span>
+          </div>
+        </a>
+
+        <!-- Project 2 -->
+        <a href="/work/generative-facade" class="block group">
+          <div class="mb-6 overflow-hidden rounded-lg">
+            <img 
+              src="https://placehold.co/800x500/1e293b/94a3b8?text=Generative+Facade"
+              alt="Generative Facade System"
+              class="w-full h-auto object-cover project-image"
+            />
+          </div>
+          <h3 class="text-2xl font-light mb-2 group-hover:text-klein-blue dark:group-hover:text-blue-400 transition-colors">
+            Generative Facade System
+          </h3>
+          <p class="text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
+            Parametric facade generated with Python + Grasshopper, optimized by ML for solar gain and airflow.
+          </p>
+          <div class="flex flex-wrap gap-2">
+            <span class="text-xs text-slate-500 dark:text-slate-400 font-mono bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">Python</span>
+            <span class="text-xs text-slate-500 dark:text-slate-400 font-mono bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">Grasshopper</span>
+            <span class="text-xs text-slate-500 dark:text-slate-400 font-mono bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">AI</span>
+            <span class="text-xs text-slate-500 dark:text-slate-400 font-mono bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">Architecture</span>
+          </div>
+        </a>
+
+        <!-- Project 3 -->
+        <a href="/work/climber-portfolio" class="block group">
+          <div class="mb-6 overflow-hidden rounded-lg">
+            <img 
+              src="https://placehold.co/800x500/0f172a/e2e8f0?text=Climber+Design"
+              alt="Climber's Portfolio"
+              class="w-full h-auto object-cover project-image"
+            />
+          </div>
+          <h3 class="text-2xl font-light mb-2 group-hover:text-klein-blue dark:group-hover:text-blue-400 transition-colors">
+            A Climber in Design
+          </h3>
+          <p class="text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
+            Inspired by Li Sanqiu’s spirit of exploration — a portfolio that reflects curiosity, systems thinking, and quiet confidence.
+          </p>
+          <div class="flex flex-wrap gap-2">
+            <span class="text-xs text-slate-500 dark:text-slate-400 font-mono bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">UI/UX</span>
+            <span class="text-xs text-slate-500 dark:text-slate-400 font-mono bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">Typography</span>
+            <span class="text-xs text-slate-500 dark:text-slate-400 font-mono bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">Minimalism</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-12 px-6 text-center text-slate-500 text-sm border-t border-slate-200 dark:border-slate-800">
+    <div class="max-w-4xl mx-auto">
+      <p>© <span id="year"></span> Arch/Code. All systems operational.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Set year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Hero Carousel
+    const slides = document.querySelectorAll('.hero-slide');
+    let currentSlide = 0;
+    
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+      });
+    }
+    
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    }
+    
+    // Auto rotate every 5 seconds
+    setInterval(nextSlide, 5000);
+
+    // Navbar on scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        navbar.classList.remove('opacity-0', 'pointer-events-none');
+        navbar.classList.add('nav-scrolled', 'opacity-100', 'pointer-events-auto');
+      } else {
+        navbar.classList.remove('nav-scrolled', 'opacity-100', 'pointer-events-auto');
+        navbar.classList.add('opacity-0', 'pointer-events-none');
+      }
+    });
+
+    // Dark mode toggle
+    const modeToggle = document.getElementById('modeToggle');
+    const modeIcon = document.getElementById('modeIcon');
+    const body = document.body;
+    
+    // Check saved preference
+    const savedMode = localStorage.getItem('color-mode');
+    if (savedMode === 'dark' || (!savedMode && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      body.classList.add('dark');
+      modeIcon.className = 'fas fa-sun text-yellow-300';
+    }
+    
+    modeToggle.addEventListener('click', () => {
+      body.classList.toggle('dark');
+      const isDark = body.classList.contains('dark');
+      localStorage.setItem('color-mode', isDark ? 'dark' : 'light');
+      modeIcon.className = isDark 
+        ? 'fas fa-sun text-yellow-300' 
+        : 'fas fa-moon text-white';
+    });
+  </script>
+</body>
+</html>

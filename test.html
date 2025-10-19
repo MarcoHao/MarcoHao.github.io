@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <!--视窗缩放-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marco’s homepage</title>
+  <!--外部资源-->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!--样式表-->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    /* global tailwind */
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            'klein-blue': '#0021A5',
+          },
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="test2.css">
+</head>
+
+<body class="
+  font-sans            <!-- 字体 -->
+  bg-white             <!-- 背景 -->
+  text-slate-900       <!-- 文字颜色 -->
+  light                <!-- 自定义标记（浅色主题） -->
+">
+  <!-- Navigation -->
+  <nav class = "nav">  <!--保证在其他元素上方-->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">  <!--外层容器-->
+      <div class = "flex justify-between items-center h-16">  <!--justify-between 就搞定左右分布。-->
+        <div class="flex items-center space-x-2">
+          <a href="index.html" class="nav-brand">Marco</a>
+        </div>
+        <div class="flex items-center space-x-6">
+          <div class="hidden md:flex space-x-6 text-sm">
+            <a href="#ai" class="nav-link">AI</a>
+            <a href="#code" class="nav-link">Code</a>
+            <a href="#design" class="nav-link">Design</a>
+            <a href="#about" class="nav-link">About</a>
+          </div>
+          <div id="modeToggle" class="mode-toggle">
+            <i id="modeIcon" class="fas fa-moon"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+ <!-- Hero Section -->
+  <section id="home" class="relative min-h-screen flex items-center hero">
+    <!-- 毛玻璃遮罩 -->
+    <div class="hero-mask"></div>
+
+    <!--默认背景图-->
+    <div class="hero-bg active" style="background-image: url('assets/images/background/最终手图2.png');"></div>
+
+    <!-- 内容层 -->
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div class="hero">
+          <!-- 主标题 -->
+          <div class="hero-content">
+            <h1 class="hero-name">
+              <span>马昊 Marco</span>
+            </h1>
+            <p class="hero-subtitle">Design × Code × AI.</p>
+            <p class="hero-description">
+              在设计中进行梯度下降，逼近理想与现实的平衡。<br>
+              Descending through design — toward the equilibrium between ideal and real.
+            </p>
+          </div>
+          <!-- 交互按钮 -->
+          <div class="hero-buttons">
+            <a href="#ai" class="btn-primary">View Projects</a>
+<!--            <a href="#contact" class="btn-secondary">Get in Touch</a>-->
+          </div>
+          <div class="flex items-center space-x-6 pt-4 text-sm">
+            <a href="https://github.com/MarcoHao" target="_blank"
+               class="flex items-center space-x-1 text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white">
+              <i class="fab fa-github"></i> <span>GitHub</span>
+            </a>
+            <div class="relative group">
+              <a href="mailto:2325169215@qq.com"
+                 class="flex items-center space-x-1 text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white">
+                <i class="fas fa-envelope"></i> <span>Email</span>
+              </a>
+              <!-- Hover to show full email on PC -->
+              <div class="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 px-2 py-1
+                          bg-white dark:bg-slate-800
+                          text-slate-900 dark:text-slate-200
+                          rounded shadow-lg text-xs
+                          hidden group-hover:block z-50">
+                2325169215@qq.com
+              </div>
+            </div>
+            <div class="relative group">
+              <button id="wechatBtn"
+                class="flex items-center space-x-1 text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white">
+                <i class="fab fa-weixin"></i> <span>WeChat</span>
+              </button>
+              <!-- Hover QR on PC -->
+              <div class="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 w-48 p-2
+                          bg-white
+                          rounded shadow-lg
+                          hidden group-hover:block z-50">
+                <!-- 浅色模式 -->
+                <img src="assets/images/contact_information/WeChatQRcode.jpg" alt="Logo" class="w-full h-full object-contain dark:hidden" />
+                <!-- 深色模式 -->
+                <img src="assets/images/contact_information/WeChatQRcode.jpg" alt="Logo" class="w-full h-full object-contain hidden dark:block" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 联系方式 -->
+        <div class="flex items-center space-x-6 pt-4 text-sm">
+
+        </div>
+    </div>
+
+  </section>
+
+  <!-- AI -->
+  <section id="ai" class="ai py-20 bg-white dark:bg-slate-900">
+    <div class="section-inner max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center mb-12">
+        <h2 class="h2-left">AI</h2>
+        <a href="AI.html" class="text-klein-blue hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 text-sm">
+          View All →
+        </a>
+      </div>
+      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3" id="AIGrid">
+        <!-- 自动加载卡片 -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Code -->
+  <section id="code" class="code py-20 bg-white dark:bg-slate-900">
+    <div class="section-inner max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center mb-12">
+        <h2 class="h2-left">Code</h2>
+        <a href="Code.html" class="text-klein-blue hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 text-sm">
+          View All →
+        </a>
+      </div>
+      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3" id="CodeGrid">
+        <!-- 自动加载卡片 -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Design -->
+  <section id="design" class="design py-20 bg-white dark:bg-slate-900">
+    <div class="section-inner max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center mb-12">
+        <h2 class="h2-left">Design</h2>
+        <a href="Design.html" class="text-klein-blue hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 text-sm">
+          View All →
+        </a>
+      </div>
+      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3" id="DesignGrid">
+        <!-- 自动加载卡片 -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Design -->
+  <section id="experience" class="py-20 bg-slate-50 dark:bg-slate-800">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center mb-12">
+      <h2 class="text-3xl font-bold text-slate-900 dark:text-white">Experience</h2>
+      <a href="#" class="text-klein-blue hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 text-sm">View All →</a>
+    </div>
+
+    <div id="ExperienceGrid" class="space-y-12">
+      <!-- JS 动态渲染卡片 -->
+    </div>
+  </div>
+</section>
+
+  <!-- About Me -->
+  <section id="about" class="section about py-20 bg-white dark:bg-slate-900 relative">
+    <div class="section-inner max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-2">
+      <h2 class="h2-middle">About Me</h2>
+
+      <!-- 精简文本内容 -->
+      <div class="space-y-6 mb-10 text-lg text-slate-600 dark:text-slate-400">
+        <p>2016-2019 佛山市第一中学</p>
+        <p>2019-2024 华南理工大学建筑学院 建筑学</p>
+        <p>2024至今 东南大学建筑学院 建筑运算与应用团队</p>
+        <p>技能：摄影 · 视频制作 · Python · Grasshopper · 3D生成</p>
+      </div>
+
+      <!-- 核心经验/荣誉 -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+        <div>
+          <h3 class="font-bold text-klein-blue dark:text-blue-400 mb-2">Honors</h3>
+          <p>2023广东省“挑战杯” 一等奖<br>东南大学2025学业奖学金 二等奖</p>
+        </div>
+        <div>
+          <h3 class="font-bold text-green-600 dark:text-green-400 mb-2">Experience</h3>
+          <p>2024-10~11 国际工作营<br>2023-09~11 设计师助理<br>班长/学创部部长</p>
+        </div>
+        <div>
+          <h3 class="font-bold text-purple-600 dark:text-purple-400 mb-2">Vision</h3>
+          <p>设计是一种解决问题的方式。画图与编程，让感性与理性并行。</p>
+        </div>
+      </div>
+
+      <!-- 心中的虎丘｜Reflections -->
+      <div class="space-y-4 mb-8">
+        <h3 class="font-bold text-xl text-slate-800 dark:text-slate-200">心中的虎丘｜Reflections</h3>
+        <p>在硕士第二年回望，我逐渐理解了“建筑”的复杂性。<strong>它不是单一的造型艺术，而是一种解决问题的方式</strong>。我学会了结构化地拆解任务，也学会从人的感受出发去设计。</p>
+        <p>设计有无数条路径，关键在于如何找到适合当下语境的那一条。画图与编程，成了我感性与理性的两条神经。它们让“设计”不只是表达形式，更是一种逻辑上的推理与思辨。</p>
+      </div>
+
+      <!-- 对未来的畅想｜Vision -->
+      <div class="space-y-4 mb-8">
+        <h3 class="font-bold text-xl text-slate-800 dark:text-slate-200">对未来的畅想｜Vision</h3>
+        <p>建筑是一门艺术，<strong>而编程让这种艺术的体验变得可被更多人共享</strong>。我相信，算法不该替代设计，而应拓展设计的边界。建筑师的想象力，应该在逻辑中被放大，而不是被约束。</p>
+      </div>
+
+      <!-- 做自己热爱的事｜Flow -->
+      <div class="space-y-4 mb-10">
+        <h3 class="font-bold text-xl text-slate-800 dark:text-slate-200">做自己热爱的事｜Flow</h3>
+        <p>机器学习有个核心：通过梯度下降最小化损失函数。生活也是如此——我们在不断调整方向，试图“减少偏差”。但现实中，很多时候我们并不知道“损失函数”是什么。</p>
+        <p>Flow Model 的思想让我重新理解了目标与路径的关系：<strong>与其盯着终点，不如顺着动力前行</strong>。方向明确，比目标更重要。在复杂的世界里，没有最优解。沿着自己热爱的方向走下去——让噪声逐渐变成秩序，让不确定变成形状。</p>
+      </div>
+
+      <!-- 签名 -->
+      <div class="about-signature-wrapper flex justify-end mt-8">
+        <img src="assets/favicon/White.png" class="about-signature-white block dark:hidden"/>
+        <img src="assets/favicon/Black.png" class="about-signature-black hidden dark:block"/>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="section contact py-20 bg-slate-50 dark:bg-slate-800 text-center ">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="h2-middle">Get in Touch</h2>
+      <p class="text-slate-600 dark:text-slate-400 mb-8">
+        邮箱：<a href="mailto:2325169215@qq.com" class="text-blue-600 dark:text-blue-400 hover:underline">2325169215@qq.com</a><br>
+        微信：13612559411
+      </p>
+    </div>
+  </section>
+
+  <!-- Modal -->
+  <div id="modalOverlay">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-info">
+          <span id="modalTag" class="modal-tag"></span>
+          <h2 id="modalTitle"></h2>
+          <p id="modalMeta" class="modal-meta"></p>
+        </div>
+        <span id="closeModal" class="modal-close">&times;</span>
+      </div>
+      <div class="modal-content">
+        <div id="modalDescription"></div>
+        <div id="modalLinks" class="modal-links"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // === 数据定义 ===
+    const AIData = [
+      {
+        id: 'generative-facade',
+        title: "Generative Facade System",
+        tag: "Workshop",
+        image: "https://placehold.co/800x600/1e293b/94a3b8?text=Facade",
+        markdown: "assets/projects/generative-facade/content.md"
+      },
+      {
+        id: 'digital-fabrication',
+        title: "Digital Fabrication Workflow",
+        tag: "Programming",
+        meta: "2024 · SEU × ETH Zurich",
+        image: "https://placehold.co/800x600/0f172a/e2e8f0?text=Fabrication",
+        description: `
+          <p>Collaborative project with ETH Zurich: AI-generated 3D printed installation with ±3cm precision.
+          Developed a full digital workflow from generative design to robotic construction.</p>
+        `,
+        markdown: "assets/projects/3d-multiview-generation/3d-multiview-generation.md",
+        links: [
+          { text: "Project Video", url: "#" },
+          { text: "Technical Report", url: "#" }
+        ]
+      },
+      {
+        id: 'ai-video-generation',
+        title: "AI Video Generation",
+        tag: "AI",
+        image: "https://placehold.co/800x600/1e293b/f1f5f9?text=Video",
+        markdown: "assets/projects/ai-video-generation/content.md"
+      }
+    ];
+
+    const CodeData = [
+      {
+        id: 'paper1',
+        title: "Reimagining Synergy between Architects and Computational Systems",
+        tag: "Paper",
+        markdown: "assets/experience/paper1/content.md"
+      },
+      {
+        id: 'patent1',
+        title: "潜力微空间识别与营建方法",
+        tag: "Patent",
+        markdown: "assets/experience/patent1/content.md"
+      }
+    ];
+
+    const DesignData = [
+      {
+        id: 'generative-facade',
+        title: "Generative Facade System",
+        tag: "Workshop",
+        image: "https://placehold.co/800x600/1e293b/94a3b8?text=Facade",
+        markdown: "assets/projects/generative-facade/content.md"
+      },
+      {
+        id: 'digital-fabrication',
+        title: "Digital Fabrication Workflow",
+        tag: "Programming",
+        image: "https://placehold.co/800x600/0f172a/e2e8f0?text=Fabrication",
+        markdown: "assets/projects/digital-fabrication/content.md"
+      },
+      {
+        id: 'ai-video-generation',
+        title: "AI Video Generation",
+        tag: "AI",
+        image: "https://placehold.co/800x600/1e293b/f1f5f9?text=Video",
+        markdown: "assets/projects/ai-video-generation/content.md"
+      }
+    ];
+
+    const ExperienceData = [
+      {
+        year: "2025",
+        items: [
+          {
+            id: "exp1",
+            title: "Algorithmic Design Research",
+            subtitle: "ETH Zurich",
+            tag: "Workshop",
+            date: "2025",
+            markdown: "assets/experience/exp1/content.md",
+            image: "assets/experience/exp1/thumb.jpg"
+          },
+          {
+            id: "exp2",
+            title: "Spatial Intelligence System",
+            subtitle: "Autonomous Design Lab",
+            tag: "Workshop",
+            date: "2025",
+            markdown: "assets/experience/exp2/content.md"
+          }
+        ]
+      },
+      {
+        year: "2024",
+        items: [
+          {
+            id: "exp3",
+            title: "Architectural Computation Workshop",
+            subtitle: "Tsinghua University",
+            tag: "AI",
+            date: "2024",
+            markdown: "assets/experience/exp3/content.md"
+          }
+        ]
+      }
+    ];
+
+    // === 渲染项目卡片 ===
+    // helper: 把标签转成安全的 class 名 (e.g. "Digital Fabrication" -> "digital-fabrication")
+    function slugifyTag(tag) {
+      return String(tag || '')
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, '-')        // spaces -> -
+        .replace(/[^\w\-]/g, '')     // remove non-word (keeps a-z0-9_ -)
+        .replace(/\-+/g, '-');      // collapse multiple -
+    }
+
+    // 通用渲染函数：接收容器元素 id 和数据数组
+    function renderCards(containerId, dataArray) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      container.innerHTML = ''; // 清空旧内容
+
+      dataArray.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        const tagClass = `tag-${slugifyTag(item.tag || '')}`;
+
+        // 可选描述块
+        const descHtml = item.meta
+          ? `<p class="card-desc text-sm text-slate-600 dark:text-slate-400 mt-2">${item.meta}</p>`
+          : '';
+
+        // 如果没 image，则不渲染 <img> 标签（保持布局一致）
+        const imgHtml = item.image
+          ? `<img src="${item.image}" alt="${(item.title||'').replace(/"/g,'')}" />`
+          : '';
+
+        card.innerHTML = `
+          ${imgHtml}
+          <div class="card-content">
+            <div class="card-tag ${tagClass}">${item.tag || ''}</div>
+            <h3 class="card-title">${item.title || ''}</h3>
+            ${descHtml}
+          </div>
+        `;
+
+        card.addEventListener('click', () => openModal(item));
+        container.appendChild(card);
+      });
+    }
+
+    renderCards('AIGrid', AIData);
+    renderCards('CodeGrid', CodeData);
+    renderCards('DesignGrid', DesignData);
+
+    // === 渲染 Experience 卡片 ===
+    const ExperienceGrid = document.getElementById('ExperienceGrid');
+    ExperienceData.forEach(yearData => {
+      const yearDiv = document.createElement('div');
+
+      // 年份标题
+      const yearTitle = document.createElement('div');
+      yearTitle.className = "text-2xl font-bold text-klein-blue dark:text-blue-400 mb-4 select-none";
+      yearTitle.textContent = yearData.year;
+      yearDiv.appendChild(yearTitle);
+
+      // 卡片列表
+      const itemsDiv = document.createElement('div');
+      itemsDiv.className = "space-y-6";
+
+      yearData.items.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'card experience-card';
+
+        const tagClass = `tag-${item.tag.toLowerCase()}`;
+
+        card.innerHTML = `
+          <div class="card-content flex items-center justify-between">
+            <div>
+              <div class="card-tag ${tagClass}">${item.tag}</div>
+              <h3 class="font-bold text-slate-900 dark:text-white">${item.title}</h3>
+              <p class="text-slate-600 dark:text-slate-400 text-sm">${item.subtitle}</p>
+            </div>
+            <div class="text-sm text-slate-500 dark:text-slate-400 ml-4 shrink-0">${item.date}</div>
+          </div>
+        `;
+
+        card.addEventListener('click', (e) => {
+          e.preventDefault();
+          openModal(item);
+        });
+
+        itemsDiv.appendChild(card);
+      });
+
+      yearDiv.appendChild(itemsDiv);
+      ExperienceGrid.appendChild(yearDiv);
+    });
+
+    // === Modal 渲染 Markdown ===
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalTag = document.getElementById('modalTag');      // container for tags
+    const modalMeta = document.getElementById('modalMeta');    // optional meta/subtitle
+    const modalDescription = document.getElementById('modalDescription');
+    const modalLinks = document.getElementById('modalLinks');
+    const closeModalBtn = document.getElementById('closeModal');
+
+    /** helper: 转成安全的 class 名，例如 "Data Science" -> "data-science" */
+    function slugifyTag(tag) {
+      return String(tag).trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-_]/g, '');
+    }
+
+    /**
+     * 打开 Modal 并加载 Markdown + 相关信息
+     * @param {Object} data - 包含 title, tag(s), meta, image, markdown, description, links 等字段
+     */
+    async function openModal(data) {
+      document.body.style.overflow = 'hidden'; // 禁止背景滚动
+
+      // header 基本信息
+      modalTitle.textContent = data.title || '';
+      modalMeta && (modalMeta.textContent = data.meta || ''); // 如果有 modalMeta 节点就设置
+
+      // === tags 渲染：支持 string 或 array ===
+      if (!modalTag) {
+        // 如果页面没有 modalTag 节点，跳过（保证稳健）
+      } else {
+        if (Array.isArray(data.tag) && data.tag.length > 0) {
+          modalTag.innerHTML = data.tag
+            .map(t => {
+              const cls = 'tag-' + slugifyTag(t);
+              return `<span class="card-tag ${cls}">${t}</span>`;
+            })
+            .join('');
+        } else if (typeof data.tag === 'string' && data.tag.trim().length > 0) {
+          // 单个字符串标签
+          const cls = 'tag-' + slugifyTag(data.tag);
+          modalTag.innerHTML = `<span class="card-tag ${cls}">${data.tag}</span>`;
+        } else {
+          modalTag.innerHTML = ''; // 没有标签则清空
+        }
+      }
+
+      // 初始化内容占位
+      modalDescription.innerHTML = '<p class="text-slate-500">Loading...</p>';
+
+      let contentHTML = '';
+
+      // 图片插入（如果提供）
+      if (data.image) {
+        contentHTML += `
+          <div class="mb-6">
+            <img src="${data.image}" alt="${(data.title||'')}" class="w-full h-auto rounded-lg shadow-sm" />
+          </div>
+        `;
+      }
+
+      // description（优先显示 description 字段，当没有 markdown 时也可显示）
+      if (data.description) {
+        contentHTML += `<div class="mb-4 text-slate-700 dark:text-slate-300">${data.description}</div>`;
+      }
+
+      // Markdown 加载与渲染（如果存在）
+      if (data.markdown) {
+        try {
+          const res = await fetch(data.markdown);
+          if (!res.ok) throw new Error('Failed to fetch markdown file');
+          let mdText = await res.text();
+
+          // 修正 Markdown 中的相对图片路径
+          const basePath = data.markdown.substring(0, data.markdown.lastIndexOf('/') + 1);
+          mdText = mdText.replace(/!\[(.*?)\]\((?!https?:\/\/)(.*?)\)/g, (match, alt, src) => {
+            return `![${alt}](${basePath}${src})`;
+          });
+
+          contentHTML += marked.parse(mdText);
+        } catch (err) {
+          console.error(err);
+          contentHTML += `<p class="text-red-500">内容加载失败，请检查文件路径或网络。</p>`;
+        }
+      } else if (!data.description) {
+        // markdown 与 description 都不存在时的占位
+        contentHTML += `<p class="text-slate-500">暂无内容。</p>`;
+      }
+
+      // 渲染到 DOM
+      modalDescription.innerHTML = `<div class="markdown-body">${contentHTML}</div>`;
+
+      // links 渲染（如果存在）
+      if (modalLinks) {
+        if (Array.isArray(data.links) && data.links.length > 0) {
+          modalLinks.innerHTML = data.links
+            .map(l => `<a href="${l.url}" target="_blank" rel="noopener" class="text-blue-600 dark:text-blue-400 underline">${l.text}</a>`)
+            .join('');
+          modalLinks.style.display = 'flex';
+        } else {
+          modalLinks.style.display = 'none';
+          modalLinks.innerHTML = '';
+        }
+      }
+
+      // 显示 modal
+      modalOverlay.classList.add('show');
+    }
+
+    /** 关闭逻辑 */
+    closeModalBtn && closeModalBtn.addEventListener('click', () => {
+      modalOverlay.classList.remove('show');
+      document.body.style.overflow = ''; // 恢复背景滚动
+    });
+
+    // 点击遮罩关闭
+    modalOverlay && modalOverlay.addEventListener('click', e => {
+      if (e.target === modalOverlay) closeModalBtn.click();
+    });
+
+    // 点击遮罩关闭
+    modalOverlay.addEventListener('click', e => {
+      if (e.target === modalOverlay) closeModalBtn.click();
+    });
+
+    // === 模式切换 ===
+    const modeToggle = document.getElementById('modeToggle');
+    const modeIcon = document.getElementById('modeIcon');
+    const body = document.body;
+
+    const savedMode = localStorage.getItem('color-mode');
+    // 用户之前选择过暗色模式或者没选择但系统偏好是暗色
+    if (savedMode === 'dark' || (!savedMode && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      // 切换模式
+      body.classList.replace('light', 'dark');
+      modeIcon.className = 'fas fa-sun';
+    }
+
+    modeToggle.addEventListener('click', () => {
+      if (body.classList.contains('light')) {
+        body.classList.replace('light', 'dark');
+        modeIcon.className = 'fas fa-sun';
+        localStorage.setItem('color-mode', 'dark');
+      } else {
+        body.classList.replace('dark', 'light');
+        modeIcon.className = 'fas fa-moon';
+        localStorage.setItem('color-mode', 'light');
+      }
+    });
+
+    // === 标签滚动高亮 ===
+    const navLinks = document.querySelectorAll('.nav-link');
+    window.addEventListener('scroll', () => {
+      const sections = ['ai', 'code', 'design', 'about'];
+      const scrollPos = window.scrollY + 100;
+
+      for (const id of sections) {
+        const el = document.getElementById(id);
+        if (el) {
+          const { offsetTop, offsetHeight } = el;
+          if (scrollPos >= offsetTop && scrollPos < offsetTop + offsetHeight) {
+            navLinks.forEach(link => link.classList.remove('active'));
+            document.querySelector(`a[href="#${id}"]`)?.classList.add('active');
+            break;
+          }
+        }
+      }
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</body>
+</html>

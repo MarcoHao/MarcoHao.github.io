@@ -1,11 +1,19 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" xmlns="">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>马昊 Marco</title>
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
   <script>
     tailwind.config = {
       darkMode: 'class',
@@ -18,100 +26,25 @@
       }
     }
   </script>
-  <style>
-    html {
-      scroll-behavior: smooth;
-    }
-    .hero-bg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
-      background-size: cover;
-      background-position: center;
-      z-index: -1;
-    }
-    .hero-bg.active {
-      opacity: 1;
-    }
-    .mode-toggle {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-    .light .mode-toggle {
-      background: rgba(241, 245, 249, 0.8);
-      border: 1px solid rgba(226, 232, 240, 0.6);
-      color: #475569;
-    }
-    .dark .mode-toggle {
-      background: rgba(30, 41, 59, 0.8);
-      border: 1px solid rgba(71, 85, 105, 0.4);
-      color: #e2e8f0;
-    }
-    .nav-link.active {
-      color: #0021A5 !important;
-    }
-    .dark .nav-link.active {
-      color: #60a5fa !important;
-    }
-    .project-card, .experience-card {
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-    .project-card:hover, .experience-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
-    }
-    .dark .project-card:hover, .dark .experience-card:hover {
-      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3);
-    }
-    #modalOverlay {
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s;
-    }
-    #modalOverlay.show {
-      opacity: 1;
-      pointer-events: all;
-    }
-    #modalContent {
-      transform: scale(0.95);
-      transition: transform 0.3s;
-    }
-    #modalOverlay.show #modalContent {
-      transform: scale(1);
-    }
-  </style>
-</head>
+<head>
 <body class="font-sans bg-white text-slate-900 light">
-
   <!-- Navigation -->
-  <nav class="fixed top-0 w-full bg-white/90 backdrop-blur z-40 border-b border-slate-200 dark:bg-slate-900/90 dark:border-slate-800">
+  <nav class="fixed top-0 w-full z-40">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-16">
         <div class="flex items-center space-x-2">
-        <div class="w-8 h-8 rounded-lg overflow-hidden">
-          <!-- 浅色模式 -->
-          <img src="assets/favicon/White.jpg" alt="Logo" class="w-full h-full object-contain dark:hidden" />
-          <!-- 深色模式 -->
-          <img src="assets/favicon/Black.PNG" alt="Logo" class="w-full h-full object-contain hidden dark:block" />
-        </div>
-            <a href="index.html" class="text-xl font-bold text-slate-900 dark:text-white">Marco</a>
+          <div class="w-8 h-8 rounded-lg overflow-hidden">
+            <img src="assets/favicon/White.PNG" alt="Logo" class="w-full h-full object-contain dark:hidden" />
+            <img src="assets/favicon/Black.PNG" alt="Logo" class="w-full h-full object-contain hidden dark:block" />
+          </div>
+          <a href="index.html" class="nav-brand">Marco</a>
         </div>
         <div class="flex items-center space-x-6">
           <div class="hidden md:flex space-x-6 text-sm">
-            <a href="#projects" class="nav-link capitalize text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200 transition-colors">Projects</a>
-            <a href="#experience" class="nav-link.capitalize text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200 transition-colors">Experience</a>
-            <a href="#about" class="nav-link.capitalize text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200 transition-colors">About</a>
-            <a href="#contact" class="nav-link.capitalize text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200 transition-colors">Contact</a>
+            <a href="#projects" class="nav-link">Projects</a>
+            <a href="#experience" class="nav-link">Experience</a>
+            <a href="#about" class="nav-link">About</a>
+            <a href="#contact" class="nav-link">Contact</a>
           </div>
           <div id="modeToggle" class="mode-toggle">
             <i id="modeIcon" class="fas fa-moon"></i>
@@ -123,37 +56,30 @@
 
   <!-- Hero Section -->
   <section id="home" class="relative min-h-screen flex items-center">
+    <!--默认背景图-->
     <div class="hero-bg active" style="background-image: url('assets/images/morfusion/Completed renderings.jpg');"></div>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <!-- 毛玻璃遮罩 -->
+    <div class="hero-mask"></div>
+
+    <!-- 内容层 -->
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
       <div class="grid lg:grid-cols-2 gap-12 items-center">
-        <div class="space-y-8">
-          <div>
-            <h1 class="text-2xl font-bold text-klein-blue dark:text-blue-400 mb-1">马昊 Marco</h1>
-            <p class="text-lg text-slate-600 dark:text-slate-400">设计 × 程序 × AI</p>
+        <div class="hero-text">
+          <div class="hero-name">
+            <h1 class="hero-title">马昊 Marco</h1>
+            <p class="hero-subtitle">设计 × 程序 × AI</p>
           </div>
-          <div class="space-y-4">
-            <h2 class="text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white leading-tight">
-              Where <span class="text-klein-blue dark:text-blue-400">Design</span><br />
-              Meets <span class="text-purple-600 dark:text-purple-400">Code</span>
-            </h2>
-            <p class="text-xl text-slate-600 dark:text-slate-400 leading-relaxed">
+          <div class="hero-headline">
+            <h2 class="hero-main">Where <span class="hero-accent-1">Design</span><br />Meets <span class="hero-accent-2">Code</span></h2>
+            <p class="hero-description">
               在计算性设计中探索未来方向，在理性与感性之间寻找平衡。<br>
               Bridging architecture and technology through design and AI-driven workflows.
-              programming, and artificial intelligence.
             </p>
           </div>
-
-          <div class="flex flex-wrap gap-4">
-            <a href="#projects" class="px-6 py-2.5 bg-gradient-to-r from-klein-blue to-blue-600 text-white text-sm font-medium rounded-lg
-                                      hover:from-blue-700 hover:to-purple-700 transition-all dark:from-blue-500 dark:to-purple-500">
-              View Projects
-            </a>
-            <a href="#contact" class="px-6 py-2.5 bg-slate-50 border border-slate-300 text-slate-700 text-sm font-medium rounded-lg
-                                      hover:bg-slate-50 transition-all
-                                      dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-700 dark:hover:border-slate-500">
-              Get in Touch
-            </a>
+          <div class="hero-buttons">
+            <a href="#projects" class="btn-primary">View Projects</a>
+            <a href="#contact" class="btn-secondary">Get in Touch</a>
           </div>
 
           <!-- Floating Contact Buttons -->
@@ -215,6 +141,13 @@
         </a>
       </div>
     </div>
+
+    <!-- Hero Dots -->
+    <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex space-x-3 z-20">
+      <button class="hero-dot"></button>
+      <button class="hero-dot"></button>
+      <button class="hero-dot"></button>
+    </div>
   </section>
 
   <!-- Projects -->
@@ -226,6 +159,7 @@
       </div>
 
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
         <a href="#" data-modal="generative-facade" class="block project-card">
           <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 dark:bg-slate-800 dark:border-slate-700">
             <img src="https://placehold.co/800x600/e2e8f0/647488?text=Facade" alt="Generative Facade" class="w-full h-64 object-cover" />
@@ -236,6 +170,7 @@
             </div>
           </div>
         </a>
+
         <a href="#" data-modal="digital-fabrication" class="block project-card">
           <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 dark:bg-slate-800 dark:border-slate-700">
             <img src="https://placehold.co/800x600/f1f5f9/e2e8f0?text=Fabrication" alt="Digital Fabrication" class="w-full h-64 object-cover" />
@@ -246,6 +181,7 @@
             </div>
           </div>
         </a>
+
         <a href="#" data-modal="ai-video-generation" class="block project-card">
           <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 dark:bg-slate-800 dark:border-slate-700">
             <img src="https://placehold.co/800x600/e2e8f0/f1f5f9?text=Video" alt="AI Video Generation" class="w-full h-64 object-cover" />
@@ -256,6 +192,18 @@
             </div>
           </div>
         </a>
+
+        <a href="#" data-modal="3d-multiview-generation" class="block project-card">
+          <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 dark:bg-slate-800 dark:border-slate-700">
+            <img src="https://placehold.co/800x600/e2e8f0/f1f5f9?text=Video" alt="3D Multiview Generation" class="w-full h-64 object-cover" />
+            <div class="p-6">
+              <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300 mb-2">AI</span>
+              <h3 class="text-xl font-bold text-slate-900 dark:text-white">3D Multiview Generation</h3>
+              <p class="text-slate-600 dark:text-slate-400 text-sm mt-2">ComfyUI workflow for spatial narrative</p>
+            </div>
+          </div>
+        </a>
+
       </div>
     </div>
   </section>
@@ -402,32 +350,66 @@
         tag: "Architecture",
         meta: "2024 · Parametric Design",
         image: "https://placehold.co/1200x600/1e293b/94a3b8?text=Generative+Facade",
-        description: "<p>Using Python and Grasshopper to create a parametric facade system that optimizes solar gain and airflow through machine learning.</p><p>The system generates thousands of iterations and selects the optimal solution based on energy performance metrics.</p>",
+        description: `
+          <p>Using Python and Grasshopper to create a parametric facade system that optimizes solar gain and airflow through machine learning.</p>
+          <p>The system generates thousands of iterations and selects the optimal solution based on energy performance metrics.</p>
+        `,
         links: [
           { text: "View Code", url: "#" },
           { text: "Full Case Study", url: "#" }
         ]
       },
+
       'digital-fabrication': {
         title: "Digital Fabrication Workflow",
         tag: "Programming",
         meta: "2024 · SEU × ETH Zurich",
         image: "https://placehold.co/1200x600/0f172a/e2e8f0?text=Digital+Fabrication",
-        description: "<p>Collaborative project with ETH Zurich: AI-generated 3D printed installation with ±3cm precision.</p><p>Developed a full digital workflow from generative design to robotic construction.</p>",
+        description: `
+          <p>Collaborative project with ETH Zurich: AI-generated 3D printed installation with ±3cm precision.</p>
+          <p>Developed a full digital workflow from generative design to robotic construction.</p>
+        `,
         links: [
           { text: "Project Video", url: "#" },
           { text: "Technical Report", url: "#" }
         ]
       },
+
       'ai-video-generation': {
         title: "AI Video Generation",
         tag: "AI",
         meta: "2024 · ComfyUI Workflow",
         image: "https://placehold.co/1200x600/1e293b/f1f5f9?text=AI+Video",
-        description: "<p>Custom ComfyUI workflow for spatial narrative video generation with 3D control and time consistency.</p><p>Integrated Diffusion models with Rhino geometry for architectural storytelling.</p>",
+        description: `
+          <p>Custom ComfyUI workflow for spatial narrative video generation with 3D control and time consistency.</p>
+          <p>Integrated Diffusion models with Rhino geometry for architectural storytelling.</p>
+        `,
         links: [
           { text: "Demo Video", url: "#" },
           { text: "GitHub Repo", url: "#" }
+        ]
+      },
+
+      '3d-multiview-generation': {
+        title: "多视图 3D 模型生成工作流",
+        tag: "AI",
+        meta: "2025 · Hunyuan3D × ComfyUI",
+        image: "https://placehold.co/1200x600/111827/f1f5f9?text=3D+Multiview",
+        description: `
+          <h4>Exploring Multi-view Consistency in AI-based 3D Generation</h4>
+          <p>基于 Hunyuan3D 与 ComfyUI 框架，实现从 <b>text2image</b> 到 <b>image2model</b> 的全过程。</p>
+          <p>聚焦于多视图一致性与可控性，通过 LoRA 微调与 ControlNet 姿态控制，实现稳定多视角 3D 生成流程，并以 3D 打印验证完成从算法到制造的闭环。</p>
+          <h4>工作流搭建与核心逻辑</h4>
+          <img src="assets/images/projects/3d_multiview_workflow.png" alt="workflow" class="rounded-lg my-2">
+          <p>在 ComfyUI 中构建完整节点网络，以 Hunyuan3D 为核心，串联文本输入、IPAdapter 特征匹配、ControlNet 姿态控制、LoRA 权重微调等模块。</p>
+          <h4>多视图一致性实验</h4>
+          <p>对比三种生成方式后发现：一次性生成多视图的方式在控制一致性与参数效率上表现最优。</p>
+          <h4>结论</h4>
+          <p>该项目构建了一个可扩展的 AI 生成工作流，验证了 <b>设计推理 → 算法生成 → 实体输出</b> 的完整路径。</p>
+        `,
+        links: [
+          { text: "Full Documentation", url: "#" },
+          { text: "Workflow Demo", url: "#" }
         ]
       }
     };
@@ -514,16 +496,6 @@
       if (!data) return;
 
       modalTag.textContent = data.tag;
-      modalTag.className = `inline-block px-3 py-1 rounded-full text-xs font-semibold mb-2 ${
-        data.tag === 'Architecture' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300' :
-        data.tag === 'Programming' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300' :
-        data.tag === 'AI' ? 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300' :
-        data.tag === 'Paper' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300' :
-        data.tag === 'Patent' ? 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300' :
-        data.tag === 'Internship' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300' :
-        'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300'
-      }`;
-
       modalTitle.textContent = data.title;
       modalMeta.textContent = data.meta;
       modalImg.src = data.image;
@@ -535,7 +507,7 @@
           const a = document.createElement('a');
           a.href = link.url;
           a.textContent = link.text;
-          a.className = 'text-klein-blue dark:text-blue-400 hover:underline';
+          a.className = 'text-klein-blue dark:text-blue-400 hover:underline mr-4';
           a.target = '_blank';
           modalLinks.appendChild(a);
         });
@@ -551,65 +523,74 @@
     });
 
     modalOverlay.addEventListener('click', (e) => {
-      if (e.target === modalOverlay) {
-        closeModalBtn.click();
-      }
+      if (e.target === modalOverlay) closeModalBtn.click();
     });
 
-    // 绑定点击事件
     document.querySelectorAll('[data-modal]').forEach(item => {
-      item.addEventListener('click', (e) => {
+      item.addEventListener('click', e => {
         e.preventDefault();
         openModal(e.currentTarget.dataset.modal);
       });
     });
 
-    // === Hero 轮播（修复版：完全同步） ===
-    const heroData = [
-      {
-        id: 'generative-facade',
-        bg: 'assets/images/city_evolution/building_generation.jpg',
-        title: "Generative Facade System",
-        desc: "Parametric facade with ML optimization for energy performance.",
-        detailImg: "https://placehold.co/400x600/e2e8f0/647488?text=Facade+Detail"
-      },
-      {
-        id: 'digital-fabrication',
-        bg: 'https://placehold.co/1920x1080/f1f5f9/e2e8f0?text=Fabrication+Project',
-        title: "Digital Fabrication Workflow",
-        desc: "SEU × ETH Zurich: AI-generated 3D printed installation.",
-        detailImg: "https://placehold.co/400x600/f1f5f9/e2e8f0?text=Fabrication+Detail"
-      },
-      {
-        id: 'ai-video-generation',
-        bg: 'https://placehold.co/1920x1080/e2e8f0/f1f5f9?text=Video+Project',
-        title: "AI Video Generation",
-        desc: "ComfyUI workflow for spatial narrative with 3D control.",
-        detailImg: "https://placehold.co/400x600/e2e8f0/f1f5f9?text=Video+Detail"
-      }
-    ];
+    // === Hero 自动生成（从项目中提取） ===
+    const heroData = Object.keys(projectsData).slice(0, 3).map(key => ({
+      id: key,
+      bg: projectsData[key].image,
+      title: projectsData[key].title,
+      desc: projectsData[key].meta,
+      detailImg: projectsData[key].image
+    }));
 
-    const heroBgSlides = document.querySelectorAll('.hero-bg');
+    const heroBg = document.querySelector('.hero-bg');
     const heroTitle = document.getElementById('heroTitle');
     const heroDesc = document.getElementById('heroDesc');
     const heroDetailImg = document.getElementById('heroDetailImg');
     const heroCard = document.querySelector('[data-modal]');
+    const dots = document.querySelectorAll('.hero-dot');
 
     let current = 0;
+    let interval;
 
-    function updateHero(index) {
+    // 切换函数
+    function setHero(index) {
       const item = heroData[index];
-      heroBgSlides[0].style.backgroundImage = `url('${item.bg}')`;
+      heroBg.style.backgroundImage = `url('${item.bg}')`;
       heroTitle.textContent = item.title;
       heroDesc.textContent = item.desc;
       heroDetailImg.src = item.detailImg;
       heroCard.dataset.modal = item.id;
+
+      // 更新小圆点样式
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('bg-klein-blue', i === index);
+        dot.classList.toggle('scale-125', i === index);
+        dot.classList.toggle('bg-slate-400', i !== index);
+      });
+
+      current = index;
     }
 
-    setInterval(() => {
-      current = (current + 1) % heroData.length;
-      updateHero(current);
-    }, 5000);
+    // 点击切换
+    dots.forEach((dot, i) => {
+      dot.addEventListener('click', () => {
+        clearInterval(interval);
+        setHero(i);
+        startAutoPlay();
+      });
+    });
+
+    // 自动轮播
+    function startAutoPlay() {
+      interval = setInterval(() => {
+        const next = (current + 1) % heroData.length;
+        setHero(next);
+      }, 5000);
+    }
+
+    // 初始化
+    setHero(0);
+    startAutoPlay();
 
     // === 滚动高亮 ===
     const navLinks = document.querySelectorAll('.nav-link');

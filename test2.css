@@ -69,14 +69,78 @@ html, body {
 }
 
 /* ========== Section Base ========== */
-section {
-  position: relative;
+.section {
   width: 100%;
-  padding: 5rem 2rem;
-  margin: 0 auto;
   background-color: var(--bg-primary);
   color: var(--text-primary);
   transition: background-color 0.3s ease, color 0.3s ease;
+  padding: 5rem 0; /* 上下留白 */
+}
+
+/* 内层容器：保持居中、阅读宽度 */
+.section-inner {
+  max-width: none;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* 黄金分割布局：左侧 38%，右侧 62% */
+.grid-section {
+  display: grid;
+  grid-template-columns: 38% 62%;
+  align-items: start;
+  gap: 3rem;
+}
+
+/* 左侧部分（标题、说明） */
+.section-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+
+/* 右侧部分（卡片区域） */
+.section-right {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+/* 标题与描述 */
+.h2-left {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.section-desc {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* 查看全部按钮 */
+.view-all {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.view-all:hover {
+  color: var(--primary-hover);
+}
+
+/* 响应式布局 */
+@media (max-width: 768px) {
+  .grid-section {
+    grid-template-columns: 1fr;
+  }
+  .section-left {
+    margin-bottom: 2rem;
+  }
 }
 
 /* Section 宽度控制 */
@@ -86,10 +150,6 @@ section.hero {
   margin: 0;
   width: 100%;
   background-color: var(--hero-bg);
-}
-
-section.ai,section.code,section.design{
-  padding: 5rem 2rem;
 }
 
 /* About Me & Contact 基础样式 */
@@ -103,29 +163,6 @@ section.about .grid {
   margin-top: 2rem;
 }
 
-/* 内层容器 */
-.section-inner {
-  margin: 0 auto;
-  padding: 0 1rem;
-  width: 100%;
-}
-
-/* 标题样式 */
-section .h2-left {
-  font-family: var(--font-heading);
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 2rem;
-  text-align: left;
-}
-
-section .h2-middle {
-  font-family: var(--font-heading);
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 2rem;
-  text-align: center;
-}
 
 /* ========== 导航栏 ========== */
 nav {
@@ -162,7 +199,6 @@ nav {
   color: var(--text-primary);
   text-decoration: none;
   transition: all 0.2s ease;
-
   border-bottom: 2px solid transparent;
 }
 .nav-brand:hover {
@@ -250,19 +286,39 @@ nav {
 .hero {
   position: relative;
   z-index: 1;
-  padding: 8rem 2rem;
   text-align: left;
   color: var(--text-primary);
   transition: background 0.3s ease, color 0.3s ease;
+
+  /* 新增：靠左下角布局 */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  height: 100%; /* 让它填满 section 高度 */
+  padding: 1rem 1rem; /* 调整边距，让底部留空间 */
 }
 
-/* 内容区 */
-.hero-content {
-  /*max-width: 720px;*/
-  /*margin: 0 auto;*/
-  position: relative;
-  z-index: 10;
+/* 包裹内容的容器 */
+.hero-inner {
+  width: 100%;
 }
+
+/* 内容块（让内部从左下角开始排） */
+.hero-content-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding-bottom: 2rem; /* 离底部一点距离 */
+}
+
+/* 可根据需要微调 */
+.hero-content {
+  margin-bottom: 1rem;
+}
+
+
 
 /* 名字 */
 .hero-name {

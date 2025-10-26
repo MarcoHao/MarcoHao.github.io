@@ -23,7 +23,7 @@
   --card-bg: #ffffff;
 
   /* 主色调 */
-  --primary-color: #fbfbfb;
+  --primary-color: #5377da;
   --primary-hover: #1d4ed8;
   --secondary-color: #8b5cf6;
   --secondary-hover: #7c3aed;
@@ -36,7 +36,7 @@
 }
 
 .dark {
-  --bg-primary: #0f172a;
+  --bg-primary: #000000;
   --bg-secondary: #1e293b;
   --text-primary: #f8fafc;
   --text-secondary: #cbd5e1;
@@ -68,100 +68,6 @@ html, body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* ========== Section Base ========== */
-.section {
-  width: 100%;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease, color 0.3s ease;
-  padding: 5rem 0; /* 上下留白 */
-}
-
-/* 内层容器：保持居中、阅读宽度 */
-.section-inner {
-  max-width: none;
-  margin: 0 auto;
-  padding: 0 2rem;
-}
-
-/* 黄金分割布局：左侧 38%，右侧 62% */
-.grid-section {
-  display: grid;
-  grid-template-columns: 38% 62%;
-  align-items: start;
-  gap: 3rem;
-}
-
-/* 左侧部分（标题、说明） */
-.section-left {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  gap: 1rem;
-}
-
-/* 右侧部分（卡片区域） */
-.section-right {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
-}
-
-/* 标题与描述 */
-.h2-left {
-  font-family: var(--font-heading);
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-
-.section-desc {
-  font-size: 0.95rem;
-  color: var(--text-secondary);
-  line-height: 1.7;
-}
-
-/* 查看全部按钮 */
-.view-all {
-  margin-top: 1rem;
-  font-size: 0.9rem;
-  color: var(--primary-color);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-.view-all:hover {
-  color: var(--primary-hover);
-}
-
-/* 响应式布局 */
-@media (max-width: 768px) {
-  .grid-section {
-    grid-template-columns: 1fr;
-  }
-  .section-left {
-    margin-bottom: 2rem;
-  }
-}
-
-/* Section 宽度控制 */
-section.hero {
-  padding: 0;
-  max-width: none;
-  margin: 0;
-  width: 100%;
-  background-color: var(--hero-bg);
-}
-
-/* About Me & Contact 基础样式 */
-section.about, section.contact {
-  padding-top: 5rem;
-  padding-bottom: 5rem;
-}
-
-/* 网格布局 */
-section.about .grid {
-  margin-top: 2rem;
-}
 
 
 /* ========== 导航栏 ========== */
@@ -184,7 +90,7 @@ nav {
   transition: background 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
 }
 .dark nav {
-  background: linear-gradient(to bottom, rgba(15, 23, 42, 0.7), rgba(18, 23, 32, 0.7));
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(18, 18, 18, 0.7));
   border-bottom: 1px solid rgba(71, 85, 105, 0.4);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
@@ -244,7 +150,6 @@ nav {
   border: 1px solid rgba(71, 85, 105, 0.4);
   color: #e2e8f0;
 }
-
 /* ========== Hero 区域 ========== */
 .hero-bg {
   position: absolute;
@@ -258,28 +163,7 @@ nav {
   z-index: -2;
 }
 .hero-bg.active {
-  opacity: 100;
-}
-.hero-mask {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom right,
-    rgba(255,255,255,0.35),
-    rgba(255,255,255,0.1)
-  );
-  backdrop-filter: blur(6px) saturate(70%);
-  -webkit-backdrop-filter: blur(12px) saturate(70%);
-  border: 1px solid rgba(255,255,255,0.2);
-  z-index: 1;
-}
-.dark .hero-mask {
-  background: linear-gradient(
-    to bottom right,
-    rgba(0,0,0,0.4),
-    rgba(0,0,0,0.2)
-  );
-  border: 1px solid rgba(255,255,255,0.1);
+  opacity: 1;
 }
 
 /* ========== Hero 内容 ========== */
@@ -290,7 +174,7 @@ nav {
   color: var(--text-primary);
   transition: background 0.3s ease, color 0.3s ease;
 
-  /* 新增：靠左下角布局 */
+  /* 靠左下角布局 */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -299,27 +183,54 @@ nav {
   padding: 1rem 1rem; /* 调整边距，让底部留空间 */
 }
 
-/* 包裹内容的容器 */
 .hero-inner {
   width: 100%;
 }
 
-/* 内容块（让内部从左下角开始排） */
+/* 内容块（固定宽度 + 最小 fallback） */
 .hero-content-block {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-end;
-  padding-bottom: 2rem; /* 离底部一点距离 */
+  padding-bottom: 2rem;
+
+  /* 固定理想宽度 */
+  width: 500px;
+  /* 如果容器放不下 400px，则最小缩到 280px */
+  min-width: 280px;
+  /* 不允许超过理想宽度 */
+  max-width: 500px;
+
+  /* 小屏幕下：占满宽度（更合理） */
+  @media (max-width: 768px) {
+    width: 100%;
+    max-width: 100%;
+    min-width: auto;
+    padding: 0 1rem;
+  }
 }
 
-/* 可根据需要微调 */
 .hero-content {
   margin-bottom: 1rem;
+  padding: 1.5rem;
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px) saturate(110%);
+  -webkit-backdrop-filter: blur(8px) saturate(110%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  margin: 0;
 }
 
-
-
+/* 深色模式优化 */
+.dark .hero-content {
+  background-color: rgba(0, 0, 0, 0.7); /* 更高透明度（数值更小 = 更透） */
+  backdrop-filter: blur(10px) saturate(120%); /* 模糊减弱 */
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
 /* 名字 */
 .hero-name {
   font-family: var(--font-heading, 'Inter', serif);
@@ -334,24 +245,20 @@ nav {
   color: var(--accent-1);
 }
 
-/* 副标题 */
+/* 副标题 Design × Code × AI.”  */
 .hero-subtitle {
-  font-size: 1.125rem;
+  font-size: 2rem;
   font-family: var(--font-heading, 'Inter', serif);
   font-weight: 500;
   margin-bottom: 1.5rem;
   letter-spacing: 0.05em;
 }
 
-/* 描述 */
+/* 描述 在设计中进行梯度下降，逼近理想与现实的平衡。 */
 .hero-description {
+  font-family: var(--font-heading, 'Inter', sans-serif); /* 或你偏好的字体，如 'Geist', 'SF Pro', etc. */
   font-size: 1rem;
-  color: var(--text-secondary);
-  line-height: 1.75;
-  max-width: 560px;
-  margin: 0 auto;
-  font-weight: 400;
-  transition: color 0.3s ease;
+  line-height: 1.6;
 }
 
 /* 按钮区 */
@@ -361,31 +268,351 @@ nav {
   margin-top: 1.25rem;
 }
 
-/* ========== Grid 布局 ========== */
-.grid { display: grid; gap: 2rem; }
-.grid-3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+/* 轮播指示器容器 */
+.hero-slider-indicators {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 0 0.1rem;
+  gap: 6px;
+}
 
-/* ========== 卡片通用样式 ========== */
-.card {
-  background-color: var(--card-bg);
+.hero-slider-indicators .indicator {
+  flex: 1;
+  height: 4px;
+  background-color: var(--accent-1);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 0;
+}
+
+.hero-slider-indicators .indicator.active {
+  background-color: var(--accent-2);
+}
+
+/* 小屏优化 */
+@media (max-width: 768px) {
+  .hero-slider-indicators {
+    padding: 0 0.5rem;
+    gap: 6px;
+  }
+}
+
+/* ========== Section 通用布局 ========== */
+.section {
+  width: 100%;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  padding: 2rem 3rem 0 3rem;
+}
+
+.section-inner {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.section-wrapper {
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.95);
   border-radius: 1rem;
-  border: 1px solid #cbd5e1;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+body.dark .section-wrapper {
+  background-color: rgba(0, 0, 0, 0.85);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ========== 主体布局 ========== */
+.section-grid {
+  display: flex;
+  gap: 2rem;
+  padding: 1rem 2rem;
+  /* 关键：保证右侧滚动容器有可约束的高度 */
+  height: auto;        /* ← 你可以改为 max-height 或 calc(%)，必须不是 auto */
+  max-height: 520px;
+  min-height: 480px;
+  overflow: hidden;     /* 防止整段滚动，右侧内部滚动 */
+}
+/* ========== 左侧描述 ========== */
+.section-left {
+  flex: 0 0 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.section-content {
+  text-align: left;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.section-subtitle {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.section-description {
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.section-view-all {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.section-view-all:hover {
+  color: var(--primary-hover);
+}
+
+/* ========== 右侧卡片区 ========== */
+.section-right {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  padding: 0rem 0.5rem 1.5rem 0.5rem;
+  align-content: start;
+  grid-auto-rows: auto;
+
+  /* === 内部滚动逻辑 === */
+  overflow-y: auto;
+  max-height: 60vh;
+  box-sizing: border-box;
+  /* 如果想响应式，可以改成 vh：例如 calc(1.4 * 40vh) */
+}
+
+
+.section-right::-webkit-scrollbar {
+  width: 8px;
+}
+
+.section-right::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+/* ========== 卡片样式 ========== */
+.card {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  background: var(--card-bg, #fff);
+  border-radius: 1rem;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  align-self: start;
 }
-body.dark .card {
-  background-color: var(--card-bg);
-  border-color: #334155;
+
+.card img {
+  width: 100%;
+  flex: none;
+  object-fit: cover;
+  display: block;
+  border-radius: 1rem 1rem 0 0;
+  aspect-ratio: 440 / 460; /* 默认保持比例 */
 }
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+
+.card-content {
+  padding: 1rem;
+  flex: 0 0 auto;;
+  /*min-height: 100px;*/
+  min-height: 0;
+  max-height: 200px;
+  overflow: hidden;
+  /*display: flex;*/
+  flex-direction: column;
 }
-.card img { width: 100%; height: 180px; object-fit: cover; display: block; border-bottom: 1px solid rgba(0,0,0,0.04); }
-.card-content { padding: 1rem; }
-.card-title { margin: 0.25rem 0 0; font-size: 1.05rem; font-weight: 700; color: var(--text-primary); }
-.card-desc { margin-top: 0.5rem; color: #475569; }
+
+.card-title {
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-desc {
+  margin-top: 0.5rem;
+  color: #475569;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ========== 响应式 ========== */
+/* 大屏：卡片可更大 */
+@media (min-width: 1600px) {
+  .section-right {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    max-height: 65vh;
+  }
+}
+
+/* 中屏：保持 280px，避免过早缩小 */
+@media (max-width: 1599px) and (min-width: 901px) {
+  .section-right {
+    /* 保持默认即可，无需额外规则 */
+  }
+}
+
+/* 小屏：放弃固定列数，让 auto-fit 自动决定（更灵活） */
+@media (max-width: 900px) {
+  .section-grid {
+    flex-direction: column;
+    height: auto;
+    min-height: auto;
+    max-height: none;
+    overflow: visible; /* 允许自然流动 */
+  }
+
+  .section-left,
+  .section-content {
+    text-align: center;
+  }
+
+  /* 关键：不再强制 repeat(2, 1fr)，而是用 auto-fit + 合理 min */
+  .section-right {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    max-height: 50vh; /* 保留一定滚动，但不过度 */
+  }
+
+  .card img {
+    aspect-ratio: unset;
+    max-height: 180px;
+    flex: none;
+  }
+
+  .card-content {
+    flex: 1;
+    min-height: auto;
+    max-height: none;
+    padding: 1rem;
+  }
+}
+
+/* 超小屏：单列自然流动 */
+@media (max-width: 600px) {
+  .section-right {
+    grid-template-columns: 1fr;
+    max-height: 60vh; /* 或 none，如果你希望完全展开 */
+  }
+}
+
+/* ========== View All 全屏模式 ========== */
+.section.expanded {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  background: var(--bg, #fff);
+  overflow: auto;
+  display: block;
+}
+
+.section.expanded .section-inner {
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.section.expanded .section-wrapper {
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  padding: 3rem 4%;
+  height: auto;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.section.expanded .section-grid {
+  flex-direction: row;
+  align-items: stretch;
+  gap: 2.5rem;
+  height: 100%;
+}
+
+.section.expanded .section-left {
+  flex: 0 0 360px;
+  align-self: flex-start;
+  padding-top: 2rem;
+}
+
+.section.expanded .section-grid,
+.section-right{
+  max-height: none !important;
+}
+@media (max-width: 1000px) {
+  .section.expanded .section-grid {
+    flex-direction: column;
+    justify-content: center; /* 让整个上下内容居中对齐 */
+    align-items: center;
+  }
+
+  .section.expanded .section-left {
+    flex: none;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* 关键：让描述在上下居中 */
+    align-items: center;     /* 让文字居中 */
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    text-align: center;
+  }
+
+  .section.expanded .section-content {
+    text-align: center;
+    max-width: 600px;
+  }
+
+  .section.expanded .section-right {
+    width: 100%;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    height: auto;
+    max-height: 60vh;
+  }
+}
+
+@media (max-width: 750px) {
+  .section.expanded .section-left {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .section.expanded .section-right {
+    grid-template-columns: 1fr;
+    max-height: none;
+  }
+}
 
 /* ========== Experience 卡片特化样式 ========== */
 .experience-card {
@@ -445,6 +672,7 @@ body.dark .card {
   opacity: 0;
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
               opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 100;
 }
 
 /* Modal 出现时的浮现动画 */

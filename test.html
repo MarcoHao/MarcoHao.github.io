@@ -43,9 +43,10 @@
         </div>
         <div class="flex items-center space-x-6">
           <div class="hidden md:flex space-x-6 text-sm">
-            <a href="#ai" class="nav-link">AI</a>
-            <a href="#code" class="nav-link">Code</a>
-            <a href="#design" class="nav-link">Design</a>
+            <a href="#ai-section" class="nav-link">AI</a>
+            <a href="#code-section" class="nav-link">Code</a>
+            <a href="#design-section" class="nav-link">Design</a>
+            <a href="#experience-section" class="nav-link">Experience</a>
             <a href="#about" class="nav-link">About</a>
           </div>
           <div id="modeToggle" class="mode-toggle">
@@ -74,11 +75,11 @@
     </video>
 
     <!-- 内容层 -->
-    <div class="hero-inner relative z-10 w-full mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="hero-inner relative z-10 w-full">
       <div class="hero-content-block ">
-        <div class="hero-content rounded-2xl p-6">
-          <h1 class="hero-name"><span>马昊 Marco</span></h1>
-          <p class="hero-subtitle">Design × Code × AI.</p>
+        <div class="hero-content">
+          <h1 class="hero-name "><span>马昊 Marco</span></h1>
+          <p class="hero-subtitle italic">Design × Code × AI.</p>
           <p class="hero-description">
             在设计中进行梯度下降，逼近理想与现实的平衡。<br>
             Descending through design — toward the equilibrium between ideal and real.
@@ -135,14 +136,44 @@
   </section>
 
   <!-- AI Section -->
-  <section class="section bg-white dark:bg-slate-900" id="ai-section">
+  <section class="section" id="ai-section">
+    <div class="section-wrapper p-6">
+      <div class="section-grid">
+        <!-- 左侧描述 -->
+        <div class="section-left">
+          <div class="section-content">
+            <h2 class="section-title">AI</h2>
+            <p class="section-subtitle">
+              从噪声出发，走向意象；从模型到心象。<br />
+                From noise to notion — from model to imagination.
+            </p>
+            <div class="section-footer">
+              <p class="section-description">
+                基于Python, ComfyUI平台，在视频生成与控制、3D生成、图像生成进行系统性探索。<br />
+                Based on the Python, ComfyUI platform, exploring video generation and control, 3D generation, and image generation.
+              </p>
+              <a href="#" class="section-view-all" id="viewAllAIBtn">View All →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 右侧卡片区（由 JS 渲染） -->
+        <div class="section-card">
+          <div class="section-right" id="AIGrid"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Code Section -->
+  <section class="section" id="code-section">
     <div class="section-inner">
       <div class="section-wrapper rounded-2xl p-6">
         <div class="section-grid">
           <!-- 左侧描述 -->
           <div class="section-left">
             <div class="section-content">
-              <h2 class="section-title">AI</h2>
+              <h2 class="section-title">Code</h2>
               <p class="section-subtitle">
                 Exploring intelligent design, from algorithms to architecture.
               </p>
@@ -151,64 +182,80 @@
                   从噪声出发，走向意象；从模型到心象。<br />
                   From noise to notion — from model to imagination.
                 </p>
-                <a href="#" class="section-view-all" id="viewAllBtn">View All →</a>
+                <a href="#" class="section-view-all" id="viewAllCodeBtn">View All →</a>
               </div>
             </div>
           </div>
 
           <!-- 右侧卡片区（由 JS 渲染） -->
-          <div class="section-right" id="AIGrid"></div>
+          <div class="section-right" id="CodeGrid"></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Code -->
-  <section id="code" class="code py-20 bg-white dark:bg-slate-900">
-    <div class="section-inner max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center mb-12">
-        <h2 class="h2-left">Code</h2>
-        <a href="Code.html" class="text-klein-blue hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 text-sm">
-          View All →
-        </a>
-      </div>
-      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3" id="CodeGrid">
-        <!-- 自动加载卡片 -->
+  <!-- Design -->
+  <section class="section" id="design-section">
+    <div class="section-inner">
+      <div class="section-wrapper rounded-2xl p-6">
+        <div class="section-grid">
+          <!-- 左侧描述 -->
+          <div class="section-left">
+            <div class="section-content">
+              <h2 class="section-title">Design</h2>
+              <p class="section-subtitle">
+                Exploring intelligent design, from algorithms to architecture.
+              </p>
+              <div class="section-footer">
+                <p class="section-description">
+                  从噪声出发，走向意象；从模型到心象。<br />
+                  From noise to notion — from model to imagination.
+                </p>
+                <a href="#" class="section-view-all" id="viewAllDesignBtn">View All →</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- 右侧卡片区（由 JS 渲染） -->
+          <div class="section-right" id="DesignGrid"></div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Design -->
-  <section id="design" class="design py-20 bg-white dark:bg-slate-900">
-    <div class="section-inner max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center mb-12">
-        <h2 class="h2-left">Design</h2>
-        <a href="Design.html" class="text-klein-blue hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 text-sm">
-          View All →
-        </a>
-      </div>
-      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3" id="DesignGrid">
-        <!-- 自动加载卡片 -->
+
+  <!-- Experience -->
+  <section class="section" id="experience-section">
+    <div class="section-inner">
+      <div class="section-wrapper rounded-2xl p-6">
+        <div class="section-grid">
+          <!-- 左侧描述 -->
+          <div class="section-left">
+            <div class="section-content">
+              <h2 class="section-title">Experience</h2>
+              <p class="section-subtitle">
+                Exploring intelligent design, from algorithms to architecture.
+              </p>
+              <div class="section-footer">
+                <p class="section-description">
+                  从噪声出发，走向意象；从模型到心象。<br />
+                  From noise to notion — from model to imagination.
+                </p>
+                <a href="#" class="section-view-all" id="viewAllExperienceBtn">View All →</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- 右侧卡片区（由 JS 渲染） -->
+          <div class="section-right" id="ExperienceGrid"></div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Design -->
-  <section id="experience" class="py-20 bg-slate-50 dark:bg-slate-800">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between items-center mb-12">
-      <h2 class="text-3xl font-bold text-slate-900 dark:text-white">Experience</h2>
-      <a href="#" class="text-klein-blue hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 text-sm">View All →</a>
-    </div>
-
-    <div id="ExperienceGrid" class="space-y-12">
-      <!-- JS 动态渲染卡片 -->
-    </div>
-  </div>
-</section>
 
   <!-- About Me -->
-  <section id="about" class="section about py-20 bg-white dark:bg-slate-900 relative">
+  <section id="about" class="section about py-20 relative">
     <div class="section-inner max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-2">
       <h2 class="h2-middle">About Me</h2>
 
@@ -297,6 +344,22 @@
     // === 数据定义 ===
     const AIData = [
       {
+        id: 'digital-fabrication',
+        title: "Digital Fabrication Workflow",
+        tag: "Programming",
+        meta: "2024 · SEU × ETH Zurich",
+        image: "assets/images/morfusion/Completed renderings.jpg",
+        description: `
+          <p>Collaborative project with ETH Zurich: AI-generated 3D printed installation with ±3cm precision.
+          Developed a full digital workflow from generative design to robotic construction.</p>
+        `,
+        markdown: "assets/projects/3d-multiview-generation/3d-multiview-generation.md",
+        links: [
+          { text: "Project Video", url: "#" },
+          { text: "Technical Report", url: "#" }
+        ]
+      },
+      {
         id: 'generative-facade',
         title: "Generative Facade System",
         tag: "Workshop",
@@ -343,7 +406,7 @@
         title: "Digital Fabrication Workflow",
         tag: "Programming",
         meta: "2024 · SEU × ETH Zurich",
-        image: "https://placehold.co/800x600/0f172a/e2e8f0?text=Fabrication",
+        image: "assets/images/morfusion/Completed renderings.jpg",
         description: `
           <p>Collaborative project with ETH Zurich: AI-generated 3D printed installation with ±3cm precision.
           Developed a full digital workflow from generative design to robotic construction.</p>
@@ -448,7 +511,7 @@
         .toLowerCase()
         .replace(/\s+/g, '-')        // spaces -> -
         .replace(/[^\w\-]/g, '')     // remove non-word (keeps a-z0-9_ -)
-        .replace(/\-+/g, '-');      // collapse multiple -
+        .replace(/\-+/g, '-');       // collapse multiple -
     }
 
     // 通用渲染函数：接收容器元素 id 和数据数组
@@ -463,22 +526,23 @@
 
         const tagClass = `tag-${slugifyTag(item.tag || '')}`;
 
-        // 可选描述块
-        const descHtml = item.meta
-          ? `<p class="card-desc text-sm text-slate-600 dark:text-slate-400 mt-2">${item.meta}</p>`
-          : '';
+        // 构建 overlay 内容（悬停时显示）
+        const overlayContent = `
+          <div class="card-tag ${tagClass}">${item.tag || ''}</div>
+          <h3 class="card-title">${item.title || ''}</h3>
+          ${item.meta ? `<p class="card-desc">${item.meta}</p>` : ''}
+        `;
 
-        // 如果没 image，则不渲染 <img> 标签（保持布局一致）
+        // 图片容器（始终显示）
         const imgHtml = item.image
-          ? `<img src="${item.image}" alt="${(item.title||'').replace(/"/g,'')}" />`
+          ? `<div class="card-image"><img src="${item.image}" alt="${(item.title || '').replace(/"/g, '&quot;')}"></div>`
           : '';
 
+        // 整体结构：图片 + 悬停 overlay
         card.innerHTML = `
           ${imgHtml}
-          <div class="card-content">
-            <div class="card-tag ${tagClass}">${item.tag || ''}</div>
-            <h3 class="card-title">${item.title || ''}</h3>
-            ${descHtml}
+          <div class="card-overlay">
+            ${overlayContent}
           </div>
         `;
 
@@ -535,12 +599,11 @@
       ExperienceGrid.appendChild(yearDiv);
     });
 
-    // === View All 控制 ===
-    /* ================= View All 展开/收起控制（包含滚动位置保存/恢复） ================= */
-    (function() {
-      const section = document.getElementById('ai-section');
-      const btn = document.getElementById('viewAllBtn');
-      const inner = document.getElementById('AIGrid'); // inner-scroll
+    /* ========== 通用 View All 控制函数 ========== */
+    function initViewAllToggle(sectionId, buttonId, innerId) {
+      const section = document.getElementById(sectionId);
+      const btn = document.getElementById(buttonId);
+      const inner = document.getElementById(innerId);
       if (!section || !btn || !inner) return;
 
       let pageScrollY = 0;
@@ -551,41 +614,38 @@
         e.preventDefault();
 
         if (!isExpanded) {
-          // 展开：保存滚动位置、锁定 body、保存 inner 的 scrollTop（以便恢复）
+          // 展开前：保存滚动状态
           pageScrollY = window.scrollY || window.pageYOffset;
           innerScrollTop = inner.scrollTop || 0;
 
-          // lock body by applying fixed position with negative top
+          // 锁定 body 滚动
           document.body.style.position = 'fixed';
           document.body.style.top = `-${pageScrollY}px`;
           document.body.style.left = '0';
           document.body.style.right = '0';
           document.body.style.overflow = 'hidden';
 
-          // add class to expand
+          // 展开当前 section
           section.classList.add('expanded');
-          // optionally ensure inner scroll starts at top of expanded view
           inner.scrollTop = 0;
 
           btn.textContent = 'Close ←';
           isExpanded = true;
         } else {
-          // 收起：移除 expanded，恢复 body 滚动到之前位置，并恢复 inner scrollTop
+          // 收起
           section.classList.remove('expanded');
 
-          // restore body scroll
+          // 恢复 body 滚动
           document.body.style.position = '';
           document.body.style.top = '';
           document.body.style.left = '';
           document.body.style.right = '';
           document.body.style.overflow = '';
 
-          // next tick restore window scroll (delay to allow layout to reflow)
           setTimeout(() => {
             window.scrollTo({ top: pageScrollY, behavior: 'instant' });
           }, 0);
 
-          // restore inner's scrollTop
           inner.scrollTop = innerScrollTop || 0;
 
           btn.textContent = 'View All →';
@@ -593,13 +653,21 @@
         }
       });
 
-      // optional: when pressing Escape while expanded, close
+      // Esc 键退出
       window.addEventListener('keydown', (e) => {
         if (isExpanded && e.key === 'Escape') {
           btn.click();
         }
       });
-    })();
+    }
+
+    /* ========== 初始化多个 Section ========== */
+    document.addEventListener('DOMContentLoaded', () => {
+      initViewAllToggle('ai-section', 'viewAllAIBtn', 'AIGrid');
+      initViewAllToggle('code-section', 'viewAllCodeBtn', 'CodeGrid');
+      initViewAllToggle('design-section', 'viewAllDesignBtn', 'DesignGrid');
+      initViewAllToggle('experience-section', 'viewAllExperienceBtn', 'ExperienceGrid');
+    });
 
     // === Modal 渲染 Markdown ===
     const modalOverlay = document.getElementById('modalOverlay');
@@ -752,7 +820,7 @@
     // === 标签滚动高亮 ===
     const navLinks = document.querySelectorAll('.nav-link');
     window.addEventListener('scroll', () => {
-      const sections = ['ai', 'code', 'design', 'about'];
+      const sections = ['home', 'ai-section', 'code-section', 'design-section', 'experience-section', 'about'];
       const scrollPos = window.scrollY + 100;
 
       for (const id of sections) {

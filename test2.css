@@ -17,7 +17,7 @@
   --bg-primary: #ffffff;
   --bg-secondary: #f8fafc;
   --text-primary: #0f172a;
-  --text-secondary: #262d37;
+  --text-secondary: rgba(38, 45, 55, 0.6);
   --text-tertiary: #64748b;
   --border-color: #e2e8f0;
   --card-bg: #ffffff;
@@ -32,7 +32,6 @@
 
   --shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  --hero-bg: #fafafa;
 }
 
 .dark {
@@ -41,7 +40,7 @@
   --text-primary: #f8fafc;
   --text-secondary: #cbd5e1;
   --text-tertiary: #94a3b8;
-  --border-color: #334155;
+  --border-color: rgba(255, 255, 255, 0.1);
   --card-bg: #1e293b;
 
   --primary-color: #3b82f6;
@@ -52,7 +51,6 @@
   --accent-2: #a78bfa;
 
   --shadow: 0 10px 25px -5px rgba(0,0,0,0.3);
-  --hero-bg: #0d0d0d;
 }
 
 /* ========== 全局样式 ========== */
@@ -67,8 +65,6 @@ html, body {
   line-height: 1.6;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
-
-
 
 /* ========== 导航栏 ========== */
 nav {
@@ -180,9 +176,7 @@ nav {
   align-items: flex-start;
   justify-content: flex-end;
   height: 100%; /* 让它填满 section 高度 */
-  padding: 1rem 1rem; /* 调整边距，让底部留空间 */
 }
-
 .hero-inner {
   width: 100%;
 }
@@ -193,13 +187,11 @@ nav {
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-end;
-  padding-bottom: 2rem;
+  padding: 0 0 2rem 1.5rem;
 
   /* 固定理想宽度 */
   width: 500px;
-  /* 如果容器放不下 400px，则最小缩到 280px */
   min-width: 280px;
-  /* 不允许超过理想宽度 */
   max-width: 500px;
 
   /* 小屏幕下：占满宽度（更合理） */
@@ -210,7 +202,6 @@ nav {
     padding: 0 1rem;
   }
 }
-
 .hero-content {
   margin-bottom: 1rem;
   padding: 1.5rem;
@@ -222,8 +213,6 @@ nav {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   margin: 0;
 }
-
-/* 深色模式优化 */
 .dark .hero-content {
   background-color: rgba(0, 0, 0, 0.7); /* 更高透明度（数值更小 = 更透） */
   backdrop-filter: blur(10px) saturate(120%); /* 模糊减弱 */
@@ -234,12 +223,11 @@ nav {
 /* 名字 */
 .hero-name {
   font-family: var(--font-heading, 'Inter', serif);
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 700;
   letter-spacing: 0.02em;
   margin-bottom: 0;
 }
-
 .hero-name .italic {
   font-style: italic;
   color: var(--accent-1);
@@ -247,13 +235,12 @@ nav {
 
 /* 副标题 Design × Code × AI.”  */
 .hero-subtitle {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-family: var(--font-heading, 'Inter', serif);
   font-weight: 500;
   margin-bottom: 1.5rem;
   letter-spacing: 0.05em;
 }
-
 /* 描述 在设计中进行梯度下降，逼近理想与现实的平衡。 */
 .hero-description {
   font-family: var(--font-heading, 'Inter', sans-serif); /* 或你偏好的字体，如 'Geist', 'SF Pro', etc. */
@@ -276,17 +263,15 @@ nav {
   padding: 0 0.1rem;
   gap: 6px;
 }
-
 .hero-slider-indicators .indicator {
   flex: 1;
   height: 4px;
-  background-color: var(--accent-1);
+  background-color: var(--text-primary);
   border-radius: 2px;
   cursor: pointer;
   transition: all 0.2s ease;
   min-width: 0;
 }
-
 .hero-slider-indicators .indicator.active {
   background-color: var(--accent-2);
 }
@@ -305,43 +290,47 @@ nav {
   background-color: var(--bg-primary);
   color: var(--text-primary);
   transition: background-color 0.3s ease, color 0.3s ease;
-  padding: 2rem 3rem 0 3rem;
+  padding: 1rem 1.5rem 1rem 1.5rem;
 }
 
-.section-inner {
-  width: 100%;
-  margin: 0 auto;
-}
-
+/*内部容器*/
 .section-wrapper {
   width: 100%;
-  background-color: rgba(255, 255, 255, 0.95);
+  border: 1px solid var(--border-color);
   border-radius: 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  overflow: hidden;
-  transition: all 0.4s ease;
+  transition: all 0.3s ease;
+
+  /* 新增背景图 */
+  /*background-image: url('assets/images/background/02.png');*/
+  /*background-size: cover;*/
+  /*background-position: center;*/
+  /*background-repeat: no-repeat;*/
 }
 
-body.dark .section-wrapper {
-  background-color: rgba(0, 0, 0, 0.85);
+.dark .section-wrapper {
   border-color: rgba(255, 255, 255, 0.1);
 }
 
 /* ========== 主体布局 ========== */
+/*横向排版*/
 .section-grid {
   display: flex;
-  gap: 2rem;
-  padding: 1rem 2rem;
-  /* 关键：保证右侧滚动容器有可约束的高度 */
-  height: auto;        /* ← 你可以改为 max-height 或 calc(%)，必须不是 auto */
-  max-height: 520px;
-  min-height: 480px;
-  overflow: hidden;     /* 防止整段滚动，右侧内部滚动 */
 }
+.section-grid .expanded {
+  display: block !important;
+}
+
+
+.section-grid {
+  gap: 4rem;  /* 左侧与右侧的间隔 */
+  /*padding: 1rem 1rem 3rem 1rem;*/
+  height: auto;
+  min-height: 480px;
+}
+
 /* ========== 左侧描述 ========== */
 .section-left {
-  flex: 0 0 320px;
+  flex: 0 0 420px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -352,21 +341,29 @@ body.dark .section-wrapper {
 }
 
 .section-title {
-  font-size: 2.5rem;
+  font-family: var(--font-heading, 'Inter', serif);
+  font-size: 4rem;
   font-weight: 700;
   margin-bottom: 0.75rem;
 }
 
 .section-subtitle {
+  font-family: var(--font-heading, 'Inter', serif);
+  /*font-style: italic;*/
   font-size: 1rem;
-  color: var(--text-secondary);
+  /*color: var(--text-secondary);*/
   margin-bottom: 1rem;
 }
 
 .section-description {
+  padding-top: 0.7rem;
+  align-self: flex-end;
+  font-family: var(--font-display, 'Inter', serif);
   color: var(--text-secondary);
   margin-bottom: 1rem;
   line-height: 1.6;
+  text-align: justify;
+  /*text-justify: inter-word;*/
 }
 
 .section-view-all {
@@ -382,87 +379,153 @@ body.dark .section-wrapper {
 }
 
 /* ========== 右侧卡片区 ========== */
+.section-card {
+  max-height: 50vh !important;
+  overflow: auto;
+}
 .section-right {
   flex: 1;
-  display: grid;
+  display: block !important;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-  padding: 0rem 0.5rem 1.5rem 0.5rem;
+
+  column-count: 4;
+  column-gap: 1rem; /* 列距 */
+  row-gap: 2rem; /* 行距更大 */
   align-content: start;
-  grid-auto-rows: auto;
 
   /* === 内部滚动逻辑 === */
-  overflow-y: auto;
-  max-height: 60vh;
-  box-sizing: border-box;
-  /* 如果想响应式，可以改成 vh：例如 calc(1.4 * 40vh) */
+  max-height: 30vh !important;
+  overflow: hidden;
+  /*overflow-inline: auto;*/
 }
 
+@media (max-width: 1200px) {
+  .section-right { column-count: 2; }
+}
 
-.section-right::-webkit-scrollbar {
+@media (max-width: 900px) {
+  .section-right { column-count: 1; }
+}
+
+/*隐藏滚动条*/
+.section-card::-webkit-scrollbar {
+  display: none;
   width: 8px;
 }
-
-.section-right::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.2);
-  border-radius: 4px;
+.section-card::-webkit-scrollbar-track {
+  background: transparent;
 }
-
+.section-card::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+.dark .section-card::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+.section-card::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.25);
+}
+.dark .section-card::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
 /* ========== 卡片样式 ========== */
 .card {
-  flex: 0 0 auto;
   display: flex;
+  position: relative;
+  flex: 0 0 auto;
   flex-direction: column;
-  height: auto;
-  background: var(--card-bg, #fff);
+  background: transparent;
+  border: none;
   border-radius: 1rem;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
+  overflow: clip;
   align-self: start;
+  transition: box-shadow 0.3s ease;
 }
 
-.card img {
+.card {
   width: 100%;
-  flex: none;
+  margin-bottom: 1.5rem;
+  break-inside: avoid;
+  -webkit-column-break-inside: avoid;
+}
+
+.card-image {
+  width: 100%;
+  border-radius: 1rem;
+  aspect-ratio: 440 / 460;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   display: block;
-  border-radius: 1rem 1rem 0 0;
-  aspect-ratio: 440 / 460; /* 默认保持比例 */
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.4, 1);
 }
 
-.card-content {
-  padding: 1rem;
-  flex: 0 0 auto;;
-  /*min-height: 100px;*/
-  min-height: 0;
-  max-height: 200px;
-  overflow: hidden;
-  /*display: flex;*/
-  flex-direction: column;
+.card:hover .card-image img {
+  transform: scale(1.05);
+}
+
+.card-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.25rem;
+  color: white;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 0 0 1rem 1rem;
+  transform: translateY(100%);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    transform 0.4s cubic-bezier(0.2, 0.8, 0.4, 1),
+    opacity 0.4s ease,
+    visibility 0.4s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.card:hover .card-overlay {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+.card-tag {
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .card-title {
   font-weight: 600;
-  font-size: 1.05rem;
+  font-size: 1.125rem;
   margin: 0;
-  white-space: nowrap;
+  line-height: 1.3;
+  white-space: normal;
   overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.card-desc {
-  margin-top: 0.5rem;
-  color: #475569;
-  font-size: 0.875rem;
-  line-height: 1.4;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 
+.card-desc {
+  margin-top: 0.75rem;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.85);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 /* ========== 响应式 ========== */
 /* 大屏：卡片可更大 */
 @media (min-width: 1600px) {
@@ -486,7 +549,7 @@ body.dark .section-wrapper {
     height: auto;
     min-height: auto;
     max-height: none;
-    overflow: visible; /* 允许自然流动 */
+    /*overflow: visible; !* 允许自然流动 *!*/
   }
 
   .section-left,
@@ -529,21 +592,12 @@ body.dark .section-wrapper {
   width: 100%;
   height: 100%;
   z-index: 2;
-  background: var(--bg, #fff);
   overflow: auto;
   display: block;
 }
 
-.section.expanded .section-inner {
-  width: 100%;
-  max-width: 100%;
-  padding: 0;
-  margin: 0;
-}
-
 .section.expanded .section-wrapper {
-  border-radius: 0;
-  border: none;
+  border: 1px solid var(--bg-primary);
   box-shadow: none;
   background: transparent;
   padding: 3rem 4%;
@@ -558,6 +612,7 @@ body.dark .section-wrapper {
   align-items: stretch;
   gap: 2.5rem;
   height: 100%;
+  display: block;
 }
 
 .section.expanded .section-left {
@@ -565,7 +620,10 @@ body.dark .section-wrapper {
   align-self: flex-start;
   padding-top: 2rem;
 }
-
+.section.expanded .section-card{
+  max-height: none !important;
+  margin-top: 2rem;
+}
 .section.expanded .section-grid,
 .section-right{
   max-height: none !important;

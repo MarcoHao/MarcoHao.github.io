@@ -325,17 +325,66 @@
   <!-- Modal -->
   <div id="modalOverlay">
     <div class="modal">
-      <div class="modal-header">
-        <div class="modal-info">
-          <span id="modalTag" class="modal-tag"></span>
-          <h2 id="modalTitle"></h2>
-          <p id="modalMeta" class="modal-meta"></p>
+
+      <!-- 浮动关闭按钮 -->
+      <span id="closeModal" class="modal-close">&times;</span>
+
+      <!-- 简易模式：左右布局 -->
+      <div id="modalSimpleView" class="modal-simple-view">
+        <div class="modal-content">
+          <div class="modal-info">
+            <span id="modalTag" class="modal-tag"></span>
+            <h2 id="modalTitle"></h2>
+            <p id="modalMeta" class="modal-meta"></p>
+            <div class="modal-description"></div>
+            <button id="readMoreBtn" class="read-more-btn">Read More</button>
+            <!-- 简易模式下的 Read Less 按钮（默认隐藏） -->
+            <button id="readLessBtnSimple" class="read-less-btn hidden">Read Less</button>
+          </div>
         </div>
-        <span id="closeModal" class="modal-close">&times;</span>
+        <div class="image-gallery-container">
+          <div class="modal-image-container">
+            <!-- 图片画廊将在这里渲染 -->
+          </div>
+        </div>
       </div>
-      <div class="modal-content">
-        <div id="modalDescription"></div>
-        <div id="modalLinks" class="modal-links"></div>
+
+      <!-- ReadMore 模式：全 Markdown 内容 -->
+      <div id="modalReadMoreView" class="modal-readmore-view hidden">
+        <!-- 滚动后出现的 Nav-->
+        <div class="modal-scroll-nav">
+<!--          <div class="modal-header-inner">-->
+<!--            <div class="modal-info">-->
+<!--              <span id="modalTag3" class="modal-tag"></span>-->
+<!--              <h2 id="modalTitle3"></h2>-->
+<!--              <p id="modalMeta3" class="modal-meta"></p>-->
+<!--            </div>-->
+<!--            &lt;!&ndash; 👇 恢复 Read Less 按钮 &ndash;&gt;-->
+<!--            <button id="readLessBtnNav" class="read-less-btn">Read Less</button>-->
+<!--          </div>-->
+          <!-- 👇 恢复 Read Less 按钮 -->
+          <button id="readLessBtnNav" class="read-less-btn">Read Less</button>
+        </div>
+        <!-- Hero 图 + 磨砂描述 -->
+        <div class="modal-hero">
+          <img id="modalHeroImage" src="" alt="" />
+          <div class="modal-hero-overlay">
+            <div class="modal-hero-content markdown-body">
+              <!-- 这里将渲染完整的标题、元信息、描述、Read Less 按钮 -->
+              <div class="hero-header">
+                <span id="modalTag2" class="modal-tag"></span>
+                <h2 id="modalTitle2"></h2>
+                <p id="modalMeta2" class="modal-meta"></p>
+              </div>
+              <div id="heroDescription"></div>
+              <button id="readLessBtnHero" class="read-less-btn">Read Less</button>
+            </div>
+          </div>
+        </div>
+        <!-- 完整 Markdown 内容 -->
+        <div class="modal-markdown-wrapper">
+          <div class="modal-markdown-body markdown-body"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -350,8 +399,7 @@
         meta: "2024 · SEU × ETH Zurich",
         image: "assets/images/morfusion/Completed renderings.jpg",
         description: `
-          <p>Collaborative project with ETH Zurich: AI-generated 3D printed installation with ±3cm precision.
-          Developed a full digital workflow from generative design to robotic construction.</p>
+          <p>Collaborative project with ETH Zurich: AI-generated 3D printed installation with ±3cm precision. Developed a full digital workflow from generative design to robotic construction.</p>
         `,
         markdown: "assets/projects/3d-multiview-generation/3d-multiview-generation.md",
         links: [
@@ -619,10 +667,6 @@
           innerScrollTop = inner.scrollTop || 0;
 
           // 锁定 body 滚动
-          document.body.style.position = 'fixed';
-          document.body.style.top = `-${pageScrollY}px`;
-          document.body.style.left = '0';
-          document.body.style.right = '0';
           document.body.style.overflow = 'hidden';
 
           // 展开当前 section
@@ -636,16 +680,10 @@
           section.classList.remove('expanded');
 
           // 恢复 body 滚动
-          document.body.style.position = '';
-          document.body.style.top = '';
-          document.body.style.left = '';
-          document.body.style.right = '';
           document.body.style.overflow = '';
-
           setTimeout(() => {
             window.scrollTo({ top: pageScrollY, behavior: 'instant' });
           }, 0);
-
           inner.scrollTop = innerScrollTop || 0;
 
           btn.textContent = 'View All →';
@@ -669,127 +707,257 @@
       initViewAllToggle('experience-section', 'viewAllExperienceBtn', 'ExperienceGrid');
     });
 
-    // === Modal 渲染 Markdown ===
+    // === 元素引用 ===
     const modalOverlay = document.getElementById('modalOverlay');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalTag = document.getElementById('modalTag');      // container for tags
-    const modalMeta = document.getElementById('modalMeta');    // optional meta/subtitle
-    const modalDescription = document.getElementById('modalDescription');
-    const modalLinks = document.getElementById('modalLinks');
     const closeModalBtn = document.getElementById('closeModal');
 
-    /** helper: 转成安全的 class 名，例如 "Data Science" -> "data-science" */
+    // 简易模式
+    const modalSimpleView = document.getElementById('modalSimpleView');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalTag = document.getElementById('modalTag');
+    const modalMeta = document.getElementById('modalMeta');
+    const modalDescriptionEl = modalSimpleView.querySelector('.modal-description');
+    const modalImageContainer = modalSimpleView.querySelector('.modal-image-container');
+    const readMoreBtn = document.getElementById('readMoreBtn');
+    const readLessBtnSimple = document.getElementById('readLessBtnSimple'); // 简易模式中的 Read Less
+
+    // ReadMore 模式
+    const modalReadMoreView = document.getElementById('modalReadMoreView');
+    const modalHeroImage = document.getElementById('modalHeroImage');
+    const modalHeroContent = modalReadMoreView.querySelector('.modal-hero-content');
+    const heroDescription = modalReadMoreView.querySelector('#heroDescription'); // Hero 中的描述
+    const modalMarkdownBody = modalReadMoreView.querySelector('.modal-markdown-body');
+
+    // Hero 内部的 Read Less 按钮
+    const readLessBtnHero = document.getElementById('readLessBtnHero');
+    const readLessBtnNav = document.getElementById('readLessBtnNav');
+
+    // Sticky Nav（仅用于显示标题/标签/元信息）
+    const modalScrollNav = document.querySelector('.modal-scroll-nav');
+    // const modalTitle3 = document.getElementById('modalTitle3');
+    // const modalTag3 = document.getElementById('modalTag3');
+    // const modalMeta3 = document.getElementById('modalMeta3');
+
+    let currentData = null;
+
+    /** 工具函数 */
     function slugifyTag(tag) {
       return String(tag).trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-_]/g, '');
     }
 
-    /**
-     * 打开 Modal 并加载 Markdown + 相关信息
-     * @param {Object} data - 包含 title, tag(s), meta, image, markdown, description, links 等字段
-     */
-    async function openModal(data) {
-      document.body.style.overflow = 'hidden'; // 禁止背景滚动
-
-      // header 基本信息
-      modalTitle.textContent = data.title || '';
-      modalMeta && (modalMeta.textContent = data.meta || ''); // 如果有 modalMeta 节点就设置
-
-      // === tags 渲染：支持 string 或 array ===
-      if (!modalTag) {
-        // 如果页面没有 modalTag 节点，跳过（保证稳健）
+    function renderTags(tag, container) {
+      if (!container) return;
+      if (Array.isArray(tag) && tag.length > 0) {
+        container.innerHTML = tag.map(t => {
+          const cls = 'tag-' + slugifyTag(t);
+          return `<span class="card-tag ${cls}">${t}</span>`;
+        }).join('');
+      } else if (typeof tag === 'string' && tag.trim()) {
+        const cls = 'tag-' + slugifyTag(tag);
+        container.innerHTML = `<span class="card-tag ${cls}">${tag}</span>`;
       } else {
-        if (Array.isArray(data.tag) && data.tag.length > 0) {
-          modalTag.innerHTML = data.tag
-            .map(t => {
-              const cls = 'tag-' + slugifyTag(t);
-              return `<span class="card-tag ${cls}">${t}</span>`;
-            })
-            .join('');
-        } else if (typeof data.tag === 'string' && data.tag.trim().length > 0) {
-          // 单个字符串标签
-          const cls = 'tag-' + slugifyTag(data.tag);
-          modalTag.innerHTML = `<span class="card-tag ${cls}">${data.tag}</span>`;
-        } else {
-          modalTag.innerHTML = ''; // 没有标签则清空
-        }
+        container.innerHTML = '';
       }
+    }
 
-      // 初始化内容占位
-      modalDescription.innerHTML = '<p class="text-slate-500">Loading...</p>';
+    // function handleScrollNav(e) {
+    //   const scrollTop = e.target.scrollTop;
+    //   const heroEl = modalReadMoreView.querySelector('.modal-hero');
+    //   const heroHeight = heroEl ? heroEl.offsetHeight : 400;
+    //   modalScrollNav.classList.toggle('shown', scrollTop > heroHeight * 0.6);
+    // }
 
-      let contentHTML = '';
+    function switchToSimpleView() {
+      modalReadMoreView.classList.add('hidden');
+      modalSimpleView.classList.remove('hidden');
+      modalScrollNav.classList.remove('shown');
+      modalReadMoreView.scrollTop = 0;
 
-      // 图片插入（如果提供）
-      if (data.image) {
-        contentHTML += `
-          <div class="mb-6">
-            <img src="${data.image}" alt="${(data.title||'')}" class="w-full h-auto rounded-lg shadow-sm" />
-          </div>
-        `;
-      }
+      // 更新按钮状态
+      readMoreBtn.classList.remove('hidden');
+      readLessBtnSimple.classList.add('hidden');
+      // 关闭按钮位置
+      closeModalBtn.style.right = '0.2rem';
+      closeModalBtn.style.top = '0.2rem';
+    }
 
-      // description（优先显示 description 字段，当没有 markdown 时也可显示）
-      if (data.description) {
-        contentHTML += `<div class="mb-4 text-slate-700 dark:text-slate-300">${data.description}</div>`;
-      }
+    function switchToReadMoreView() {
+      modalSimpleView.classList.add('hidden');
+      modalReadMoreView.classList.remove('hidden');
+      // 更新按钮状态
+      readMoreBtn.classList.add('hidden');
+      readLessBtnSimple.classList.remove('hidden');
+      // 关闭按钮位置
+      closeModalBtn.style.right = '1rem';
+      closeModalBtn.style.top = '0.5rem';
+    }
 
-      // Markdown 加载与渲染（如果存在）
+    // === 相册放大功能 ===
+    let lightboxOverlay = null;
+    let lightboxImg = null;
+    let isLightboxOpen = false;
+
+    function initLightbox() {
+      if (lightboxOverlay) return;
+      lightboxOverlay = document.createElement('div');
+      lightboxOverlay.id = 'lightboxOverlay';
+      lightboxOverlay.innerHTML = `
+        <div class="lightbox-content">
+          <img id="lightboxImage" src="" alt="Preview">
+          <button id="closeLightbox" class="lightbox-close">&times;</button>
+        </div>
+      `;
+      document.body.appendChild(lightboxOverlay);
+
+      lightboxImg = document.getElementById('lightboxImage');
+      document.getElementById('closeLightbox').addEventListener('click', () => {
+        lightboxOverlay.style.display = 'none';
+        isLightboxOpen = false;
+      });
+      lightboxOverlay.addEventListener('click', (e) => {
+        if (e.target === lightboxOverlay) lightboxOverlay.style.display = 'none';
+      });
+    }
+
+    function showLightbox(src) {
+      initLightbox();
+      lightboxImg.src = src;
+      lightboxOverlay.style.display = 'flex';
+      isLightboxOpen = true;
+    }
+
+    // === 核心：打开 Modal ===
+    async function openModal(data) {
+      currentData = data;
+      document.body.style.overflow = 'hidden';
+
+      // === 1. 渲染基础信息 ===
+      // modalTitle.textContent = modalTitle2.textContent = modalTitle3.textContent = data.title || '';
+      // modalMeta.textContent = modalMeta2.textContent = modalMeta3.textContent = data.meta || '';
+      modalTitle.textContent = modalTitle2.textContent = data.title || '';
+      modalMeta.textContent = modalMeta2.textContent = data.meta || '';
+      renderTags(data.tag, modalTag);
+      renderTags(data.tag, modalTag2);
+      // renderTags(data.tag, modalTag3);
+
+      // 简易模式描述
+      modalDescriptionEl.innerHTML = data.description
+        ? `<div class="modal-description">${data.description}</div>`
+        : '<p class="text-slate-500">暂无描述。</p>';
+
+      // Hero 描述（完整内容）
+      heroDescription.innerHTML = data.description
+        ? `<div class="text-white">${data.description}</div>`
+        : '<p class="text-white/80">暂无描述。</p>';
+
+      // === 2. 提取图片列表 ===
+      let coverImage = data.image || null;
+      let galleryImages = coverImage ? [coverImage] : [];
+
+      let mdText = '';
       if (data.markdown) {
         try {
           const res = await fetch(data.markdown);
-          if (!res.ok) throw new Error('Failed to fetch markdown file');
-          let mdText = await res.text();
+          if (!res.ok) throw new Error('Markdown not found');
+          mdText = await res.text();
 
-          // 修正 Markdown 中的相对图片路径
           const basePath = data.markdown.substring(0, data.markdown.lastIndexOf('/') + 1);
-          mdText = mdText.replace(/!\[(.*?)\]\((?!https?:\/\/)(.*?)\)/g, (match, alt, src) => {
-            return `![${alt}](${basePath}${src})`;
-          });
-
-          contentHTML += marked.parse(mdText);
+          const regex = /!\[.*?\]\((?!https?:\/\/)([^)\s]+)\)/g;
+          let match;
+          while ((match = regex.exec(mdText)) !== null) {
+            const relPath = match[1].startsWith('./') ? match[1].slice(2) : match[1];
+            const fullUrl = basePath + relPath;
+            if (!galleryImages.includes(fullUrl)) {
+              galleryImages.push(fullUrl);
+            }
+          }
         } catch (err) {
-          console.error(err);
-          contentHTML += `<p class="text-red-500">内容加载失败，请检查文件路径或网络。</p>`;
-        }
-      } else if (!data.description) {
-        // markdown 与 description 都不存在时的占位
-        contentHTML += `<p class="text-slate-500">暂无内容。</p>`;
-      }
-
-      // 渲染到 DOM
-      modalDescription.innerHTML = `<div class="markdown-body">${contentHTML}</div>`;
-
-      // links 渲染（如果存在）
-      if (modalLinks) {
-        if (Array.isArray(data.links) && data.links.length > 0) {
-          modalLinks.innerHTML = data.links
-            .map(l => `<a href="${l.url}" target="_blank" rel="noopener" class="text-blue-600 dark:text-blue-400 underline">${l.text}</a>`)
-            .join('');
-          modalLinks.style.display = 'flex';
-        } else {
-          modalLinks.style.display = 'none';
-          modalLinks.innerHTML = '';
+          console.error('加载 Markdown 失败:', err);
         }
       }
 
-      // 显示 modal
+      // === 3. 渲染相册 ===
+      if (galleryImages.length > 0) {
+        modalImageContainer.innerHTML = '<div class="image-gallery"></div>';
+        const galleryEl = modalImageContainer.querySelector('.image-gallery');
+        modalImageContainer.style.display = 'block';
+
+        galleryImages.forEach((src, i) => {
+          const img = document.createElement('img');
+          img.src = src;
+          img.alt = `Gallery ${i + 1}`;
+          img.loading = 'lazy';
+          img.dataset.index = i;
+
+          img.onload = () => {};
+          img.onerror = () => {
+            console.warn('图片加载失败，已跳过:', src);
+            if (img.parentNode) img.parentNode.removeChild(img);
+          };
+
+          img.addEventListener('click', () => showLightbox(src));
+          galleryEl.appendChild(img);
+        });
+      } else {
+        modalImageContainer.style.display = 'none';
+      }
+
+      // === 4. 设置 Hero 图 ===
+      if (galleryImages.length > 0) {
+        modalHeroImage.src = galleryImages[0];
+        modalHeroImage.alt = data.title || '';
+      }
+
+      // === 5. 渲染 Markdown ===
+      let mdHTML = '';
+      if (mdText && data.markdown) {
+        const basePath = data.markdown.substring(0, data.markdown.lastIndexOf('/') + 1);
+        const fixedMdText = mdText.replace(/!\[(.*?)\]\((?!https?:\/\/)(.*?)\)/g, (match, alt, src) => {
+          const cleanSrc = src.startsWith('./') ? src.slice(2) : src;
+          return `![${alt}](${basePath}${cleanSrc})`;
+        });
+        mdHTML = marked.parse(fixedMdText);
+      } else if (data.markdown) {
+        mdHTML = '<p class="text-red-500">内容加载失败。</p>';
+      }
+      modalMarkdownBody.innerHTML = mdHTML;
+
+      // === 6. 初始化状态 ===
+      switchToSimpleView(); // 默认显示简易模式
+      // modalReadMoreView.removeEventListener('scroll', handleScrollNav);
+      // modalReadMoreView.addEventListener('scroll', handleScrollNav);
+
+      // 绑定按钮事件
+      readMoreBtn?.addEventListener('click', switchToReadMoreView);
+      readLessBtnSimple?.addEventListener('click', switchToSimpleView);
+      readLessBtnHero?.addEventListener('click', switchToSimpleView);
+      readLessBtnNav?.addEventListener('click', switchToSimpleView);
+
       modalOverlay.classList.add('show');
     }
 
-    /** 关闭逻辑 */
-    closeModalBtn && closeModalBtn.addEventListener('click', () => {
+    // === 关闭逻辑 ===
+    closeModalBtn?.addEventListener('click', () => {
       modalOverlay.classList.remove('show');
-      document.body.style.overflow = ''; // 恢复背景滚动
+      document.body.style.overflow = '';
+      // modalReadMoreView.removeEventListener('scroll', handleScrollNav);
     });
 
-    // 点击遮罩关闭
-    modalOverlay && modalOverlay.addEventListener('click', e => {
-      if (e.target === modalOverlay) closeModalBtn.click();
+    modalOverlay?.addEventListener('click', (e) => {
+      if (e.target === modalOverlay) closeModalBtn?.click();
     });
 
-    // 点击遮罩关闭
-    modalOverlay.addEventListener('click', e => {
-      if (e.target === modalOverlay) closeModalBtn.click();
+    // === ESC 关闭 ===
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (isLightboxOpen) {
+          // 优先关闭 Lightbox
+          document.getElementById('closeLightbox').click();
+        } else if (modalOverlay.classList.contains('show')) {
+          // 否则关闭 Modal
+          closeModalBtn?.click();
+        }
+      }
     });
 
     // === 模式切换 ===

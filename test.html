@@ -39,18 +39,19 @@
     <div class="w-full mx-auto px-4 sm:px-6 lg:px-8">  <!--外层容器-->
       <div class = "flex justify-between items-center h-16">  <!--justify-between 就搞定左右分布。-->
         <div class="flex items-center space-x-2">
-          <a href="index.html" class="nav-brand">Marco</a>
+          <a href="test.html" class="nav-brand">Marco</a>
         </div>
         <div class="flex items-center space-x-6">
-          <div class="hidden md:flex space-x-6 text-sm">
+          <div class="nav-button md:flex space-x-6 text-sm">
             <a href="#ai-section" class="nav-link">AI</a>
             <a href="#code-section" class="nav-link">Code</a>
             <a href="#design-section" class="nav-link">Design</a>
             <a href="#experience-section" class="nav-link">Experience</a>
             <a href="#about" class="nav-link">About</a>
+<!--            <a href="#contact" class="nav-link">Contact</a>-->
           </div>
           <div id="modeToggle" class="mode-toggle">
-            <i id="modeIcon" class="fas fa-moon"></i>
+            <svg class="mode-icon" viewBox="0 0 24 24"></svg>
           </div>
         </div>
       </div>
@@ -85,42 +86,9 @@
             Descending through design — toward the equilibrium between ideal and real.
           </p>
 
-<!--          <div class="hero-buttons">-->
-<!--            <a href="#ai" class="btn-primary">View Projects</a>-->
-<!--          </div>-->
-
-<!--          <div class="flex items-center space-x-6 pt-4 text-sm">-->
-<!--            <a href="https://github.com/MarcoHao" target="_blank"-->
-<!--               class="flex items-center space-x-1 text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white">-->
-<!--              <i class="fab fa-github"></i> <span>GitHub</span>-->
-<!--            </a>-->
-
-<!--            <div class="relative group">-->
-<!--              <a href="mailto:2325169215@qq.com"-->
-<!--                 class="flex items-center space-x-1 text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white">-->
-<!--                <i class="fas fa-envelope"></i> <span>Email</span>-->
-<!--              </a>-->
-<!--              <div class="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 px-2 py-1-->
-<!--                          bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-200-->
-<!--                          rounded shadow-lg text-xs hidden group-hover:block z-50">-->
-<!--                2325169215@qq.com-->
-<!--              </div>-->
-<!--            </div>-->
-
-<!--            <div class="relative group">-->
-<!--              <button id="wechatBtn"-->
-<!--                class="flex items-center space-x-1 text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white">-->
-<!--                <i class="fab fa-weixin"></i> <span>WeChat</span>-->
-<!--              </button>-->
-<!--              <div class="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 w-48 p-2-->
-<!--                          bg-white rounded shadow-lg hidden group-hover:block z-50">-->
-<!--                <img src="assets/images/contact_information/WeChatQRcode.jpg" alt="Logo"-->
-<!--                     class="w-full h-full object-contain dark:hidden" />-->
-<!--                <img src="assets/images/contact_information/WeChatQRcode.jpg" alt="Logo"-->
-<!--                     class="w-full h-full object-contain hidden dark:block" />-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
+          <div class="hero-buttons">
+            <a href="#contact" class="btn-primary">Contact</a>
+          </div>
 
           <!-- 轮播指示器 -->
           <div class="hero-slider-indicators  flex space-x-2 mt-4">
@@ -167,86 +135,88 @@
 
   <!-- Code Section -->
   <section class="section" id="code-section">
-    <div class="section-inner">
-      <div class="section-wrapper rounded-2xl p-6">
-        <div class="section-grid">
-          <!-- 左侧描述 -->
-          <div class="section-left">
-            <div class="section-content">
-              <h2 class="section-title">Code</h2>
-              <p class="section-subtitle">
-                Exploring intelligent design, from algorithms to architecture.
+    <div class="section-wrapper p-6">
+      <div class="section-grid">
+        <!-- 左侧描述 -->
+        <div class="section-left">
+          <div class="section-content">
+            <h2 class="section-title">Code</h2>
+            <p class="section-subtitle">
+              从算法出发，构建智能设计；从逻辑到空间。<br />
+              From algorithms to intelligent design — from logic to space.
+            </p>
+            <div class="section-footer">
+              <p class="section-description">
+                基于Python与前端技术，在生成式设计、参数化建模与交互系统中进行实践探索。<br />
+                Practicing generative design, parametric modeling, and interactive systems using Python and front-end technologies.
               </p>
-              <div class="section-footer">
-                <p class="section-description">
-                  从噪声出发，走向意象；从模型到心象。<br />
-                  From noise to notion — from model to imagination.
-                </p>
-                <a href="#" class="section-view-all" id="viewAllCodeBtn">View All →</a>
-              </div>
+              <a href="#" class="section-view-all" id="viewAllCodeBtn">View All →</a>
             </div>
           </div>
+        </div>
 
-          <!-- 右侧卡片区（由 JS 渲染） -->
+        <!-- 右侧卡片区（由 JS 渲染） -->
+        <div class="section-card">
           <div class="section-right" id="CodeGrid"></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Design -->
+  <!-- Design Section -->
   <section class="section" id="design-section">
-    <div class="section-inner">
-      <div class="section-wrapper rounded-2xl p-6">
-        <div class="section-grid">
-          <!-- 左侧描述 -->
-          <div class="section-left">
-            <div class="section-content">
-              <h2 class="section-title">Design</h2>
-              <p class="section-subtitle">
-                Exploring intelligent design, from algorithms to architecture.
+    <div class="section-wrapper p-6">
+      <div class="section-grid">
+        <!-- 左侧描述 -->
+        <div class="section-left">
+          <div class="section-content">
+            <h2 class="section-title">Design</h2>
+            <p class="section-subtitle">
+              从概念出发，塑造空间叙事；从感知到形式。<br />
+              From concept to spatial narrative — from perception to form.
+            </p>
+            <div class="section-footer">
+              <p class="section-description">
+                融合计算思维与建筑美学，探索生成式设计在建筑与城市尺度中的表达。<br />
+                Integrating computational thinking and architectural aesthetics to explore generative design at architectural and urban scales.
               </p>
-              <div class="section-footer">
-                <p class="section-description">
-                  从噪声出发，走向意象；从模型到心象。<br />
-                  From noise to notion — from model to imagination.
-                </p>
-                <a href="#" class="section-view-all" id="viewAllDesignBtn">View All →</a>
-              </div>
+              <a href="#" class="section-view-all" id="viewAllDesignBtn">View All →</a>
             </div>
           </div>
+        </div>
 
-          <!-- 右侧卡片区（由 JS 渲染） -->
+        <!-- 右侧卡片区（由 JS 渲染） -->
+        <div class="section-card">
           <div class="section-right" id="DesignGrid"></div>
         </div>
       </div>
     </div>
   </section>
 
-
-  <!-- Experience -->
+  <!-- Experience Section -->
   <section class="section" id="experience-section">
-    <div class="section-inner">
-      <div class="section-wrapper rounded-2xl p-6">
-        <div class="section-grid">
-          <!-- 左侧描述 -->
-          <div class="section-left">
-            <div class="section-content">
-              <h2 class="section-title">Experience</h2>
-              <p class="section-subtitle">
-                Exploring intelligent design, from algorithms to architecture.
+    <div class="section-wrapper p-6">
+      <div class="section-grid">
+        <!-- 左侧描述 -->
+        <div class="section-left">
+          <div class="section-content">
+            <h2 class="section-title">Experience</h2>
+            <p class="section-subtitle">
+              从实践出发，连接研究与创造；从项目到洞见。<br />
+              From practice to insight — bridging research and creation through projects.
+            </p>
+            <div class="section-footer">
+              <p class="section-description">
+                涵盖学术研究、竞赛、实习与跨学科合作，聚焦AI驱动的建筑设计创新。<br />
+                Including academic research, competitions, internships, and interdisciplinary collaborations, focusing on AI-driven architectural innovation.
               </p>
-              <div class="section-footer">
-                <p class="section-description">
-                  从噪声出发，走向意象；从模型到心象。<br />
-                  From noise to notion — from model to imagination.
-                </p>
-                <a href="#" class="section-view-all" id="viewAllExperienceBtn">View All →</a>
-              </div>
+              <a href="#" class="section-view-all" id="viewAllExperienceBtn">View All →</a>
             </div>
           </div>
+        </div>
 
-          <!-- 右侧卡片区（由 JS 渲染） -->
+        <!-- 右侧卡片区（由 JS 渲染） -->
+        <div class="section-card">
           <div class="section-right" id="ExperienceGrid"></div>
         </div>
       </div>
@@ -255,70 +225,214 @@
 
 
   <!-- About Me -->
-  <section id="about" class="section about py-20 relative">
-    <div class="section-inner max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-2">
-      <h2 class="h2-middle">About Me</h2>
+<!--  <section id="about" class="section about py-20 relative">-->
+<!--    <div class="section-inner max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-2">-->
+<!--      <h2 class="h2-middle">About Me</h2>-->
 
-      <!-- 精简文本内容 -->
-      <div class="space-y-6 mb-10 text-lg text-slate-600 dark:text-slate-400">
-        <p>2016-2019 佛山市第一中学</p>
-        <p>2019-2024 华南理工大学建筑学院 建筑学</p>
-        <p>2024至今 东南大学建筑学院 建筑运算与应用团队</p>
-        <p>技能：摄影 · 视频制作 · Python · Grasshopper · 3D生成</p>
-      </div>
+<!--      &lt;!&ndash; 精简文本内容 &ndash;&gt;-->
+<!--      <div class="space-y-6 mb-10 text-lg text-slate-600 dark:text-slate-400">-->
+<!--        <p>2016-2019 佛山市第一中学</p>-->
+<!--        <p>2019-2024 华南理工大学建筑学院 建筑学</p>-->
+<!--        <p>2024至今 东南大学建筑学院 建筑运算与应用团队</p>-->
+<!--        <p>技能：摄影 · 视频制作 · Python · Grasshopper · 3D生成</p>-->
+<!--      </div>-->
 
-      <!-- 核心经验/荣誉 -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-        <div>
-          <h3 class="font-bold text-klein-blue dark:text-blue-400 mb-2">Honors</h3>
-          <p>2023广东省“挑战杯” 一等奖<br>东南大学2025学业奖学金 二等奖</p>
+<!--      &lt;!&ndash; 核心经验/荣誉 &ndash;&gt;-->
+<!--      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">-->
+<!--        <div>-->
+<!--          <h3 class="font-bold text-klein-blue dark:text-blue-400 mb-2">Honors</h3>-->
+<!--          <p>2023广东省“挑战杯” 一等奖<br>东南大学2025学业奖学金 二等奖</p>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--          <h3 class="font-bold text-green-600 dark:text-green-400 mb-2">Experience</h3>-->
+<!--          <p>2024-10~11 国际工作营<br>2023-09~11 设计师助理<br>班长/学创部部长</p>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--          <h3 class="font-bold text-purple-600 dark:text-purple-400 mb-2">Vision</h3>-->
+<!--          <p>设计是一种解决问题的方式。画图与编程，让感性与理性并行。</p>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      &lt;!&ndash; 心中的虎丘｜Reflections &ndash;&gt;-->
+<!--      <div class="space-y-4 mb-8">-->
+<!--        <h3 class="font-bold text-xl text-slate-800 dark:text-slate-200">心中的虎丘｜Reflections</h3>-->
+<!--        <p>在硕士第二年回望，我逐渐理解了“建筑”的复杂性。<strong>它不是单一的造型艺术，而是一种解决问题的方式</strong>。我学会了结构化地拆解任务，也学会从人的感受出发去设计。</p>-->
+<!--        <p>设计有无数条路径，关键在于如何找到适合当下语境的那一条。画图与编程，成了我感性与理性的两条神经。它们让“设计”不只是表达形式，更是一种逻辑上的推理与思辨。</p>-->
+<!--      </div>-->
+
+<!--      &lt;!&ndash; 对未来的畅想｜Vision &ndash;&gt;-->
+<!--      <div class="space-y-4 mb-8">-->
+<!--        <h3 class="font-bold text-xl text-slate-800 dark:text-slate-200">对未来的畅想｜Vision</h3>-->
+<!--        <p>建筑是一门艺术，<strong>而编程让这种艺术的体验变得可被更多人共享</strong>。我相信，算法不该替代设计，而应拓展设计的边界。建筑师的想象力，应该在逻辑中被放大，而不是被约束。</p>-->
+<!--      </div>-->
+
+<!--      &lt;!&ndash; 做自己热爱的事｜Flow &ndash;&gt;-->
+<!--      <div class="space-y-4 mb-10">-->
+<!--        <h3 class="font-bold text-xl text-slate-800 dark:text-slate-200">做自己热爱的事｜Flow</h3>-->
+<!--        <p>机器学习有个核心：通过梯度下降最小化损失函数。生活也是如此——我们在不断调整方向，试图“减少偏差”。但现实中，很多时候我们并不知道“损失函数”是什么。</p>-->
+<!--        <p>Flow Model 的思想让我重新理解了目标与路径的关系：<strong>与其盯着终点，不如顺着动力前行</strong>。方向明确，比目标更重要。在复杂的世界里，没有最优解。沿着自己热爱的方向走下去——让噪声逐渐变成秩序，让不确定变成形状。</p>-->
+<!--      </div>-->
+
+<!--      &lt;!&ndash; 签名 &ndash;&gt;-->
+<!--      <div class="about-signature-wrapper flex justify-end mt-8">-->
+<!--        <img src="assets/favicon/White.png" class="about-signature-white block dark:hidden"/>-->
+<!--        <img src="assets/favicon/Black.png" class="about-signature-black hidden dark:block"/>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </section>-->
+<!-- About Me -->
+<section id="about" class="section about py-0">
+  <div class="section-wrapper p-6">
+    <div class="section-grid">
+      <!-- 左侧：About 内容 -->
+      <div class="section-left">
+        <div class="section-content">
+          <h2 class="section-title">About Me</h2>
+
+          <!-- 精简文本内容 -->
+          <div class="space-y-4 mb-6 text-slate-600 dark:text-slate-400">
+            <p>2016–2019 佛山市第一中学</p>
+            <p>2019–2024 华南理工大学建筑学院 · 建筑学</p>
+            <p>2024–Now 东南大学建筑学院 · 建筑运算与应用团队</p>
+            <p>技能：摄影 · 视频制作 · Python · Grasshopper · 3D生成</p>
+          </div>
+
+          <!-- 核心经验/荣誉 -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div>
+              <h3 class="font-bold text-klein-blue dark:text-blue-400 mb-1">Honors</h3>
+              <p class="text-sm">2023广东省“挑战杯”一等奖<br>东南大学2025学业奖学金二等奖</p>
+            </div>
+            <div>
+              <h3 class="font-bold text-green-600 dark:text-green-400 mb-1">Practice</h3>
+              <p class="text-sm">2024.10–11 国际工作营<br>2023.09–11 设计师助理<br>班长 / 学创部部长</p>
+            </div>
+            <div>
+              <h3 class="font-bold text-purple-600 dark:text-purple-400 mb-1">Vision</h3>
+              <p class="text-sm">设计是一种解决问题的方式。画图与编程，让感性与理性并行。</p>
+            </div>
+          </div>
+
+          <!-- Reflections -->
+          <div class="space-y-3 mb-6">
+            <h3 class="section-subtitle">心中的虎丘｜Reflections</h3>
+            <p class="section-description about">
+              在硕士第二年回望，我逐渐理解了“建筑”的复杂性。<strong>它不是单一的造型艺术，而是一种解决问题的方式</strong>。我学会了结构化地拆解任务，也学会从人的感受出发去设计。
+            </p>
+            <p class="section-description about">
+              设计有无数条路径，关键在于如何找到适合当下语境的那一条。画图与编程，成了我感性与理性的两条神经。它们让“设计”不只是表达形式，更是一种逻辑上的推理与思辨。
+            </p>
+          </div>
+
+          <!-- Vision -->
+          <div class="space-y-3 mb-6">
+            <h3 class="section-subtitle">对未来的畅想｜Vision</h3>
+            <p class="section-description about">
+              建筑是一门艺术，<strong>编程让这种艺术的体验变得可被更多人共享</strong>。我相信，算法不该替代设计，而应拓展设计的边界。建筑师的想象力，应该在逻辑中被放大，而不是被约束。
+            </p>
+          </div>
+
+          <!-- Flow -->
+          <div class="space-y-3 mb-6">
+            <h3 class="section-subtitle">做自己热爱的事｜Flow</h3>
+            <p class="section-description about">
+              机器学习有个核心：通过梯度下降最小化损失函数。生活也是如此——我们在不断调整方向，试图“减少偏差”。但现实中，很多时候我们并不知道“损失函数”是什么。
+            </p>
+            <p class="section-description about">
+              Flow Model 的思想让我重新理解了目标与路径的关系：<strong>与其盯着终点，不如顺着动力前行</strong>。方向明确，比目标更重要。在复杂的世界里，没有最优解。沿着自己热爱的方向走下去——让噪声逐渐变成秩序，让不确定变成形状。
+            </p>
+          </div>
+
         </div>
-        <div>
-          <h3 class="font-bold text-green-600 dark:text-green-400 mb-2">Experience</h3>
-          <p>2024-10~11 国际工作营<br>2023-09~11 设计师助理<br>班长/学创部部长</p>
+      </div>
+
+      <!-- 右侧：个人照片背景图 -->
+      <div class="section-card-image">
+        <div class="about-image-wrapper rounded-2xl overflow-hidden relative">
+          <!-- 背景图 -->
+          <img
+            src="assets/images/background/_MG_5956.JPG"
+            alt="Marco Hao"
+            class="w-full h-full object-cover"
+          />
+          <!-- 签名：绝对定位叠加在图上 -->
+          <div class="about-signature-wrapper absolute bottom-4 right-4">
+            <img src="assets/favicon/Black.png" class="h-6 block" />
+          </div>
         </div>
-        <div>
-          <h3 class="font-bold text-purple-600 dark:text-purple-400 mb-2">Vision</h3>
-          <p>设计是一种解决问题的方式。画图与编程，让感性与理性并行。</p>
-        </div>
-      </div>
-
-      <!-- 心中的虎丘｜Reflections -->
-      <div class="space-y-4 mb-8">
-        <h3 class="font-bold text-xl text-slate-800 dark:text-slate-200">心中的虎丘｜Reflections</h3>
-        <p>在硕士第二年回望，我逐渐理解了“建筑”的复杂性。<strong>它不是单一的造型艺术，而是一种解决问题的方式</strong>。我学会了结构化地拆解任务，也学会从人的感受出发去设计。</p>
-        <p>设计有无数条路径，关键在于如何找到适合当下语境的那一条。画图与编程，成了我感性与理性的两条神经。它们让“设计”不只是表达形式，更是一种逻辑上的推理与思辨。</p>
-      </div>
-
-      <!-- 对未来的畅想｜Vision -->
-      <div class="space-y-4 mb-8">
-        <h3 class="font-bold text-xl text-slate-800 dark:text-slate-200">对未来的畅想｜Vision</h3>
-        <p>建筑是一门艺术，<strong>而编程让这种艺术的体验变得可被更多人共享</strong>。我相信，算法不该替代设计，而应拓展设计的边界。建筑师的想象力，应该在逻辑中被放大，而不是被约束。</p>
-      </div>
-
-      <!-- 做自己热爱的事｜Flow -->
-      <div class="space-y-4 mb-10">
-        <h3 class="font-bold text-xl text-slate-800 dark:text-slate-200">做自己热爱的事｜Flow</h3>
-        <p>机器学习有个核心：通过梯度下降最小化损失函数。生活也是如此——我们在不断调整方向，试图“减少偏差”。但现实中，很多时候我们并不知道“损失函数”是什么。</p>
-        <p>Flow Model 的思想让我重新理解了目标与路径的关系：<strong>与其盯着终点，不如顺着动力前行</strong>。方向明确，比目标更重要。在复杂的世界里，没有最优解。沿着自己热爱的方向走下去——让噪声逐渐变成秩序，让不确定变成形状。</p>
-      </div>
-
-      <!-- 签名 -->
-      <div class="about-signature-wrapper flex justify-end mt-8">
-        <img src="assets/favicon/White.png" class="about-signature-white block dark:hidden"/>
-        <img src="assets/favicon/Black.png" class="about-signature-black hidden dark:block"/>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- Contact -->
-  <section id="contact" class="section contact py-20 bg-slate-50 dark:bg-slate-800 text-center ">
-    <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="h2-middle">Get in Touch</h2>
-      <p class="text-slate-600 dark:text-slate-400 mb-8">
-        邮箱：<a href="mailto:2325169215@qq.com" class="text-blue-600 dark:text-blue-400 hover:underline">2325169215@qq.com</a><br>
-        微信：13612559411
+  <section id="contact" class="section contact py-20">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="h2-middle section-title">Get in Touch</h2>
+      <p class="text-slate-600 dark:text-slate-400 mt-4 mb-8">
+        Hi there! Got something to say?
       </p>
+
+      <div class="flex flex-wrap justify-center items-center gap-6 text-sm">
+        <!-- GitHub -->
+        <a
+          href="https://github.com/MarcoHao"
+          target="_blank"
+          rel="noopener"
+          class="flex items-center space-x-2 text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors"
+        >
+          <i class="fab fa-github text-lg"></i>
+          <span>GitHub</span>
+        </a>
+
+        <!-- Email with tooltip -->
+        <div class="relative group">
+          <a
+            href="mailto:2325169215@qq.com"
+            class="flex items-center space-x-2 text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors"
+          >
+            <i class="fas fa-envelope text-lg"></i>
+            <span>Email</span>
+          </a>
+          <div
+            class="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 px-3 py-1.5
+                    bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-200
+                    rounded text-xs shadow-md
+                    invisible opacity-0
+                    group-hover:visible group-hover:opacity-100
+                    transition-opacity duration-200
+                    z-50 whitespace-nowrap"
+          >
+            2325169215@qq.com
+          </div>
+        </div>
+
+        <!-- WeChat with QR code -->
+<!--        <div class="relative group">-->
+<!--          <button-->
+<!--            type="button"-->
+<!--            class="flex items-center space-x-2 text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors focus:outline-none"-->
+<!--          >-->
+<!--            <i class="fab fa-weixin text-lg"></i>-->
+<!--            <span>WeChat</span>-->
+<!--          </button>-->
+<!--          <div-->
+<!--            class="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 w-40 p-2-->
+<!--                    rounded shadow-lg-->
+<!--                    invisible opacity-0-->
+<!--                    group-hover:visible group-hover:opacity-100-->
+<!--                    transition-opacity duration-200-->
+<!--                    z-50"-->
+<!--          >-->
+<!--            <img-->
+<!--              src="assets/images/contact_information/WeChatQRcode.jpg"-->
+<!--              alt="WeChat QR Code"-->
+<!--              class="w-full h-auto object-contain"-->
+<!--            />-->
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -352,7 +466,7 @@
       <!-- ReadMore 模式：全 Markdown 内容 -->
       <div id="modalReadMoreView" class="modal-readmore-view hidden">
         <!-- 滚动后出现的 Nav-->
-        <div class="modal-scroll-nav">
+        <div class="modal-scroll-nav flex items-center gap-3">
 <!--          <div class="modal-header-inner">-->
 <!--            <div class="modal-info">-->
 <!--              <span id="modalTag3" class="modal-tag"></span>-->
@@ -362,8 +476,10 @@
 <!--            &lt;!&ndash; 👇 恢复 Read Less 按钮 &ndash;&gt;-->
 <!--            <button id="readLessBtnNav" class="read-less-btn">Read Less</button>-->
 <!--          </div>-->
-          <!-- 👇 恢复 Read Less 按钮 -->
           <button id="readLessBtnNav" class="read-less-btn">Read Less</button>
+          <div class="mode-toggle modal-mode-toggle">
+            <svg class="mode-icon" viewBox="0 0 24 24" ></svg>
+          </div>
         </div>
         <!-- Hero 图 + 磨砂描述 -->
         <div class="modal-hero">
@@ -479,7 +595,15 @@
         id: 'paper1',
         title: "Reimagining Synergy between Architects and Computational Systems",
         tag: "Paper",
+        image: "https://placehold.co/800x600/1e293b/f1f5f9?text=Video",
         markdown: "assets/experience/paper1/content.md"
+      },
+      {
+        id: 'ai-video-generation',
+        title: "AI Video Generation",
+        tag: "AI",
+        image: "https://placehold.co/800x600/1e293b/f1f5f9?text=Video",
+        markdown: "assets/projects/ai-video-generation/content.md"
       },
       {
         id: 'patent1',
@@ -524,7 +648,7 @@
             tag: "Workshop",
             date: "2025",
             markdown: "assets/experience/exp1/content.md",
-            image: "assets/experience/exp1/thumb.jpg"
+            image: "https://placehold.co/800x600/1e293b/f1f5f9?text=Video",
           },
           {
             id: "exp2",
@@ -532,7 +656,8 @@
             subtitle: "Autonomous Design Lab",
             tag: "Workshop",
             date: "2025",
-            markdown: "assets/experience/exp2/content.md"
+            markdown: "assets/experience/exp2/content.md",
+            image: "https://placehold.co/800x600/1e293b/f1f5f9?text=Video",
           }
         ]
       },
@@ -545,7 +670,53 @@
             subtitle: "Tsinghua University",
             tag: "AI",
             date: "2024",
-            markdown: "assets/experience/exp3/content.md"
+            markdown: "assets/experience/exp3/content.md",
+            image: "https://placehold.co/800x600/1e293b/f1f5f9?text=Video",
+          },
+          {
+            id: "exp4",
+            title: "Architectural Computation Workshop",
+            subtitle: "Tsinghua University",
+            tag: "AI",
+            date: "2024",
+            markdown: "assets/experience/exp3/content.md",
+            image: "https://placehold.co/800x600/1e293b/f1f5f9?text=Video",
+          },
+          {
+            id: "exp5",
+            title: "Architectural Computation Workshop",
+            subtitle: "Tsinghua University",
+            tag: "AI",
+            date: "2024",
+            markdown: "assets/experience/exp3/content.md",
+            image: "https://placehold.co/800x600/1e293b/f1f5f9?text=Video",
+          },
+          {
+            id: "exp5",
+            title: "Architectural Computation Workshop",
+            subtitle: "Tsinghua University",
+            tag: "AI",
+            date: "2024",
+            markdown: "assets/experience/exp3/content.md",
+            image: "https://placehold.co/800x600/1e293b/f1f5f9?text=Video",
+          },
+          {
+            id: "exp5",
+            title: "Architectural Computation Workshop",
+            subtitle: "Tsinghua University",
+            tag: "AI",
+            date: "2024",
+            markdown: "assets/experience/exp3/content.md",
+            image: "https://placehold.co/800x600/1e293b/f1f5f9?text=Video",
+          },
+          {
+            id: "exp5",
+            title: "Architectural Computation Workshop",
+            subtitle: "Tsinghua University",
+            tag: "AI",
+            date: "2024",
+            markdown: "assets/experience/exp3/content.md",
+            image: "https://placehold.co/800x600/1e293b/f1f5f9?text=Video",
           }
         ]
       }
@@ -610,13 +781,14 @@
 
       // 年份标题
       const yearTitle = document.createElement('div');
-      yearTitle.className = "text-2xl font-bold text-klein-blue dark:text-blue-400 mb-4 select-none";
+      // yearTitle.className = "text-2xl font-bold text-klein-blue dark:text-blue-400 mb-4 select-none";
+      yearTitle.className = "year-title";
       yearTitle.textContent = yearData.year;
       yearDiv.appendChild(yearTitle);
 
       // 卡片列表
       const itemsDiv = document.createElement('div');
-      itemsDiv.className = "space-y-6";
+      itemsDiv.className = "p-2";
 
       yearData.items.forEach(item => {
         const card = document.createElement('div');
@@ -625,15 +797,21 @@
         const tagClass = `tag-${item.tag.toLowerCase()}`;
 
         card.innerHTML = `
-          <div class="card-content flex items-center justify-between">
-            <div>
-              <div class="card-tag ${tagClass}">${item.tag}</div>
-              <h3 class="font-bold text-slate-900 dark:text-white">${item.title}</h3>
-              <p class="text-slate-600 dark:text-slate-400 text-sm">${item.subtitle}</p>
-            </div>
-            <div class="text-sm text-slate-500 dark:text-slate-400 ml-4 shrink-0">${item.date}</div>
+        <div class="card-content flex items-center gap-3">
+          <!-- 左侧图片 -->
+          <div class="experience-thumb">
+            <img src="${item.image}" alt="" loading="lazy" />
           </div>
-        `;
+          <!-- 原有文字内容 -->
+          <div class="flex-1 min-w-0">
+            <div class="card-tag ${tagClass}">${item.tag}</div>
+            <h3 class="font-bold text-slate-900 dark:text-white truncate">${item.title}</h3>
+            <p class="text-slate-600 dark:text-slate-400 text-sm truncate">${item.subtitle}</p>
+          </div>
+          <!-- 右侧日期 -->
+          <div class="text-sm text-slate-500 dark:text-slate-400 shrink-0 whitespace-nowrap">${item.date}</div>
+        </div>
+      `;
 
         card.addEventListener('click', (e) => {
           e.preventDefault();
@@ -961,47 +1139,113 @@
     });
 
     // === 模式切换 ===
-    const modeToggle = document.getElementById('modeToggle');
-    const modeIcon = document.getElementById('modeIcon');
     const body = document.body;
-
-    const savedMode = localStorage.getItem('color-mode');
-    // 用户之前选择过暗色模式或者没选择但系统偏好是暗色
-    if (savedMode === 'dark' || (!savedMode && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      // 切换模式
-      body.classList.replace('light', 'dark');
-      modeIcon.className = 'fas fa-sun';
+    // 设置图标函数（支持传入 element）
+    function setModeIcon(element, isDark) {
+      const sunSVG = `<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="M4.93 4.93l1.41 1.41"/><path d="M17.66 17.66l1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="M6.34 17.66l1.41-1.41"/><path d="M19.07 4.93l-1.41-1.41"/>`;
+      const moonSVG = `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>`;
+      element.innerHTML = isDark ? moonSVG : sunSVG;
     }
 
-    modeToggle.addEventListener('click', () => {
-      if (body.classList.contains('light')) {
-        body.classList.replace('light', 'dark');
-        modeIcon.className = 'fas fa-sun';
-        localStorage.setItem('color-mode', 'dark');
-      } else {
-        body.classList.replace('dark', 'light');
-        modeIcon.className = 'fas fa-moon';
-        localStorage.setItem('color-mode', 'light');
+    // 初始化所有 mode-toggle 按钮的图标
+    function initAllModeToggles() {
+      const allToggles = document.querySelectorAll('.mode-toggle');
+      const savedMode = localStorage.getItem('color-mode');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const isDark = savedMode === 'dark' || (!savedMode && prefersDark);
+
+      body.classList.toggle('dark', isDark);
+      allToggles.forEach(toggle => {
+        const icon = toggle.querySelector('.mode-icon');
+        if (icon) setModeIcon(icon, isDark);
+      });
+    }
+
+    // 切换主题（全局）
+    function toggleTheme() {
+      const isNowDark = body.classList.contains('dark');
+      const newMode = isNowDark ? 'light' : 'dark';
+
+      body.classList.toggle('dark', !isNowDark);
+      localStorage.setItem('color-mode', newMode);
+
+      // 更新所有图标
+      document.querySelectorAll('.mode-icon').forEach(icon => {
+        setModeIcon(icon, !isNowDark);
+      });
+    }
+
+    // 初始化
+    initAllModeToggles();
+
+    // 监听所有 .mode-toggle 点击
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('.mode-toggle')) {
+        toggleTheme();
       }
     });
 
     // === 标签滚动高亮 ===
     const navLinks = document.querySelectorAll('.nav-link');
+    const sections = ['home', 'ai-section', 'code-section', 'design-section', 'experience-section', 'about'];
+
     window.addEventListener('scroll', () => {
-      const sections = ['home', 'ai-section', 'code-section', 'design-section', 'experience-section', 'about'];
-      const scrollPos = window.scrollY + 100;
+      const viewportCenter = window.scrollY + window.innerHeight / 2;
+
+      let activeId = null;
 
       for (const id of sections) {
         const el = document.getElementById(id);
-        if (el) {
-          const { offsetTop, offsetHeight } = el;
-          if (scrollPos >= offsetTop && scrollPos < offsetTop + offsetHeight) {
-            navLinks.forEach(link => link.classList.remove('active'));
-            document.querySelector(`a[href="#${id}"]`)?.classList.add('active');
-            break;
-          }
+        if (!el) continue;
+
+        const { offsetTop, offsetHeight } = el;
+        const offsetBottom = offsetTop + offsetHeight;
+
+        if (viewportCenter >= offsetTop && viewportCenter <= offsetBottom) {
+          activeId = id;
+          break;
         }
       }
+
+      // 更新高亮
+      navLinks.forEach(link => link.classList.remove('active'));
+      if (activeId) {
+        document.querySelector(`a[href="#${activeId}"]`)?.classList.add('active');
+      }
+    });
+
+    // === 自定义锚点跳转（居中）===
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (!href || href === '#') return;
+
+        const targetId = href.substring(1);
+        const targetEl = document.getElementById(targetId);
+
+        if (targetEl) {
+          e.preventDefault();
+
+          // 计算目标元素应滚动到的位置：使其垂直居中
+          const rect = targetEl.getBoundingClientRect();
+          const scrollTop = window.scrollY;
+          const targetTop = scrollTop + rect.top;
+          const viewportHeight = window.innerHeight;
+
+          // 理想居中位置：让 targetEl 中心 = 视口中心
+          let scrollToY = targetTop - viewportHeight / 2 + targetEl.offsetHeight / 2;
+
+          // 边界保护：不能滚到负值，也不能超过文档底部
+          const maxScroll = document.body.scrollHeight - viewportHeight;
+          scrollToY = Math.max(0, Math.min(scrollToY, maxScroll));
+
+          // 平滑滚动
+          window.scrollTo({
+            top: scrollToY,
+            behavior: 'smooth'
+          });
+        }
+      });
     });
 
     // Hero BG change

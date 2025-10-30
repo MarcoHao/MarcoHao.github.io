@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <!--样式表-->
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
     /* global tailwind */
     tailwind.config = {
@@ -510,12 +511,12 @@
     const AIData = [
       {
         id: 'digital-fabrication',
-        title: "Digital Fabrication Workflow",
+        title: "3D Model Generation Workflow",
         tag: "Programming",
-        meta: "2024 · SEU × ETH Zurich",
-        image: "assets/images/morfusion/Completed renderings.jpg",
+        meta: "Hunyuan3D × ComfyUI",
+        image: "assets/projects/3d-multiview-generation/OuputModel.png",
         description: `
-          <p>Collaborative project with ETH Zurich: AI-generated 3D printed installation with ±3cm precision. Developed a full digital workflow from generative design to robotic construction.</p>
+          <p>基于Hunyuan3D与ComfyUI框架，实现从 text2image 到 image2model 的全过程。项目聚焦于多视图一致性与可控性的核心问题，通过LoRA 微调与ControlNet 姿态控制，实现了稳定多视角 3D 生成流程。</p>
         `,
         markdown: "assets/projects/3d-multiview-generation/3d-multiview-generation.md",
         links: [
@@ -524,18 +525,19 @@
         ]
       },
       {
-        id: 'generative-facade',
-        title: "Generative Facade System",
-        tag: "Workshop",
-        image: "https://placehold.co/800x600/1e293b/94a3b8?text=Facade",
-        markdown: "assets/projects/generative-facade/content.md"
-      },
-            {
-        id: 'generative-facade',
-        title: "Generative Facade System",
-        tag: "Workshop",
-        image: "https://placehold.co/800x600/1e293b/94a3b8?text=Facade",
-        markdown: "assets/projects/generative-facade/content.md"
+        id: 'wan-video-generation',
+        title: "WAN 2.2 视频生成工作流",
+        tag: "Programming",
+        meta: "2024 · SEU × Kuaishou AI Lab",
+        image: "assets/projects/wan-video-generation/WanVideoWrapper_Fun22ControlCamera_00011.png",
+        description: `
+          <p>基于 ComfyUI 构建的两阶段视频生成策略：以 FunControl 实现动作与场景控制，再通过 ReCamMaster + WAN Video Wrapper 进行镜头重建与多视角重采样，实现兼具语义一致性与镜头多样性的生成式视频工作流。</p>
+        `,
+        markdown: "assets/projects/wan-video-generation/wan-video-generation.md",
+        links: [
+          { text: "GitHub · WAN Video Wrapper", url: "https://github.com/kijai/ComfyUI-WanVideoWrapper" },
+          { text: "GitHub · ReCamMaster", url: "https://github.com/KwaiVGI/ReCamMaster" }
+        ]
       },
             {
         id: 'generative-facade',
@@ -1040,10 +1042,22 @@
           mdText = await res.text();
 
           const basePath = data.markdown.substring(0, data.markdown.lastIndexOf('/') + 1);
-          const regex = /!\[.*?\]\((?!https?:\/\/)([^)\s]+)\)/g;
+          // 1. 从 ![](xxx) 提取资源
+          const imageRegex = /!\[.*?\]\((?!https?:\/\/)([^)\s]+)\)/g;
           let match;
-          while ((match = regex.exec(mdText)) !== null) {
+          while ((match = imageRegex.exec(mdText)) !== null) {
             const relPath = match[1].startsWith('./') ? match[1].slice(2) : match[1];
+            const fullUrl = basePath + relPath;
+            if (!galleryImages.includes(fullUrl)) {
+              galleryImages.push(fullUrl);
+            }
+          }
+
+          // 2. 从 <video src="xxx"> 或 <source src="xxx"> 提取视频资源
+          const videoRegex = /<(video|source)\b[^>]*src\s*=\s*["'](?!(?:https?:)?\/\/)([^"']+)["']/gi;
+          let videoMatch;
+          while ((videoMatch = videoRegex.exec(mdText)) !== null) {
+            const relPath = videoMatch[2].startsWith('./') ? videoMatch[2].slice(2) : videoMatch[2];
             const fullUrl = basePath + relPath;
             if (!galleryImages.includes(fullUrl)) {
               galleryImages.push(fullUrl);
@@ -1054,27 +1068,43 @@
         }
       }
 
-      // === 3. 渲染相册 ===
+      // === 3. 渲染相册（支持图片与视频） ===
       if (galleryImages.length > 0) {
         modalImageContainer.innerHTML = '<div class="image-gallery"></div>';
         const galleryEl = modalImageContainer.querySelector('.image-gallery');
         modalImageContainer.style.display = 'block';
 
         galleryImages.forEach((src, i) => {
-          const img = document.createElement('img');
-          img.src = src;
-          img.alt = `Gallery ${i + 1}`;
-          img.loading = 'lazy';
-          img.dataset.index = i;
+          const ext = src.split('.').pop().toLowerCase();
+          let el;
 
-          img.onload = () => {};
-          img.onerror = () => {
-            console.warn('图片加载失败，已跳过:', src);
-            if (img.parentNode) img.parentNode.removeChild(img);
+          if (['mp4', 'webm', 'ogg'].includes(ext)) {
+            // 视频文件
+            el = document.createElement('video');
+            el.controls = true;
+            el.muted = true;
+            el.playsInline = true;
+            el.loop = true;
+            el.src = src;
+            el.dataset.index = i;
+            el.classList.add('gallery-video');
+          } else {
+            // 图片文件
+            el = document.createElement('img');
+            el.src = src;
+            el.alt = `Gallery ${i + 1}`;
+            el.loading = 'lazy';
+            el.dataset.index = i;
+
+            el.addEventListener('click', () => showLightbox(src));
+          }
+
+          el.onerror = () => {
+            console.warn('媒体加载失败，已跳过:', src);
+            el.remove();
           };
 
-          img.addEventListener('click', () => showLightbox(src));
-          galleryEl.appendChild(img);
+          galleryEl.appendChild(el);
         });
       } else {
         modalImageContainer.style.display = 'none';
@@ -1090,14 +1120,23 @@
       let mdHTML = '';
       if (mdText && data.markdown) {
         const basePath = data.markdown.substring(0, data.markdown.lastIndexOf('/') + 1);
-        const fixedMdText = mdText.replace(/!\[(.*?)\]\((?!https?:\/\/)(.*?)\)/g, (match, alt, src) => {
+        let fixedMdText = mdText.replace(/!\[(.*?)\]\((?!https?:\/\/)(.*?)\)/g, (match, alt, src) => {
           const cleanSrc = src.startsWith('./') ? src.slice(2) : src;
           return `![${alt}](${basePath}${cleanSrc})`;
         });
+
+        fixedMdText = fixedMdText.replace(
+          /(<(video|source)\b[^>]*src\s*=\s*["'])(?!(?:https?:)?\/\/)([^"']+)/gi,
+          (match, prefix, tag, src) => {
+            const cleanSrc = src.startsWith('./') ? src.slice(2) : src;
+            return `${prefix}${basePath}${cleanSrc}`;
+          }
+        );
         mdHTML = marked.parse(fixedMdText);
       } else if (data.markdown) {
         mdHTML = '<p class="text-red-500">内容加载失败。</p>';
       }
+
       modalMarkdownBody.innerHTML = mdHTML;
 
       // === 6. 初始化状态 ===
@@ -1349,6 +1388,5 @@
       goToSlide(0); // 从 0 开始，会正确播放视频 + 触发 transition
     });
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </body>
 </html>

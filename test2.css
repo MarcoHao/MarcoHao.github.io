@@ -952,6 +952,17 @@ nav {
   cursor: zoom-in;
   width: 100%;
 }
+
+.image-gallery video {
+  width: 100%;
+  height: auto;
+  border-radius: 1rem;
+  object-fit: cover;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+}
+
 /* ========== Lightbox（全屏预览） ========== */
 #lightboxOverlay {
   position: fixed;
@@ -1339,23 +1350,20 @@ nav {
 /* ===== Blockquote ===== */
 .markdown-body blockquote {
   border-left: 3px solid var(--accent-2);
-  /*background: rgba(83, 119, 218, 0.05);*/
   color: var(--text-tertiary);
   padding: 0 0.8rem;
   margin: 1.5rem 0;
-  /*border-radius: 0.5rem;*/
 }
+
 .markdown-body blockquote p {
-  margin: 0;
-  display: flex;
-  align-items: center;
+  margin: 0.5em 0;
   font-style: italic;
 }
 
+/* 深色模式背景（可选） */
 .dark .markdown-body blockquote {
   background: rgba(59, 130, 246, 0.08);
 }
-
 /* ===== Links ===== */
 .markdown-body a {
   color: var(--primary-color);
@@ -1426,6 +1434,12 @@ nav {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.markdown-vide {
+  height: auto;
+  margin: 1rem auto;
+  border-radius: 0.75rem;
+}
+
 /* ===== Horizontal Line ===== */
 .markdown-body hr {
   border: none;
@@ -1443,6 +1457,24 @@ nav {
 /*.markdown-body em {*/
 /*  color: var(--accent-2);*/
 /*}*/
+
+.markdown-body .md-figure {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.markdown-body .md-figure img {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+}
+
+.markdown-body .md-figure em {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary, #666);
+}
 
 /* ===== Tag / Keyword Capsule ===== */
 .markdown-body .tag {

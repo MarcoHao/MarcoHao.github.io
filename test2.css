@@ -506,9 +506,6 @@ nav {
 
 /* ========== About Me介绍 ========== */
 /* 图片容器 */
-.about {
-  margin-top: 1rem;
-}
 .section-card-image{
   display: flex;
 }
@@ -764,17 +761,18 @@ nav {
 
 /* Experience 卡片缩略图样式 */
 .experience-thumb {
-  width: 10%;
-  min-width: 120px;
-  max-width: 180px;
+  width: 0%;
+  /*min-width: 120px;*/
+  /*max-width: 180px;*/
   aspect-ratio: 4/ 3;
   /*height: 120px;*/
   flex-shrink: 0;
   overflow: hidden;
   border-radius: 0.5rem;
-  transition: width 0.3s ease;
+  transition: width 0.5s ease;
 }
 .experience-card:hover .experience-thumb {
+  width: 10%;
   /*width: 180px;*/
 }
 @media (max-width: 1200px) {
@@ -1277,6 +1275,35 @@ nav {
   color: rgb(187, 247, 208);
 }
 
+/* Award */
+.tag-award {
+  background-color: rgba(254, 226, 226, 1); /* bg-red-100 */
+  color: rgb(153, 27, 27); /* text-red-800 */
+}
+.dark .tag-award {
+  background-color: rgba(153, 27, 27, 0.3); /* dark:bg-red-900/30 */
+  color: rgb(251, 191, 191); /* dark:text-red-300 */
+}
+
+/* Education */
+.tag-education {
+  background-color: rgba(207, 255, 243, 1); /* bg-teal-100 */
+  color: rgb(13, 100, 91); /* text-teal-800 */
+}
+.dark .tag-education {
+  background-color: rgba(13, 100, 91, 0.3); /* dark:bg-teal-900/30 */
+  color: rgb(153, 243, 230); /* dark:text-teal-300 */
+}
+
+/* Event */
+.tag-event {
+  background-color: rgba(255, 237, 212, 1); /* bg-orange-100 */
+  color: rgb(124, 45, 18); /* text-orange-800 */
+}
+.dark .tag-event {
+  background-color: rgba(124, 45, 18, 0.3); /* dark:bg-orange-900/30 */
+  color: rgb(253, 186, 116); /* dark:text-orange-300 */
+}
 /* === Markdown 样式 === */
 /* 基础字体与排版 */
 .markdown-body {

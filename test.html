@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <!--视窗缩放-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marco’s homepage</title>
+  <!--外部资源-->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!--样式表-->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    /* global tailwind */
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            'klein-blue': '#0021A5',
+          },
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="test2.css">
+</head>
+
+<body class="
+  font-sans            <!-- 字体 -->
+  bg-white             <!-- 背景 -->
+  text-slate-900       <!-- 文字颜色 -->
+  light                <!-- 自定义标记（浅色主题） -->
+">
+  <!-- Navigation -->
+  <nav class = "nav">  <!--保证在其他元素上方-->
+    <div class="w-full mx-auto px-4 sm:px-6 lg:px-8">  <!--外层容器-->
+      <div class = "flex justify-between items-center h-16">  <!--justify-between 就搞定左右分布。-->
+        <div class="flex items-center space-x-2">
+          <a href="test.html" class="nav-brand">Marco</a>
+        </div>
+        <div class="flex items-center space-x-6">
+          <div class="nav-button md:flex space-x-6 text-sm">
+            <a href="#ai-section" class="nav-link">AI</a>
+            <a href="#code-section" class="nav-link">Code</a>
+            <a href="#design-section" class="nav-link">Design</a>
+            <a href="#experience-section" class="nav-link">Experience</a>
+            <a href="#about" class="nav-link">About</a>
+<!--            <a href="#contact" class="nav-link">Contact</a>-->
+          </div>
+          <div id="modeToggle" class="mode-toggle">
+            <svg class="mode-icon" viewBox="0 0 24 24"></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="home" class="relative min-h-screen hero">
+    <!-- 图片背景（初始隐藏） -->
+    <div class="hero-bg" style="background-image: url('assets/images/background/02.png');"></div>
+
+    <!-- 视频背景（初始隐藏） -->
+    <video
+      class="hero-video"
+      muted
+      loop
+      playsinline
+      webkit-playsinline
+      style="display: none; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2;"
+    >
+      <source src="" type="video/mp4">
+    </video>
+
+    <!-- 内容层 -->
+    <div class="hero-inner relative z-10 w-full">
+      <div class="hero-content-block ">
+        <div class="hero-content">
+          <h1 class="hero-name "><span>马昊 Marco</span></h1>
+          <p class="hero-subtitle italic">Design × Code × AI.</p>
+          <p class="hero-description">
+            在设计中进行梯度下降，逼近理想与现实的平衡。<br>
+            Descending through design — toward the equilibrium between ideal and real.
+          </p>
+
+          <div class="hero-buttons">
+            <a href="#contact" class="btn-primary">Contact</a>
+          </div>
+
+          <!-- 轮播指示器 -->
+          <div class="hero-slider-indicators  flex space-x-2 mt-4">
+            <div class="indicator active"></div>
+            <div class="indicator"></div>
+            <div class="indicator"></div>
+            <div class="indicator"></div>
+            <div class="indicator"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI Section -->
+  <section class="section" id="ai-section">
+    <div class="section-wrapper p-6">
+      <div class="section-grid">
+        <!-- 左侧描述 -->
+        <div class="section-left">
+          <div class="section-content">
+            <h2 class="section-title">AI</h2>
+            <p class="section-subtitle">
+              从噪声出发，走向意象；从模型到心象。<br />
+                From noise to notion — from model to imagination.
+            </p>
+            <div class="section-footer">
+              <p class="section-description">
+                基于Python, ComfyUI平台，在视频生成与控制、3D生成、图像生成进行系统性探索。<br />
+                Based on the Python, ComfyUI platform, exploring video generation and control, 3D generation, and image generation.
+              </p>
+              <a href="#" class="section-view-all" id="viewAllAIBtn">View All →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 右侧卡片区（由 JS 渲染） -->
+        <div class="section-card">
+          <div class="section-right" id="AIGrid"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Code Section -->
+  <section class="section" id="code-section">
+    <div class="section-wrapper p-6">
+      <div class="section-grid">
+        <!-- 左侧描述 -->
+        <div class="section-left">
+          <div class="section-content">
+            <h2 class="section-title">Code</h2>
+            <p class="section-subtitle">
+              从算法出发，构建智能设计；从逻辑到空间。<br />
+              From algorithms to intelligent design — from logic to space.
+            </p>
+            <div class="section-footer">
+              <p class="section-description">
+                基于Python与前端技术，在生成式设计、参数化建模与交互系统中进行实践探索。<br />
+                Practicing generative design, parametric modeling, and interactive systems using Python and front-end technologies.
+              </p>
+              <a href="#" class="section-view-all" id="viewAllCodeBtn">View All →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 右侧卡片区（由 JS 渲染） -->
+        <div class="section-card">
+          <div class="section-right" id="CodeGrid"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Design Section -->
+  <section class="section" id="design-section">
+    <div class="section-wrapper p-6">
+      <div class="section-grid">
+        <!-- 左侧描述 -->
+        <div class="section-left">
+          <div class="section-content">
+            <h2 class="section-title">Design</h2>
+            <p class="section-subtitle">
+              从概念出发，塑造空间叙事；从感知到形式。<br />
+              From concept to spatial narrative — from perception to form.
+            </p>
+            <div class="section-footer">
+              <p class="section-description">
+                融合计算思维与建筑美学，探索生成式设计在建筑与城市尺度中的表达。<br />
+                Integrating computational thinking and architectural aesthetics to explore generative design at architectural and urban scales.
+              </p>
+              <a href="#" class="section-view-all" id="viewAllDesignBtn">View All →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 右侧卡片区（由 JS 渲染） -->
+        <div class="section-card">
+          <div class="section-right" id="DesignGrid"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience Section -->
+  <section class="section" id="experience-section">
+    <div class="section-wrapper p-6">
+      <div class="section-grid">
+        <!-- 左侧描述 -->
+        <div class="section-left">
+          <div class="section-content">
+            <h2 class="section-title">Experience</h2>
+            <p class="section-subtitle">
+              从实践出发，连接研究与创造；从项目到洞见。<br />
+              From practice to insight — bridging research and creation through projects.
+            </p>
+            <div class="section-footer">
+<!--              <p class="section-description">-->
+<!--                涵盖学术研究、竞赛、实习与跨学科合作，聚焦AI驱动的建筑设计创新。<br />-->
+<!--                Including academic research, competitions, internships, and interdisciplinary collaborations, focusing on AI-driven architectural innovation.-->
+<!--              </p>-->
+              <a href="#" class="section-view-all" id="viewAllExperienceBtn">View All →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 右侧卡片区（由 JS 渲染） -->
+        <div class="section-card">
+          <div class="section-right" id="ExperienceGrid"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- About Me -->
+  <section id="about" class="section">
+    <div class="section-wrapper p-6">
+      <div class="section-grid">
+        <!-- 左侧：About 内容 -->
+        <div class="section-left">
+          <div class="section-content">
+            <h2 class="section-title">About Me</h2>
+
+            <!-- 精简文本内容 -->
+            <div class="space-y-4 mb-6 text-slate-600 dark:text-slate-400">
+              <p>2016–2019 佛山市第一中学</p>
+              <p>2019–2024 华南理工大学建筑学院 · 建筑学</p>
+              <p>2024–Now 东南大学建筑学院 · 建筑运算与应用团队</p>
+              <p>技能：摄影 · 视频制作 · Python · Grasshopper · 3D生成</p>
+            </div>
+
+            <!-- 核心经验/荣誉 -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+              <div>
+                <h3 class="font-bold text-klein-blue dark:text-blue-400 mb-1">Honors</h3>
+                <p class="text-sm">2023广东省“挑战杯”一等奖<br>东南大学2025学业奖学金二等奖</p>
+              </div>
+              <div>
+                <h3 class="font-bold text-green-600 dark:text-green-400 mb-1">Practice</h3>
+                <p class="text-sm">2024.10–11 国际工作营<br>2023.09–11 设计师助理<br>班长 / 学创部部长</p>
+              </div>
+              <div>
+                <h3 class="font-bold text-purple-600 dark:text-purple-400 mb-1">Vision</h3>
+                <p class="text-sm">设计是一种解决问题的方式。画图与编程，让感性与理性并行。</p>
+              </div>
+            </div>
+
+            <!-- Reflections -->
+            <div class="space-y-3 mb-6">
+              <h3 class="section-subtitle">心中的虎丘｜Reflections</h3>
+              <p class="section-description about">
+                在硕士第二年回望，我逐渐理解了“建筑”的复杂性。<strong>它不是单一的造型艺术，而是一种解决问题的方式</strong>。我学会了结构化地拆解任务，也学会从人的感受出发去设计。
+              </p>
+              <p class="section-description about">
+                设计有无数条路径，关键在于如何找到适合当下语境的那一条。画图与编程，成了我感性与理性的两条神经。它们让“设计”不只是表达形式，更是一种逻辑上的推理与思辨。
+              </p>
+            </div>
+
+            <!-- Vision -->
+            <div class="space-y-3 mb-6">
+              <h3 class="section-subtitle">对未来的畅想｜Vision</h3>
+              <p class="section-description about">
+                建筑是一门艺术，<strong>编程让这种艺术的体验变得可被更多人共享</strong>。我相信，算法不该替代设计，而应拓展设计的边界。建筑师的想象力，应该在逻辑中被放大，而不是被约束。
+              </p>
+            </div>
+
+            <!-- Flow -->
+            <div class="space-y-3 mb-6">
+              <h3 class="section-subtitle">做自己热爱的事｜Flow</h3>
+              <p class="section-description about">
+                机器学习有个核心：通过梯度下降最小化损失函数。生活也是如此——我们在不断调整方向，试图“减少偏差”。但现实中，很多时候我们并不知道“损失函数”是什么。
+              </p>
+              <p class="section-description about">
+                Flow Model 的思想让我重新理解了目标与路径的关系：<strong>与其盯着终点，不如顺着动力前行</strong>。方向明确，比目标更重要。在复杂的世界里，没有最优解。沿着自己热爱的方向走下去——让噪声逐渐变成秩序，让不确定变成形状。
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 右侧：个人照片背景图 -->
+        <div class="section-card-image">
+          <div class="about-image-wrapper rounded-2xl overflow-hidden relative">
+            <!-- 背景图 -->
+            <img
+              src="assets/images/background/_MG_5956.JPG"
+              alt="Marco Hao"
+              class="w-full h-full object-cover"
+            />
+            <!-- 签名：绝对定位叠加在图上 -->
+            <div class="about-signature-wrapper absolute bottom-4 right-4">
+              <img src="assets/favicon/Black.png" class="h-6 block" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="section contact py-20">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="h2-middle section-title">Get in Touch</h2>
+      <p class="text-slate-600 dark:text-slate-400 mt-4 mb-8">
+        Hi there! Got something to say?
+      </p>
+
+      <div class="flex flex-wrap justify-center items-center gap-6 text-sm">
+        <!-- GitHub -->
+        <a
+          href="https://github.com/MarcoHao"
+          target="_blank"
+          rel="noopener"
+          class="flex items-center space-x-2 text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors"
+        >
+          <i class="fab fa-github text-lg"></i>
+          <span>GitHub</span>
+        </a>
+
+        <!-- Email with tooltip -->
+        <div class="relative group">
+          <a
+            href="mailto:2325169215@qq.com"
+            class="flex items-center space-x-2 text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors"
+          >
+            <i class="fas fa-envelope text-lg"></i>
+            <span>Email</span>
+          </a>
+          <div
+            class="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 px-3 py-1.5
+                    bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-200
+                    rounded text-xs shadow-md
+                    invisible opacity-0
+                    group-hover:visible group-hover:opacity-100
+                    transition-opacity duration-200
+                    z-50 whitespace-nowrap"
+          >
+            2325169215@qq.com
+          </div>
+        </div>
+
+        <!-- WeChat with QR code -->
+<!--        <div class="relative group">-->
+<!--          <button-->
+<!--            type="button"-->
+<!--            class="flex items-center space-x-2 text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors focus:outline-none"-->
+<!--          >-->
+<!--            <i class="fab fa-weixin text-lg"></i>-->
+<!--            <span>WeChat</span>-->
+<!--          </button>-->
+<!--          <div-->
+<!--            class="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 w-40 p-2-->
+<!--                    rounded shadow-lg-->
+<!--                    invisible opacity-0-->
+<!--                    group-hover:visible group-hover:opacity-100-->
+<!--                    transition-opacity duration-200-->
+<!--                    z-50"-->
+<!--          >-->
+<!--            <img-->
+<!--              src="assets/images/contact_information/WeChatQRcode.jpg"-->
+<!--              alt="WeChat QR Code"-->
+<!--              class="w-full h-auto object-contain"-->
+<!--            />-->
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Modal -->
+  <div id="modalOverlay">
+    <div class="modal">
+
+      <!-- 浮动关闭按钮 -->
+      <span id="closeModal" class="modal-close">&times;</span>
+
+      <!-- 简易模式：左右布局 -->
+      <div id="modalSimpleView" class="modal-simple-view">
+        <div class="modal-content">
+          <div class="modal-info">
+            <span id="modalTag" class="modal-tag"></span>
+            <h2 id="modalTitle"></h2>
+            <p id="modalMeta" class="modal-meta"></p>
+            <div class="modal-description"></div>
+            <button id="readMoreBtn" class="read-more-btn">Read More</button>
+            <!-- 简易模式下的 Read Less 按钮（默认隐藏） -->
+            <button id="readLessBtnSimple" class="read-less-btn hidden">Read Less</button>
+          </div>
+        </div>
+        <div class="image-gallery-container">
+          <div class="modal-image-container">
+            <!-- 图片画廊将在这里渲染 -->
+          </div>
+        </div>
+      </div>
+
+      <!-- ReadMore 模式：全 Markdown 内容 -->
+      <div id="modalReadMoreView" class="modal-readmore-view hidden">
+        <!-- 滚动后出现的 Nav-->
+        <div class="modal-scroll-nav flex items-center gap-3">
+<!--          <div class="modal-header-inner">-->
+<!--            <div class="modal-info">-->
+<!--              <span id="modalTag3" class="modal-tag"></span>-->
+<!--              <h2 id="modalTitle3"></h2>-->
+<!--              <p id="modalMeta3" class="modal-meta"></p>-->
+<!--            </div>-->
+<!--            &lt;!&ndash; 👇 恢复 Read Less 按钮 &ndash;&gt;-->
+<!--            <button id="readLessBtnNav" class="read-less-btn">Read Less</button>-->
+<!--          </div>-->
+          <button id="readLessBtnNav" class="read-less-btn">Read Less</button>
+          <div class="mode-toggle modal-mode-toggle">
+            <svg class="mode-icon" viewBox="0 0 24 24" ></svg>
+          </div>
+        </div>
+        <!-- Hero 图 + 磨砂描述 -->
+        <div class="modal-hero">
+          <img id="modalHeroImage" src="" alt="" />
+          <div class="modal-hero-overlay">
+            <div class="modal-hero-content markdown-body">
+              <!-- 这里将渲染完整的标题、元信息、描述、Read Less 按钮 -->
+              <div class="hero-header">
+                <span id="modalTag2" class="modal-tag"></span>
+                <h2 id="modalTitle2"></h2>
+                <p id="modalMeta2" class="modal-meta"></p>
+              </div>
+              <div id="heroDescription"></div>
+              <button id="readLessBtnHero" class="read-less-btn">Read Less</button>
+            </div>
+          </div>
+        </div>
+        <!-- 完整 Markdown 内容 -->
+        <div class="modal-markdown-wrapper">
+          <div class="modal-markdown-body markdown-body"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // === 数据定义 ===
+    const AIData = [
+      {
+        id: '3d-model-generation-workflow',
+        title: "3D Model Generation Workflow",
+        tag: "AI",
+        meta: "Hunyuan3D × ComfyUI",
+        image: "assets/projects/3d-multiview-generation/Cover.jpg",
+        description: `
+          <p>基于Hunyuan3D与ComfyUI框架，实现从 text2image 到 image2model 的全过程。项目聚焦于多视图一致性与可控性的核心问题，通过LoRA 微调与ControlNet 姿态控制，实现了稳定多视角 3D 生成流程。</p>
+        `,
+        markdown: "assets/projects/3d-multiview-generation/3d-multiview-generation.md",
+        links: [
+          { text: "Project Video", url: "#" },
+          { text: "Technical Report", url: "#" }
+        ]
+      },
+      {
+        id: 'wan-video-generation',
+        title: "WAN 2.2 视频生成工作流",
+        tag: "AI",
+        meta: "2024 · SEU × Kuaishou AI Lab",
+        image: "assets/projects/wan-video-generation/WanVideoWrapper_Fun22ControlCamera_00011.png",
+        description: `
+          <p>基于 ComfyUI 构建的两阶段视频生成策略：以 FunControl 实现动作与场景控制，再通过 ReCamMaster + WAN Video Wrapper 进行镜头重建与多视角重采样，实现兼具语义一致性与镜头多样性的生成式视频工作流。</p>
+        `,
+        markdown: "assets/projects/wan-video-generation/wan-video-generation.md",
+        links: [
+          { text: "GitHub · WAN Video Wrapper", url: "https://github.com/kijai/ComfyUI-WanVideoWrapper" },
+          { text: "GitHub · ReCamMaster", url: "https://github.com/KwaiVGI/ReCamMaster" }
+        ]
+      },
+      // {
+      //   id: 'ai-video-generation',
+      //   title: "AI Video Generation",
+      //   tag: "AI",
+      //   image: "https://placehold.co/800x600/1e293b/f1f5f9?text=Video",
+      //   markdown: "assets/projects/ai-video-generation/content.md"
+      // }
+    ];
+
+    const CodeData = [
+      {
+        id: 'morphusion-workshop',
+        title: "Morphusion: Composite Sprawling",
+        tag: "Workshop",
+        meta: "Grasshopper × Python × Robotic Fabrication",
+        image: "assets/projects/morfusion-project/cover.jpg",
+        description: `
+          <p>作为东南大学与ETH Zurich合作四十周年的纪念项目，“Morphusion”融合AIGC生成、参数化建模与高精度数字建造，通过内侧偏移控制、折痕识别与AR辅助装配，实现了复杂有机形态从算法到实体的精准落地。</p>
+        `,
+        markdown: "assets/projects/morfusion-project/Morphusion.md",
+        links: [
+          { text: "Workshop Documentation", url: "#" },
+          { text: "Construction Video", url: "#" }
+        ]
+      },
+      {
+        id: 'multi-agent-structural-generation',
+        title: "Multi-Agent Structural Generation",
+        tag: "Paper",
+        meta: "Python × Grasshopper × MAS",
+        image: "assets/projects/multi-agent-system/cover.jpg",
+        description: `
+          <p>本研究提出一种基于分层行为控制的多智能体系统框架，用于协同优化建筑结构的性能、可装配性与几何逻辑。通过“架构—机制—策略—行为”四层设计，实现从全局调度到局部建构的统一生成流程，并在自由曲面钢框架案例中验证其有效性。</p>
+        `,
+        markdown: "assets/projects/multi-agent-system/multi-agents-system.md",
+        links: [
+          { text: "Full Paper", url: "#" },
+          { text: "Source Code", url: "#" }
+        ]
+      },
+      {
+        id: 'city-evolution-florence',
+        title: "City Evolution: Florence Urban Design",
+        tag: "Architecture",
+        meta: "Multi-Agent × Space Syntax × Grasshopper",
+        image: "assets/projects/city-evolution/image.png",
+        description: `
+          <p>本项目在佛罗伦萨历史城区开展城市自更新模拟，通过行人智能体与环境智能体的互动，结合空间句法与多指标建筑聚类，探索步行空间活力的动态演化机制，为历史城市提供数据驱动的渐进式更新路径。</p>
+        `,
+        markdown: "assets/projects/city-evolution/佛罗伦萨城市设计.md",
+        links: [
+          { text: "Simulation Code", url: "#" },
+          { text: "Process Documentation", url: "#" }
+        ]
+      },
+      {
+        id: 'urban-leftover-spaces',
+        title: "Urban Leftover Spaces Analysis",
+        tag: "Paper",
+        meta: "Grasshopper × Urban Regeneration",
+        image: "assets/projects/micro-space-analysis/cover.jpg",
+        description: `
+          <p>本研究基于 Rhino + Grasshopper 构建参数化模型，从人流潜力、热舒适度与空间类型三方面识别城市剩余空间，并以广州大小马站街区为例，提出数据驱动的微更新设计路径，支持高密度城市中的精细化空间治理。</p>
+        `,
+        markdown: "assets/projects/micro-space-analysis/城市微空间分析.md",
+        links: [
+          { text: "Full Paper", url: "#" },
+          { text: "Grasshopper Definition", url: "#" }
+        ]
+      },
+    ];
+
+    const DesignData = [
+      {
+        id: 'center-ula-adaptive-design',
+        title: "Center ULA: Adaptive Heritage Design",
+        tag: "Programming",
+        meta: "Generative Design × A* Algorithm × Spatial Analysis",
+        image: "assets/projects/center-ula/image.png",
+        description: `
+          <p>本毕业设计提出“既要又要”理念，通过潜空间评价体系与生成式路径算法，在旧建筑改造中同步实现空间效率最大化与遗产干预最小化，为城市存量更新提供高效且人文的设计路径。</p>
+        `,
+        markdown: "assets/projects/center-ula/人工智能时代下的建筑设计.md",
+        links: [
+          { text: "Full Thesis", url: "#" },
+          { text: "Grasshopper Definition", url: "#" }
+        ]
+      },
+      {
+        id: 'wood-grain-study',
+        title: "Wood Grain Study",
+        tag: "Programming",
+        meta: "Grasshopper × Kangaroo",
+        image: "assets/projects/wood-grain-analysis/cover.png",
+        description: `
+          <p>本研究源于对《梁思成全集》中木构件剖面图的观察，聚焦于木材截面纹理绘制的科学性与结构性。通过 Grasshopper 与 Kangaroo 构建参数化力学模型，探索“合理画纹”背后的材料逻辑，并尝试为古建筑修缮中的木材选型提供设计依据。</p>
+        `,
+        markdown: "assets/projects/wood-grain-analysis/wood-grain-analysis.md",
+        links: [
+          { text: "Project Report", url: "#" },
+          { text: "Grasshopper Definition", url: "#" }
+        ]
+      },
+      {
+        id: 'wind-valley-theatre',
+        title: "Wind Valley Theatre",
+        tag: "Architecture",
+        meta: "Grasshopper × Kangaroo × VisualARQ",
+        image: "assets/projects/theater-design/Cover.png",
+        description: `
+          <p>本设计反思“戏剧性空间”的常见误区，从观众的视线行为与情感响应出发，构建基于视觉节奏的空间生成逻辑。通过参数化建模与多目标优化，在算法理性与设计感性之间寻求平衡，并以自承重膜结构实现轻盈而富有张力的剧场形态。</p>
+        `,
+        markdown: "assets/projects/theater-design/theater-design.md",
+        links: [
+          { text: "Design Process", url: "#" },
+          { text: "Grasshopper File", url: "#" }
+        ]
+      },
+    ];
+
+    const ExperienceData = [
+    {
+      year: "2025",
+      items: [
+        {
+          id: "exp2025-01",
+          title: "基于分层行为控制的多智能体系统生成与优化方法研究",
+          subtitle: "2025计算性设计学术论坛暨中国建筑学会计算性设计专业委员会年会",
+          tag: "Paper",
+          date: "2025-10",
+          markdown: "assets/experience/multi-agent-mas-research/content.md",
+          image: "assets/experience/连接智能体.jpg"
+        },
+        {
+          id: "exp2025-02",
+          title: "基于机器学习的城市街区能耗分析与预测",
+          subtitle: "XGBoost + SHAP",
+          tag: "AI",
+          date: "2025-03",
+          markdown: "assets/experience/urban-energy-prediction/content.md",
+          image: "assets/experience/学习效果分析_5.png"
+        },
+        {
+          id: "exp2025-03",
+          title: "宜兴市丁蜀镇立面更新改造与城市设计",
+          subtitle: "城市更新实践项目",
+          tag: "Architecture",
+          date: "2025-06",
+          markdown: "assets/experience/dingshu-facade-renewal/content.md",
+          image: "assets/experience/AI效果图.png"
+        },
+        {
+          id: "exp2025-04",
+          title: "东南大学二等学业奖学金",
+          subtitle: "东南大学",
+          tag: "Award",
+          date: "2025-10",
+          markdown: "assets/experience/seu-scholarship-2025/content.md",
+          image: "https://placehold.co/800x600/1e293b/f1f5f9?text=Scholarship"
+        }
+      ]
+    },
+    {
+      year: "2024",
+      items: [
+        {
+          id: "exp2024-01",
+          title: "Decoding syntax:城市生成设计网络工作营",
+          subtitle: "同济大学",
+          tag: "Workshop",
+          date: "2024-11",
+          markdown: "assets/experience/digital-futures-tongji/content.md",
+          image: "https://placehold.co/800x600/1e293b/f1f5f9?text=Digital+Futures"
+        },
+        {
+          id: "exp2024-02",
+          title: "“形态融合：复合蔓生”国际工作营",
+          subtitle: "东南大学 × 苏黎世联邦理工学院",
+          tag: "Workshop",
+          date: "2024-11",
+          markdown: "assets/experience/morphusion-workshop/content.md",
+          image: "assets/projects/morfusion-project/cover.jpg"
+        },
+        {
+          id: "exp2024-03",
+          title: "院级优秀毕业设计",
+          subtitle: "华南理工大学",
+          tag: "Award",
+          date: "2024-06",
+          markdown: "assets/experience/outstanding-thesis-scutech/content.md",
+          image: "assets/experience/优秀毕设.jpg"
+        },
+        {
+          id: "exp2024-04",
+          title: "2024 未来·展 省优秀毕设参展作品",
+          // subtitle: "广东省教育厅",
+          tag: "Architecture",
+          date: "2024-11",
+          markdown: "assets/experience/provincial-grad-exhibition/content.md",
+          image: "assets/experience/未来展.jpg"
+        },
+        {
+          id: "exp2024-05",
+          title: "东南大学二等学业奖学金",
+          subtitle: "东南大学",
+          tag: "Award",
+          date: "2024-10",
+          markdown: "assets/experience/seu-scholarship-2024/content.md",
+          image: "https://placehold.co/800x600/1e293b/f1f5f9?text=Scholarship"
+        },
+        {
+          id: "exp2024-06",
+          title: "免试攻读建筑学专业硕士学位",
+          subtitle: "东南大学建筑学院",
+          tag: "Education",
+          date: "2024-09",
+          markdown: "assets/experience/seu-masters-admission/content.md",
+          image: "https://placehold.co/800x600/1e293b/f1f5f9?text=SEU+Masters"
+        },
+        {
+          id: "exp2024-07",
+          title: "建筑学学士学位",
+          subtitle: "华南理工大学",
+          tag: "Education",
+          date: "2024-06",
+          markdown: "assets/experience/bachelor-degree-scutech/content.md",
+          image: "assets/experience/毕业.jpg"
+        }
+      ]
+    },
+    {
+      year: "2023",
+      items: [
+        {
+          id: "exp2023-01",
+          title: "“挑战杯”广东大学生课外学术科技作品竞赛特等奖",
+          subtitle: "共青团广东省委等",
+          tag: "Award",
+          date: "2023-06",
+          markdown: "assets/experience/challenge-cup-guangdong-special/content.md",
+          image: "assets/experience/高密度建成环境下健康风险空间识别与优化策略——以广州中心城区为例.jpg"
+        },
+        {
+          id: "exp2023-02",
+          title: "华南理工大学“挑战杯”终审决赛一等奖",
+          subtitle: "华南理工大学",
+          tag: "Award",
+          date: "2023-03",
+          markdown: "assets/experience/challenge-cup-scutech-first/content.md",
+          image: "assets/experience/挑战杯校级一等奖.jpg"
+        },
+        {
+          id: "exp2023-03",
+          title: "发明专利：城市空间建筑形体优化方法、系统、计算机设备及存储介质",
+          subtitle: "国家知识产权局 CN116257925A",
+          tag: "Patent",
+          date: "2023-03",
+          markdown: "assets/experience/patent-urban-form-optimization/content.md",
+          image: "assets/experience/城市空间建筑形体优化方法、系统、计算机设备及存储介质.jpg"
+        },
+        {
+          id: "exp2023-04",
+          title: "发明专利：潜力微空间识别评估与营建方法、系统、设备及存储介质",
+          subtitle: "国家知识产权局 CN117390478A",
+          tag: "Patent",
+          date: "2023-09",
+          markdown: "assets/experience/patent-microspace-method/content.md",
+          image: "assets/experience/潜力微空间识别评估与营建方法、系统、设备及存储介质.jpg"
+        },
+      ]
+    },
+    {
+      year: "2022",
+      items: [
+        {
+          id: "exp2022-01",
+          title: "院级优秀部长",
+          subtitle: "华南理工大学建筑学院",
+          tag: "Award",
+          date: "2022-04",
+          markdown: "assets/experience/outstanding-minister-scutech/content.md",
+          image: "assets/experience/院级优秀部长.jpg"
+        },
+        {
+          id: "exp2022-02",
+          title: "SRP项目：机器学习与设计前沿探索",
+          subtitle: "华南理工大学",
+          tag: "AI",
+          date: "2022-05",
+          markdown: "assets/experience/srp-ml-design/content.md",
+          image: "assets/experience/SRP.png"
+        }
+      ]
+    },
+    {
+      year: "2021",
+      items: [
+        {
+          id: "exp2021-09",
+          title: "优秀学生会骨干",
+          subtitle: "华南理工大学",
+          tag: "Award",
+          date: "2021-09",
+          markdown: "assets/experience/outstanding-student-union/content.md",
+          image: "assets/experience/优秀学生会骨干.jpg"
+        },
+        {
+          id: "exp2021-12",
+          title: "2021 粤港澳大湾区·东盟国际高校营造大赛",
+          subtitle: "华南理工大学学生会",
+          tag: "Event",
+          date: "2021-12",
+          markdown: "assets/experience/gba-asean-competition-org/content.md",
+          image: "assets/experience/粤港澳大湾区·东盟国际高校营造大赛.jpg"
+        }
+      ]
+    },
+    {
+      year: "2020",
+      items: [
+        {
+          id: "exp2020-01",
+          title: "奥意建筑奖",
+          subtitle: "奥意建筑工程设计有限公司",
+          tag: "Award",
+          date: "2020-12",
+          markdown: "assets/experience/aoyi-architecture-award/content.md",
+          image: "assets/experience/奥意建筑奖.PNG"
+        }
+      ]
+    }
+  ];
+
+    // === 渲染项目卡片 ===
+    // helper: 把标签转成安全的 class 名 (e.g. "Digital Fabrication" -> "digital-fabrication")
+    function slugifyTag(tag) {
+      return String(tag || '')
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, '-')        // spaces -> -
+        .replace(/[^\w\-]/g, '')     // remove non-word (keeps a-z0-9_ -)
+        .replace(/\-+/g, '-');       // collapse multiple -
+    }
+
+    // 通用渲染函数：接收容器元素 id 和数据数组
+    function renderCards(containerId, dataArray) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      container.innerHTML = ''; // 清空旧内容
+
+      dataArray.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        const tagClass = `tag-${slugifyTag(item.tag || '')}`;
+
+        // 构建 overlay 内容（悬停时显示）
+        const overlayContent = `
+          <div class="card-tag ${tagClass}">${item.tag || ''}</div>
+          <h3 class="card-title">${item.title || ''}</h3>
+          ${item.meta ? `<p class="card-desc">${item.meta}</p>` : ''}
+        `;
+
+        // 图片容器（始终显示）
+        const imgHtml = item.image
+          ? `<div class="card-image"><img src="${item.image}" alt="${(item.title || '').replace(/"/g, '&quot;')}"></div>`
+          : '';
+
+        // 整体结构：图片 + 悬停 overlay
+        card.innerHTML = `
+          ${imgHtml}
+          <div class="card-overlay">
+            ${overlayContent}
+          </div>
+        `;
+
+        card.addEventListener('click', () => openModal(item));
+        container.appendChild(card);
+      });
+    }
+
+    renderCards('AIGrid', AIData);
+    renderCards('CodeGrid', CodeData);
+    renderCards('DesignGrid', DesignData);
+
+    // === 渲染 Experience 卡片 ===
+    const ExperienceGrid = document.getElementById('ExperienceGrid');
+    ExperienceData.forEach(yearData => {
+      const yearDiv = document.createElement('div');
+
+      // 年份标题
+      const yearTitle = document.createElement('div');
+      // yearTitle.className = "text-2xl font-bold text-klein-blue dark:text-blue-400 mb-4 select-none";
+      yearTitle.className = "year-title";
+      yearTitle.textContent = yearData.year;
+      yearDiv.appendChild(yearTitle);
+
+      // === 对 items 按 date 降序排序（最新在前）===
+      const sortedItems = [...yearData.items].sort((a, b) => {
+        // 辅助函数：将 "YYYY" 或 "YYYY-MM" 转为可比较的时间戳
+        const parseDate = (dateStr) => {
+          if (!dateStr) return 0;
+          // 补全为 YYYY-MM 格式（若只有年，则视为 12 月）
+          const padded = dateStr.length === 4 ? `${dateStr}-12` : dateStr;
+          return new Date(padded).getTime();
+        };
+        return parseDate(b.date) - parseDate(a.date); // 降序：最新在前
+      });
+
+      // 卡片列表
+      const itemsDiv = document.createElement('div');
+      itemsDiv.className = "p-2";
+
+      sortedItems.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'card experience-card';
+
+        const tagClass = `tag-${item.tag.toLowerCase()}`;
+
+        card.innerHTML = `
+        <div class="card-content flex items-center gap-3">
+          <!-- 左侧图片 -->
+          <div class="experience-thumb">
+            <img src="${item.image}" alt="" loading="lazy" />
+          </div>
+          <!-- 原有文字内容 -->
+          <div class="flex-1 min-w-0">
+            <div class="card-tag ${tagClass}">${item.tag}</div>
+            <h3 class="font-bold text-slate-900 dark:text-white truncate">${item.title}</h3>
+            <p class="text-slate-600 dark:text-slate-400 text-sm truncate">${item.subtitle}</p>
+          </div>
+          <!-- 右侧日期 -->
+          <div class="text-sm text-slate-500 dark:text-slate-400 shrink-0 whitespace-nowrap">${item.date}</div>
+        </div>
+      `;
+
+        card.addEventListener('click', (e) => {
+          e.preventDefault();
+          openModal(item);
+        });
+
+        itemsDiv.appendChild(card);
+      });
+
+      yearDiv.appendChild(itemsDiv);
+      ExperienceGrid.appendChild(yearDiv);
+    });
+
+    /* ========== 通用 View All 控制函数 ========== */
+    function initViewAllToggle(sectionId, buttonId, innerId) {
+      const section = document.getElementById(sectionId);
+      const btn = document.getElementById(buttonId);
+      const inner = document.getElementById(innerId);
+      if (!section || !btn || !inner) return;
+
+      let pageScrollY = 0;
+      let innerScrollTop = 0;
+      let isExpanded = false;
+
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        if (!isExpanded) {
+          // 展开前：保存滚动状态
+          pageScrollY = window.scrollY || window.pageYOffset;
+          innerScrollTop = inner.scrollTop || 0;
+
+          // 锁定 body 滚动
+          document.body.style.overflow = 'hidden';
+
+          // 展开当前 section
+          section.classList.add('expanded');
+          inner.scrollTop = 0;
+
+          btn.textContent = 'Close ←';
+          isExpanded = true;
+        } else {
+          // 收起
+          section.classList.remove('expanded');
+
+          // 恢复 body 滚动
+          document.body.style.overflow = '';
+          setTimeout(() => {
+            window.scrollTo({ top: pageScrollY, behavior: 'instant' });
+          }, 0);
+          inner.scrollTop = innerScrollTop || 0;
+
+          btn.textContent = 'View All →';
+          isExpanded = false;
+        }
+      });
+
+      // Esc 键退出
+      window.addEventListener('keydown', (e) => {
+        if (isExpanded && e.key === 'Escape') {
+          btn.click();
+        }
+      });
+    }
+
+    /* ========== 初始化多个 Section ========== */
+    document.addEventListener('DOMContentLoaded', () => {
+      initViewAllToggle('ai-section', 'viewAllAIBtn', 'AIGrid');
+      initViewAllToggle('code-section', 'viewAllCodeBtn', 'CodeGrid');
+      initViewAllToggle('design-section', 'viewAllDesignBtn', 'DesignGrid');
+      initViewAllToggle('experience-section', 'viewAllExperienceBtn', 'ExperienceGrid');
+    });
+
+    // === 元素引用 ===
+    const modalOverlay = document.getElementById('modalOverlay');
+    const closeModalBtn = document.getElementById('closeModal');
+
+    // 简易模式
+    const modalSimpleView = document.getElementById('modalSimpleView');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalTag = document.getElementById('modalTag');
+    const modalMeta = document.getElementById('modalMeta');
+    const modalDescriptionEl = modalSimpleView.querySelector('.modal-description');
+    const modalImageContainer = modalSimpleView.querySelector('.modal-image-container');
+    const readMoreBtn = document.getElementById('readMoreBtn');
+    const readLessBtnSimple = document.getElementById('readLessBtnSimple'); // 简易模式中的 Read Less
+
+    // ReadMore 模式
+    const modalReadMoreView = document.getElementById('modalReadMoreView');
+    const modalHeroImage = document.getElementById('modalHeroImage');
+    const modalHeroContent = modalReadMoreView.querySelector('.modal-hero-content');
+    const heroDescription = modalReadMoreView.querySelector('#heroDescription'); // Hero 中的描述
+    const modalMarkdownBody = modalReadMoreView.querySelector('.modal-markdown-body');
+
+    // Hero 内部的 Read Less 按钮
+    const readLessBtnHero = document.getElementById('readLessBtnHero');
+    const readLessBtnNav = document.getElementById('readLessBtnNav');
+
+    // Sticky Nav（仅用于显示标题/标签/元信息）
+    const modalScrollNav = document.querySelector('.modal-scroll-nav');
+    // const modalTitle3 = document.getElementById('modalTitle3');
+    // const modalTag3 = document.getElementById('modalTag3');
+    // const modalMeta3 = document.getElementById('modalMeta3');
+
+    let currentData = null;
+
+    /** 工具函数 */
+    function slugifyTag(tag) {
+      return String(tag).trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-_]/g, '');
+    }
+
+    function renderTags(tag, container) {
+      if (!container) return;
+      if (Array.isArray(tag) && tag.length > 0) {
+        container.innerHTML = tag.map(t => {
+          const cls = 'tag-' + slugifyTag(t);
+          return `<span class="card-tag ${cls}">${t}</span>`;
+        }).join('');
+      } else if (typeof tag === 'string' && tag.trim()) {
+        const cls = 'tag-' + slugifyTag(tag);
+        container.innerHTML = `<span class="card-tag ${cls}">${tag}</span>`;
+      } else {
+        container.innerHTML = '';
+      }
+    }
+
+    // function handleScrollNav(e) {
+    //   const scrollTop = e.target.scrollTop;
+    //   const heroEl = modalReadMoreView.querySelector('.modal-hero');
+    //   const heroHeight = heroEl ? heroEl.offsetHeight : 400;
+    //   modalScrollNav.classList.toggle('shown', scrollTop > heroHeight * 0.6);
+    // }
+
+    function switchToSimpleView() {
+      modalReadMoreView.classList.add('hidden');
+      modalSimpleView.classList.remove('hidden');
+      modalScrollNav.classList.remove('shown');
+      modalReadMoreView.scrollTop = 0;
+
+      // 更新按钮状态
+      readMoreBtn.classList.remove('hidden');
+      readLessBtnSimple.classList.add('hidden');
+      // 关闭按钮位置
+      closeModalBtn.style.right = '0.2rem';
+      closeModalBtn.style.top = '0.2rem';
+    }
+
+    function switchToReadMoreView() {
+      modalSimpleView.classList.add('hidden');
+      modalReadMoreView.classList.remove('hidden');
+      // 更新按钮状态
+      readMoreBtn.classList.add('hidden');
+      readLessBtnSimple.classList.remove('hidden');
+      // 关闭按钮位置
+      closeModalBtn.style.right = '1rem';
+      closeModalBtn.style.top = '0.5rem';
+    }
+
+    // === 相册放大功能 ===
+    let lightboxOverlay = null;
+    let lightboxImg = null;
+    let isLightboxOpen = false;
+
+    function initLightbox() {
+      if (lightboxOverlay) return;
+      lightboxOverlay = document.createElement('div');
+      lightboxOverlay.id = 'lightboxOverlay';
+      lightboxOverlay.innerHTML = `
+        <div class="lightbox-content">
+          <img id="lightboxImage" src="" alt="Preview">
+          <button id="closeLightbox" class="lightbox-close">&times;</button>
+        </div>
+      `;
+      document.body.appendChild(lightboxOverlay);
+
+      lightboxImg = document.getElementById('lightboxImage');
+      document.getElementById('closeLightbox').addEventListener('click', () => {
+        lightboxOverlay.style.display = 'none';
+        isLightboxOpen = false;
+      });
+      lightboxOverlay.addEventListener('click', (e) => {
+        if (e.target === lightboxOverlay) lightboxOverlay.style.display = 'none';
+      });
+    }
+
+    function showLightbox(src) {
+      initLightbox();
+      lightboxImg.src = src;
+      lightboxOverlay.style.display = 'flex';
+      isLightboxOpen = true;
+    }
+
+    // === 核心：打开 Modal ===
+    async function openModal(data) {
+      currentData = data;
+      document.body.style.overflow = 'hidden';
+
+      // === 1. 渲染基础信息 ===
+      // modalTitle.textContent = modalTitle2.textContent = modalTitle3.textContent = data.title || '';
+      // modalMeta.textContent = modalMeta2.textContent = modalMeta3.textContent = data.meta || '';
+      modalTitle.textContent = modalTitle2.textContent = data.title || '';
+      modalMeta.textContent = modalMeta2.textContent = data.meta || '';
+      renderTags(data.tag, modalTag);
+      renderTags(data.tag, modalTag2);
+      // renderTags(data.tag, modalTag3);
+
+      // 简易模式描述
+      modalDescriptionEl.innerHTML = data.description
+        ? `<div class="modal-description">${data.description}</div>`
+        : '<p class="text-slate-500">暂无描述。</p>';
+
+      // Hero 描述（完整内容）
+      heroDescription.innerHTML = data.description
+        ? `<div class="text-white">${data.description}</div>`
+        : '<p class="text-white/80">暂无描述。</p>';
+
+      // === 2. 提取图片列表 ===
+      let coverImage = data.image || null;
+      let galleryImages = coverImage ? [coverImage] : [];
+
+      let mdText = '';
+      if (data.markdown) {
+        try {
+          const res = await fetch(data.markdown);
+          if (!res.ok) throw new Error('Markdown not found');
+          mdText = await res.text();
+
+          const basePath = data.markdown.substring(0, data.markdown.lastIndexOf('/') + 1);
+          // 1. 从 ![](xxx) 提取资源
+          const imageRegex = /!\[.*?\]\((?!https?:\/\/)([^)\s]+)\)/g;
+          let match;
+          while ((match = imageRegex.exec(mdText)) !== null) {
+            const relPath = match[1].startsWith('./') ? match[1].slice(2) : match[1];
+            const fullUrl = basePath + relPath;
+            if (!galleryImages.includes(fullUrl)) {
+              galleryImages.push(fullUrl);
+            }
+          }
+
+          // 2. 从 <video src="xxx"> 或 <source src="xxx"> 提取视频资源
+          const videoRegex = /<(video|source)\b[^>]*src\s*=\s*["'](?!(?:https?:)?\/\/)([^"']+)["']/gi;
+          let videoMatch;
+          while ((videoMatch = videoRegex.exec(mdText)) !== null) {
+            const relPath = videoMatch[2].startsWith('./') ? videoMatch[2].slice(2) : videoMatch[2];
+            const fullUrl = basePath + relPath;
+            if (!galleryImages.includes(fullUrl)) {
+              galleryImages.push(fullUrl);
+            }
+          }
+        } catch (err) {
+          console.error('加载 Markdown 失败:', err);
+        }
+      }
+
+      // === 3. 渲染相册（支持图片与视频） ===
+      if (galleryImages.length > 0) {
+        modalImageContainer.innerHTML = '<div class="image-gallery"></div>';
+        const galleryEl = modalImageContainer.querySelector('.image-gallery');
+        modalImageContainer.style.display = 'block';
+
+        galleryImages.forEach((src, i) => {
+          const ext = src.split('.').pop().toLowerCase();
+          let el;
+
+          if (['mp4', 'webm', 'ogg'].includes(ext)) {
+            // 视频文件
+            el = document.createElement('video');
+            el.controls = true;
+            el.muted = true;
+            el.playsInline = true;
+            el.loop = true;
+            el.src = src;
+            el.dataset.index = i;
+            el.classList.add('gallery-video');
+          } else {
+            // 图片文件
+            el = document.createElement('img');
+            el.src = src;
+            el.alt = `Gallery ${i + 1}`;
+            el.loading = 'lazy';
+            el.dataset.index = i;
+
+            el.addEventListener('click', () => showLightbox(src));
+          }
+
+          el.onerror = () => {
+            console.warn('媒体加载失败，已跳过:', src);
+            el.remove();
+          };
+
+          galleryEl.appendChild(el);
+        });
+      } else {
+        modalImageContainer.style.display = 'none';
+      }
+
+      // === 4. 设置 Hero 图 ===
+      if (galleryImages.length > 0) {
+        modalHeroImage.src = galleryImages[0];
+        modalHeroImage.alt = data.title || '';
+      }
+
+      // === 5. 渲染 Markdown ===
+      let mdHTML = '';
+      if (mdText && data.markdown) {
+        const basePath = data.markdown.substring(0, data.markdown.lastIndexOf('/') + 1);
+        let fixedMdText = mdText.replace(/!\[(.*?)\]\((?!https?:\/\/)(.*?)\)/g, (match, alt, src) => {
+          const cleanSrc = src.startsWith('./') ? src.slice(2) : src;
+          return `![${alt}](${basePath}${cleanSrc})`;
+        });
+
+        fixedMdText = fixedMdText.replace(
+          /(<(video|source)\b[^>]*src\s*=\s*["'])(?!(?:https?:)?\/\/)([^"']+)/gi,
+          (match, prefix, tag, src) => {
+            const cleanSrc = src.startsWith('./') ? src.slice(2) : src;
+            return `${prefix}${basePath}${cleanSrc}`;
+          }
+        );
+        mdHTML = marked.parse(fixedMdText);
+      } else if (data.markdown) {
+        mdHTML = '<p class="text-red-500">内容加载失败。</p>';
+      }
+
+      modalMarkdownBody.innerHTML = mdHTML;
+
+      // === 6. 初始化状态 ===
+      switchToSimpleView(); // 默认显示简易模式
+      // modalReadMoreView.removeEventListener('scroll', handleScrollNav);
+      // modalReadMoreView.addEventListener('scroll', handleScrollNav);
+
+      // 绑定按钮事件
+      readMoreBtn?.addEventListener('click', switchToReadMoreView);
+      readLessBtnSimple?.addEventListener('click', switchToSimpleView);
+      readLessBtnHero?.addEventListener('click', switchToSimpleView);
+      readLessBtnNav?.addEventListener('click', switchToSimpleView);
+
+      modalOverlay.classList.add('show');
+    }
+
+    // === 关闭逻辑 ===
+    closeModalBtn?.addEventListener('click', () => {
+      modalOverlay.classList.remove('show');
+      document.body.style.overflow = '';
+      // modalReadMoreView.removeEventListener('scroll', handleScrollNav);
+    });
+
+    modalOverlay?.addEventListener('click', (e) => {
+      if (e.target === modalOverlay) closeModalBtn?.click();
+    });
+
+    // === ESC 关闭 ===
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (isLightboxOpen) {
+          // 优先关闭 Lightbox
+          document.getElementById('closeLightbox').click();
+        } else if (modalOverlay.classList.contains('show')) {
+          // 否则关闭 Modal
+          closeModalBtn?.click();
+        }
+      }
+    });
+
+    // === 模式切换 ===
+    const body = document.body;
+    // 设置图标函数（支持传入 element）
+    function setModeIcon(element, isDark) {
+      const sunSVG = `<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="M4.93 4.93l1.41 1.41"/><path d="M17.66 17.66l1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="M6.34 17.66l1.41-1.41"/><path d="M19.07 4.93l-1.41-1.41"/>`;
+      const moonSVG = `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>`;
+      element.innerHTML = isDark ? moonSVG : sunSVG;
+    }
+
+    // 初始化所有 mode-toggle 按钮的图标
+    function initAllModeToggles() {
+      const allToggles = document.querySelectorAll('.mode-toggle');
+      const savedMode = localStorage.getItem('color-mode');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const isDark = savedMode === 'dark' || (!savedMode && prefersDark);
+
+      body.classList.toggle('dark', isDark);
+      allToggles.forEach(toggle => {
+        const icon = toggle.querySelector('.mode-icon');
+        if (icon) setModeIcon(icon, isDark);
+      });
+    }
+
+    // 切换主题（全局）
+    function toggleTheme() {
+      const isNowDark = body.classList.contains('dark');
+      const newMode = isNowDark ? 'light' : 'dark';
+
+      body.classList.toggle('dark', !isNowDark);
+      localStorage.setItem('color-mode', newMode);
+
+      // 更新所有图标
+      document.querySelectorAll('.mode-icon').forEach(icon => {
+        setModeIcon(icon, !isNowDark);
+      });
+    }
+
+    // 初始化
+    initAllModeToggles();
+
+    // 监听所有 .mode-toggle 点击
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('.mode-toggle')) {
+        toggleTheme();
+      }
+    });
+
+    // === 标签滚动高亮 ===
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = ['home', 'ai-section', 'code-section', 'design-section', 'experience-section', 'about'];
+
+    window.addEventListener('scroll', () => {
+      const viewportCenter = window.scrollY + window.innerHeight / 2;
+
+      let activeId = null;
+
+      for (const id of sections) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+
+        const { offsetTop, offsetHeight } = el;
+        const offsetBottom = offsetTop + offsetHeight;
+
+        if (viewportCenter >= offsetTop && viewportCenter <= offsetBottom) {
+          activeId = id;
+          break;
+        }
+      }
+
+      // 更新高亮
+      navLinks.forEach(link => link.classList.remove('active'));
+      if (activeId) {
+        document.querySelector(`a[href="#${activeId}"]`)?.classList.add('active');
+      }
+    });
+
+    // === 自定义锚点跳转（居中）===
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (!href || href === '#') return;
+
+        const targetId = href.substring(1);
+        const targetEl = document.getElementById(targetId);
+
+        if (targetEl) {
+          e.preventDefault();
+
+          // 计算目标元素应滚动到的位置：使其垂直居中
+          const rect = targetEl.getBoundingClientRect();
+          const scrollTop = window.scrollY;
+          const targetTop = scrollTop + rect.top;
+          const viewportHeight = window.innerHeight;
+
+          // 理想居中位置：让 targetEl 中心 = 视口中心
+          let scrollToY = targetTop - viewportHeight / 2 + targetEl.offsetHeight / 2;
+
+          // 边界保护：不能滚到负值，也不能超过文档底部
+          const maxScroll = document.body.scrollHeight - viewportHeight;
+          scrollToY = Math.max(0, Math.min(scrollToY, maxScroll));
+
+          // 平滑滚动
+          window.scrollTo({
+            top: scrollToY,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Hero BG change
+    document.addEventListener('DOMContentLoaded', function () {
+      const backgrounds = [
+        'assets/images/background/01.mp4',
+        'assets/images/background/02.png',
+        'assets/images/background/03.jpg',
+        'assets/images/background/04.png',
+        'assets/images/background/05.jpg',
+      ];
+
+      const heroBg = document.querySelector('.hero-bg');
+      const heroVideo = document.querySelector('.hero-video');
+      const videoSource = heroVideo?.querySelector('source');
+      const indicators = document.querySelectorAll('.hero-slider-indicators .indicator');
+
+      if (!heroBg || !heroVideo || indicators.length === 0) {
+        console.warn('Hero elements missing');
+        return;
+      }
+
+      let currentIndex = -1; // 初始为 -1，表示尚未初始化
+      let autoSlideTimeout = null;
+
+      // 预加载资源
+      backgrounds.forEach(src => {
+        if (src.endsWith('.mp4')) {
+          const v = document.createElement('video');
+          v.muted = true;
+          v.preload = 'metadata';
+          v.src = src;
+        } else {
+          const img = new Image();
+          img.src = src;
+        }
+      });
+
+      // 切换到指定索引
+      function goToSlide(index, isManual = false) {
+        if (index < 0 || index >= backgrounds.length || index === currentIndex) return;
+
+        const prevIsVideo = currentIndex >= 0 && backgrounds[currentIndex].endsWith('.mp4');
+        const isVideo = backgrounds[index].endsWith('.mp4');
+
+        // 隐藏上一个
+        if (prevIsVideo) {
+          heroVideo.style.display = 'none';
+        } else {
+          heroBg.classList.remove('active');
+        }
+
+        // 显示当前
+        if (isVideo) {
+          videoSource.src = backgrounds[index];
+          heroVideo.load();
+          heroVideo.style.display = 'block';
+          // 尝试播放（静音视频通常可 autoplay）
+          heroVideo.play().catch(e => console.warn('Play failed:', e));
+        } else {
+          heroBg.style.backgroundImage = `url('${backgrounds[index]}')`;
+          // 关键：先确保没有 active，再强制重排，再加 active
+          heroBg.classList.remove('active');
+          void heroBg.offsetWidth; // 触发重排
+          heroBg.classList.add('active');
+        }
+
+        // 更新状态
+        currentIndex = index;
+
+        // 更新指示器
+        indicators.forEach((ind, i) => {
+          ind.classList.toggle('active', i === index);
+        });
+
+        // 重置自动轮播
+        if (isManual) {
+          resetAutoSlide();
+        } else {
+          scheduleNextSlide();
+        }
+      }
+
+      function scheduleNextSlide() {
+        clearTimeout(autoSlideTimeout);
+        autoSlideTimeout = setTimeout(() => {
+          goToSlide((currentIndex + 1) % backgrounds.length);
+        }, 3000);
+      }
+
+      function resetAutoSlide() {
+        clearTimeout(autoSlideTimeout);
+        scheduleNextSlide();
+      }
+
+      // 绑定点击
+      indicators.forEach((ind, i) => {
+        ind.addEventListener('click', () => goToSlide(i, true));
+      });
+
+      goToSlide(0); // 从 0 开始，会正确播放视频 + 触发 transition
+    });
+  </script>
+</body>
+</html>

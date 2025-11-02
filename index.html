@@ -26,6 +26,7 @@
       }
     }
   </script>
+
   <link rel="stylesheet" href="test2.css">
 </head>
 
@@ -296,14 +297,10 @@
           <div class="about-image-wrapper rounded-2xl overflow-hidden relative">
             <!-- 背景图 -->
             <img
-              src="assets/images/background/_MG_5956.JPG"
+              src="assets/images/background/about.webp"
               alt="Marco Hao"
               class="w-full h-full object-cover"
             />
-            <!-- 签名：绝对定位叠加在图上 -->
-            <div class="about-signature-wrapper absolute bottom-4 right-4">
-              <img src="assets/favicon/Black.png" class="h-6 block" />
-            </div>
           </div>
         </div>
       </div>
@@ -1466,5 +1463,54 @@
       goToSlide(0); // 从 0 开始，会正确播放视频 + 触发 transition
     });
   </script>
+  <script>
+    console.log("📌 WebP loader initialized...");
+
+    // Helper: 尝试替换为 WebP
+    function tryReplaceWithWebP(el) {
+      const src = el.getAttribute("src");
+      if (!src) return;
+
+      if (/\.(jpg|jpeg|png)$/i.test(src)) {
+        const webpSrc = src.replace(/\.(jpg|jpeg|png)$/i, ".webp");
+
+        // URL encode 中文/空格
+        const encodedWebpSrc = encodeURI(webpSrc);
+
+        fetch(encodedWebpSrc, { method: 'HEAD' })
+          .then(response => {
+            if (response.ok) {
+              console.log(`✅ WebP found and used: ${encodedWebpSrc}`);
+              el.setAttribute("src", encodedWebpSrc);
+            } else {
+              console.log(`❌ WebP not found, keeping original: ${src}`);
+            }
+          })
+          .catch(err => {
+            console.log(`⚠️ Error checking WebP: ${encodedWebpSrc}`, err);
+          });
+      }
+    }
+
+    // 替换已存在的图片
+    document.querySelectorAll("img").forEach(tryReplaceWithWebP);
+
+    // 监听动态插入的图片
+    const observer = new MutationObserver(mutations => {
+      mutations.forEach(mutation => {
+        mutation.addedNodes.forEach(node => {
+          if (node.nodeType === 1) { // element
+            if (node.tagName.toLowerCase() === 'img') {
+              tryReplaceWithWebP(node);
+            } else {
+              node.querySelectorAll?.("img").forEach(tryReplaceWithWebP);
+            }
+          }
+        });
+      });
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+    </script>
 </body>
 </html>

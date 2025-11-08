@@ -41,7 +41,7 @@
   --card-bg: #ffffff;
 
   --mask-bg: rgba(255, 255, 255, 0.7);
-  --mask-bg2: rgba(255, 255, 255, 0.5);
+  --mask-bg2: rgba(255, 255, 255, 0.94);
 
   /* 主色调 */
   --primary-color: #5377da;
@@ -79,7 +79,7 @@
   --shadow: 0 10px 25px -5px rgba(0,0,0,0.3);
 
   --mask-bg: rgba(0, 0, 0, 0.7);
-  --mask-bg2: rgba(0, 0, 0, 0.5);
+  --mask-bg2: rgba(0, 0, 0, 0.89);
 
     /* 浅色模式Modal */
   --nav-primary: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(18, 18, 18, 0.7));
@@ -169,6 +169,107 @@ nav {
   }
 }
 
+/* 汉堡菜单按钮 */
+.mobile-menu-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid rgba(226, 232, 240, 0.6);
+  color: var(--text-primary);
+  transition: background 0.3s ease, border 0.3s ease, color 0.3s ease;
+  isolation: isolate;
+}
+
+.dark .mobile-menu-btn {
+  background: transparent;
+  border: 1px solid rgba(71, 85, 105, 0.4);
+  color: #e2e8f0;
+}
+
+.hamburger-line {
+  width: 20px;
+  height: 1px;
+  background-color: var(--text-secondary);
+  border-radius: 1px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.hamburger-line:not(:first-child) {
+  margin-top: 3px;
+}
+
+/* 移动端显示汉堡菜单 (900px 以下) */
+@media (max-width: 900px) {
+  .nav-button {
+    display: none !important;
+  }
+
+  .mobile-menu-btn {
+    display: flex;
+  }
+
+  .mode-toggle {
+    margin-right: 0.5rem;
+  }
+}
+
+/* 移动端导航弹窗 */
+.mobile-nav-popup {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  border-radius: 1rem;
+  padding: 1rem;
+  min-width: 200px;
+  margin: 0.5rem;
+  z-index: 999;
+
+  background: var(--mask-bg2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(14px);
+
+  border: var(--border-bottom);
+
+  /* 过渡 */
+  transition: background 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.mobile-nav-popup.show {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.mobile-nav-link {
+  display: block !important;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  color: var(--text-primary, #333);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-transform: capitalize;
+  transition: background-color 0.2s ease;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.mobile-nav-link:hover {
+  background: var(--primary-hover, #f5f5f5);
+}
+
+.mobile-nav-link.active {
+  color: var(--accent-1, #007acc) !important;
+}
+
 /* 模式切换  */
 .mode-toggle {
   width: 36px;
@@ -180,7 +281,7 @@ nav {
   cursor: pointer;
   background: transparent;
   border: 1px solid rgba(226, 232, 240, 0.6);
-  color: var(--text-primary); /* ← 关键：图标颜色来源 */
+  color: var(--text-primary);
   transition: background 0.3s ease, border 0.3s ease, color 0.3s ease;
   isolation: isolate; /* 防止继承污染 */
 }
@@ -905,6 +1006,7 @@ nav {
 @media (max-width: 900px) {
   .modal-simple-view {
     display: block;
+    padding: 1.5rem;
   }
 
   .modal-simple-view::-webkit-scrollbar {
@@ -1280,8 +1382,8 @@ nav {
 
 /* Workshop */
 .tag-workshop {
-  background-color: rgba(254, 249, 195, 1); /* bg-yellow-100 */
-  color: rgb(133, 77, 14); /* text-yellow-800 */
+  background-color: rgb(255, 251, 196); /* bg-yellow-100 */
+  color: rgb(195, 112, 27); /* text-yellow-800 */
 }
 .dark .tag-workshop {
   background-color: rgba(133, 77, 14, 0.3);
@@ -1310,7 +1412,7 @@ nav {
 
 /* Education */
 .tag-education {
-  background-color: rgba(207, 255, 243, 1); /* bg-teal-100 */
+  background-color: rgb(207, 255, 226); /* bg-teal-100 */
   color: rgb(13, 100, 91); /* text-teal-800 */
 }
 .dark .tag-education {

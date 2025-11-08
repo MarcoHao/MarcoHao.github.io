@@ -37,26 +37,45 @@
   text-slate-900       <!-- 文字颜色 -->
   light                <!-- 自定义标记（浅色主题） -->
 ">
+
   <!-- Navigation -->
-  <nav class = "nav">  <!--保证在其他元素上方-->
-    <div class="w-full mx-auto px-4 sm:px-6 lg:px-8">  <!--外层容器-->
-      <div class = "flex justify-between items-center h-16">  <!--justify-between 就搞定左右分布。-->
+  <nav class="nav">
+    <div class="w-full mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
         <div class="flex items-center space-x-2">
           <a href="index.html" class="nav-brand">Marco</a>
         </div>
-        <div class="flex items-center space-x-6">
+        <div class="flex items-center space-x-4">
           <div class="nav-button md:flex space-x-6 text-sm">
             <a href="#ai-section" class="nav-link">AI</a>
             <a href="#code-section" class="nav-link">Code</a>
             <a href="#design-section" class="nav-link">Design</a>
             <a href="#experience-section" class="nav-link">Experience</a>
             <a href="#about" class="nav-link">About</a>
-<!--            <a href="#contact" class="nav-link">Contact</a>-->
           </div>
+
+          <!-- 汉堡菜单按钮 -->
+          <button id="mobileMenuBtn" class="mobile-menu-btn" aria-label="Toggle navigation">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+          </button>
+
           <div id="modeToggle" class="mode-toggle">
             <svg class="mode-icon" viewBox="0 0 24 24"></svg>
           </div>
         </div>
+      </div>
+
+      <!-- 移动端导航弹窗 -->
+      <div id="mobileNavPopup" class="mobile-nav-popup">
+        <a href="index.html" class="mobile-nav-link nav-link">Home</a>
+        <a href="#ai-section" class="mobile-nav-link nav-link">AI</a>
+        <a href="#code-section" class="mobile-nav-link nav-link">Code</a>
+        <a href="#design-section" class="mobile-nav-link nav-link">Design</a>
+        <a href="#experience-section" class="mobile-nav-link nav-link">Experience</a>
+        <a href="#about" class="mobile-nav-link nav-link">About</a>
+        <a href="#contact" class="mobile-nav-link nav-link">Contact</a>
       </div>
     </div>
   </nav>
@@ -150,8 +169,8 @@
             </p>
             <div class="section-footer">
               <p class="section-description">
-                基于Python与前端技术，在生成式设计、参数化建模与交互系统中进行实践探索。<br />
-                Practicing generative design, parametric modeling, and interactive systems using Python and front-end technologies.
+                在生成式设计、参数化建模与交互系统中进行实践探索。<br />
+                Practicing generative design, parametric modeling, and interactive systems.
               </p>
               <a href="#" class="section-view-all" id="viewAllCodeBtn">View All →</a>
             </div>
@@ -181,7 +200,7 @@
             <div class="section-footer">
               <p class="section-description">
                 融合计算思维与建筑美学，探索生成式设计在建筑与城市尺度中的表达。<br />
-                Integrating computational thinking and architectural aesthetics to explore generative design at architectural and urban scales.
+                Integrating computational thinking and architectural aesthetics to explore generative design on architectural and urban scales.
               </p>
               <a href="#" class="section-view-all" id="viewAllDesignBtn">View All →</a>
             </div>
@@ -238,9 +257,9 @@
 
             <!-- 精简文本内容 -->
             <div class="space-y-4 mb-6 text-slate-600 dark:text-slate-400">
-              <p>2016–2019 佛山市第一中学</p>
-              <p>2019–2024 华南理工大学建筑学院 · 建筑学</p>
               <p>2024–Now 东南大学建筑学院 · 建筑运算与应用团队</p>
+              <p>2019–2024 华南理工大学建筑学院 · 建筑学</p>
+              <p>2016–2019 佛山市第一中学</p>
               <p>技能：摄影 · 视频制作 · Python · Grasshopper · 3D生成</p>
             </div>
 
@@ -248,7 +267,7 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
               <div>
                 <h3 class="font-bold text-klein-blue dark:text-blue-400 mb-1">Honors</h3>
-                <p class="text-sm">2023广东省“挑战杯”一等奖<br>东南大学2025学业奖学金二等奖</p>
+                <p class="text-sm">2023广东省“挑战杯”特等奖<br>东南大学2025学业奖学金二等奖</p>
               </div>
               <div>
                 <h3 class="font-bold text-green-600 dark:text-green-400 mb-1">Practice</h3>
@@ -585,25 +604,25 @@
           subtitle: "2025计算性设计学术论坛暨中国建筑学会计算性设计专业委员会年会",
           tag: "Paper",
           date: "2025-10",
-          markdown: "assets/experience/multi-agent-mas-research/content.md",
+          markdown: "assets/projects/multi-agent-system/multi-agents-system.md",
           image: "assets/experience/连接智能体.jpg"
         },
-        {
-          id: "exp2025-02",
-          title: "基于机器学习的城市街区能耗分析与预测",
-          subtitle: "XGBoost + SHAP",
-          tag: "AI",
-          date: "2025-03",
-          markdown: "assets/experience/urban-energy-prediction/content.md",
-          image: "assets/experience/学习效果分析_5.png"
-        },
+        // {
+        //   id: "exp2025-02",
+        //   title: "基于机器学习的城市街区能耗分析与预测",
+        //   subtitle: "XGBoost + SHAP",
+        //   tag: "AI",
+        //   date: "2025-03",
+        //   // markdown: "assets/experience/urban-energy-prediction/content.md",
+        //   image: "assets/experience/学习效果分析_5.png"
+        // },
         {
           id: "exp2025-03",
           title: "宜兴市丁蜀镇立面更新改造与城市设计",
           subtitle: "城市更新实践项目",
           tag: "Architecture",
           date: "2025-06",
-          markdown: "assets/experience/dingshu-facade-renewal/content.md",
+          // markdown: "assets/experience/dingshu-facade-renewal/content.md",
           image: "assets/experience/AI效果图.png"
         },
         {
@@ -612,7 +631,7 @@
           subtitle: "东南大学",
           tag: "Award",
           date: "2025-10",
-          markdown: "assets/experience/seu-scholarship-2025/content.md",
+          // markdown: "assets/experience/seu-scholarship-2025/content.md",
           image: "https://placehold.co/800x600/1e293b/f1f5f9?text=Scholarship"
         }
       ]
@@ -626,8 +645,8 @@
           subtitle: "同济大学",
           tag: "Workshop",
           date: "2024-11",
-          markdown: "assets/experience/digital-futures-tongji/content.md",
-          image: "https://placehold.co/800x600/1e293b/f1f5f9?text=Digital+Futures"
+          markdown: "assets/projects/city-evolution/佛罗伦萨城市设计.md",
+          image: "assets/projects/city-evolution/c52366f5-0460-4cd3-bd0d-73fc4a7bfc29.webp"
         },
         {
           id: "exp2024-02",
@@ -635,7 +654,7 @@
           subtitle: "东南大学 × 苏黎世联邦理工学院",
           tag: "Workshop",
           date: "2024-11",
-          markdown: "assets/experience/morphusion-workshop/content.md",
+          markdown: "assets/projects/morfusion-project/Morphusion.md",
           image: "assets/projects/morfusion-project/cover.jpg"
         },
         {
@@ -644,7 +663,7 @@
           subtitle: "华南理工大学",
           tag: "Award",
           date: "2024-06",
-          markdown: "assets/experience/outstanding-thesis-scutech/content.md",
+          markdown: "assets/projects/center-ula/人工智能时代下的建筑设计.md",
           image: "assets/experience/优秀毕设.jpg"
         },
         {
@@ -653,7 +672,7 @@
           // subtitle: "广东省教育厅",
           tag: "Architecture",
           date: "2024-11",
-          markdown: "assets/experience/provincial-grad-exhibition/content.md",
+          markdown: "assets/projects/center-ula/人工智能时代下的建筑设计.md",
           image: "assets/experience/未来展.jpg"
         },
         {
@@ -662,7 +681,7 @@
           subtitle: "东南大学",
           tag: "Award",
           date: "2024-10",
-          markdown: "assets/experience/seu-scholarship-2024/content.md",
+          // markdown: "assets/experience/seu-scholarship-2024/content.md",
           image: "https://placehold.co/800x600/1e293b/f1f5f9?text=Scholarship"
         },
         {
@@ -671,7 +690,7 @@
           subtitle: "东南大学建筑学院",
           tag: "Education",
           date: "2024-09",
-          markdown: "assets/experience/seu-masters-admission/content.md",
+          // markdown: "assets/experience/seu-masters-admission/content.md",
           image: "https://placehold.co/800x600/1e293b/f1f5f9?text=SEU+Masters"
         },
         {
@@ -680,7 +699,7 @@
           subtitle: "华南理工大学",
           tag: "Education",
           date: "2024-06",
-          markdown: "assets/experience/bachelor-degree-scutech/content.md",
+          // markdown: "assets/experience/bachelor-degree-scutech/content.md",
           image: "assets/experience/毕业.jpg"
         }
       ]
@@ -694,7 +713,7 @@
           subtitle: "共青团广东省委等",
           tag: "Award",
           date: "2023-06",
-          markdown: "assets/experience/challenge-cup-guangdong-special/content.md",
+          // markdown: "assets/experience/challenge-cup-guangdong-special/content.md",
           image: "assets/experience/高密度建成环境下健康风险空间识别与优化策略——以广州中心城区为例.jpg"
         },
         {
@@ -703,7 +722,7 @@
           subtitle: "华南理工大学",
           tag: "Award",
           date: "2023-03",
-          markdown: "assets/experience/challenge-cup-scutech-first/content.md",
+          // markdown: "assets/experience/challenge-cup-scutech-first/content.md",
           image: "assets/experience/挑战杯校级一等奖.jpg"
         },
         {
@@ -712,7 +731,7 @@
           subtitle: "国家知识产权局 CN116257925A",
           tag: "Patent",
           date: "2023-03",
-          markdown: "assets/experience/patent-urban-form-optimization/content.md",
+          // markdown: "assets/experience/patent-urban-form-optimization/content.md",
           image: "assets/experience/城市空间建筑形体优化方法、系统、计算机设备及存储介质.jpg"
         },
         {
@@ -721,7 +740,7 @@
           subtitle: "国家知识产权局 CN117390478A",
           tag: "Patent",
           date: "2023-09",
-          markdown: "assets/experience/patent-microspace-method/content.md",
+          // markdown: "assets/experience/patent-microspace-method/content.md",
           image: "assets/experience/潜力微空间识别评估与营建方法、系统、设备及存储介质.jpg"
         },
       ]
@@ -735,7 +754,7 @@
           subtitle: "华南理工大学建筑学院",
           tag: "Award",
           date: "2022-04",
-          markdown: "assets/experience/outstanding-minister-scutech/content.md",
+          // markdown: "assets/experience/outstanding-minister-scutech/content.md",
           image: "assets/experience/院级优秀部长.jpg"
         },
         {
@@ -744,7 +763,7 @@
           subtitle: "华南理工大学",
           tag: "AI",
           date: "2022-05",
-          markdown: "assets/experience/srp-ml-design/content.md",
+          // markdown: "assets/experience/srp-ml-design/content.md",
           image: "assets/experience/SRP.png"
         }
       ]
@@ -758,7 +777,7 @@
           subtitle: "华南理工大学",
           tag: "Award",
           date: "2021-09",
-          markdown: "assets/experience/outstanding-student-union/content.md",
+          // markdown: "assets/experience/outstanding-student-union/content.md",
           image: "assets/experience/优秀学生会骨干.jpg"
         },
         {
@@ -767,7 +786,7 @@
           subtitle: "华南理工大学学生会",
           tag: "Event",
           date: "2021-12",
-          markdown: "assets/experience/gba-asean-competition-org/content.md",
+          // markdown: "assets/experience/gba-asean-competition-org/content.md",
           image: "assets/experience/粤港澳大湾区·东盟国际高校营造大赛.jpg"
         }
       ]
@@ -781,7 +800,7 @@
           subtitle: "奥意建筑工程设计有限公司",
           tag: "Award",
           date: "2020-12",
-          markdown: "assets/experience/aoyi-architecture-award/content.md",
+          // markdown: "assets/experience/aoyi-architecture-award/content.md",
           image: "assets/experience/奥意建筑奖.PNG"
         }
       ]
@@ -1096,22 +1115,23 @@
       renderTags(data.tag, modalTag2);
       // renderTags(data.tag, modalTag3);
 
-      // 简易模式描述
-      modalDescriptionEl.innerHTML = data.description
-        ? `<div class="modal-description">${data.description}</div>`
-        : '<p class="text-slate-500">暂无描述。</p>';
-
-      // Hero 描述（完整内容）
-      heroDescription.innerHTML = data.description
-        ? `<div class="text-white">${data.description}</div>`
-        : '<p class="text-white/80">暂无描述。</p>';
+      // // 简易模式描述
+      // modalDescriptionEl.innerHTML = data.description
+      //   ? `<div class="modal-description">${data.description}</div>`
+      //   : '<p class="text-slate-500">暂无描述。</p>';
+      //
+      // // Hero 描述（完整内容）
+      // heroDescription.innerHTML = data.description
+      //   ? `<div class="text-white">${data.description}</div>`
+      //   : '<p class="text-white/80">暂无描述。</p>';
 
       // === 2. 提取图片列表 ===
       let coverImage = data.image || null;
       let galleryImages = coverImage ? [coverImage] : [];
+      let hasMarkdown = !!data.markdown; // 检查是否有 markdown 路径
 
       let mdText = '';
-      if (data.markdown) {
+      if (hasMarkdown) { // 只有在有 markdown 路径时才尝试加载
         try {
           const res = await fetch(data.markdown);
           if (!res.ok) throw new Error('Markdown not found');
@@ -1141,6 +1161,7 @@
           }
         } catch (err) {
           console.error('加载 Markdown 失败:', err);
+          hasMarkdown = false; // 加载失败时也标记为无 markdown
         }
       }
 
@@ -1194,7 +1215,7 @@
 
       // === 5. 渲染 Markdown ===
       let mdHTML = '';
-      if (mdText && data.markdown) {
+      if (hasMarkdown && mdText) { // 只有在有 markdown 且加载成功时才渲染
         const basePath = data.markdown.substring(0, data.markdown.lastIndexOf('/') + 1);
         let fixedMdText = mdText.replace(/!\[(.*?)\]\((?!https?:\/\/)(.*?)\)/g, (match, alt, src) => {
           const cleanSrc = src.startsWith('./') ? src.slice(2) : src;
@@ -1209,13 +1230,24 @@
           }
         );
         mdHTML = marked.parse(fixedMdText);
-      } else if (data.markdown) {
+      } else if (hasMarkdown) { // 有路径但加载失败
         mdHTML = '<p class="text-red-500">内容加载失败。</p>';
+      } else { // 没有 markdown 路径
+        mdHTML = '<p class="text-slate-500">暂无详细内容。</p>';
       }
 
       modalMarkdownBody.innerHTML = mdHTML;
 
-      // === 6. 初始化状态 ===
+      // === 6. 控制 Read More 按钮显示 ===
+      if (readMoreBtn) {
+        if (!hasMarkdown) {
+          readMoreBtn.style.display = 'none'; // 隐藏按钮
+        } else {
+          readMoreBtn.style.removeProperty('display'); // 显示按钮
+        }
+      }
+
+      // === 7. 初始化状态 ===
       switchToSimpleView(); // 默认显示简易模式
       // modalReadMoreView.removeEventListener('scroll', handleScrollNav);
       // modalReadMoreView.addEventListener('scroll', handleScrollNav);
@@ -1463,7 +1495,34 @@
 
       goToSlide(0); // 从 0 开始，会正确播放视频 + 触发 transition
     });
+
+    // 获取 DOM 元素
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileNavPopup = document.getElementById('mobileNavPopup');
+
+    // 切换菜单
+    function toggleMobileMenu() {
+      mobileNavPopup.classList.toggle('show');
+    }
+
+    // 点击汉堡菜单按钮
+    mobileMenuBtn?.addEventListener('click', toggleMobileMenu);
+
+    // 点击其他地方关闭菜单
+    document.addEventListener('click', (e) => {
+      if (!mobileMenuBtn.contains(e.target) && !mobileNavPopup.contains(e.target)) {
+        mobileNavPopup.classList.remove('show');
+      }
+    });
+
+    // 点击导航链接后关闭菜单
+    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileNavPopup.classList.remove('show');
+      });
+    });
   </script>
+
   <script>
     console.log("📌 WebP loader initialized...");
 

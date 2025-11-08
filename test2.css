@@ -1016,6 +1016,18 @@ nav {
   .image-gallery-container {
     padding-top: 2rem;
   }
+
+  .modal-content {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .modal-info {
+    width: 100%;
+    box-sizing: border-box;
+  }
 }
 
 .modal-simple-view .modal-info {

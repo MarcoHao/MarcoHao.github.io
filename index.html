@@ -1115,15 +1115,15 @@
       renderTags(data.tag, modalTag2);
       // renderTags(data.tag, modalTag3);
 
-      // // 简易模式描述
-      // modalDescriptionEl.innerHTML = data.description
-      //   ? `<div class="modal-description">${data.description}</div>`
-      //   : '<p class="text-slate-500">暂无描述。</p>';
-      //
-      // // Hero 描述（完整内容）
-      // heroDescription.innerHTML = data.description
-      //   ? `<div class="text-white">${data.description}</div>`
-      //   : '<p class="text-white/80">暂无描述。</p>';
+      // 简易模式描述
+      modalDescriptionEl.innerHTML = data.description
+        ? `<div class="modal-description">${data.description}</div>`
+        : '<p class="text-slate-500">暂无描述。</p>';
+
+      // Hero 描述（完整内容）
+      heroDescription.innerHTML = data.description
+        ? `<div class="text-white">${data.description}</div>`
+        : '<p class="text-white/80">暂无描述。</p>';
 
       // === 2. 提取图片列表 ===
       let coverImage = data.image || null;

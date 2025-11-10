@@ -463,7 +463,7 @@
         id: 'wan-video-generation',
         title: "WAN 2.2 视频生成工作流",
         tag: "AI",
-        meta: "2024 · SEU × Kuaishou AI Lab",
+        meta: "ComfyUI × Wan Video",
         image: "assets/projects/wan-video-generation/WanVideoWrapper_Fun22ControlCamera_00011.png",
         description: `
           <p>基于 ComfyUI 构建的两阶段视频生成策略：以 FunControl 实现动作与场景控制，再通过 ReCamMaster + WAN Video Wrapper 进行镜头重建与多视角重采样，实现兼具语义一致性与镜头多样性的生成式视频工作流。</p>
@@ -474,13 +474,21 @@
           { text: "GitHub · ReCamMaster", url: "https://github.com/KwaiVGI/ReCamMaster" }
         ]
       },
-      // {
-      //   id: 'ai-video-generation',
-      //   title: "AI Video Generation",
-      //   tag: "AI",
-      //   image: "https://placehold.co/800x600/1e293b/f1f5f9?text=Video",
-      //   markdown: "assets/projects/ai-video-generation/content.md"
-      // }
+      {
+        id: 'render-parameter-workflow',
+        title: "Rendering & Parameter",
+        tag: "AI",
+        meta: "ComfyUI × Diffusion",
+        image: "assets/projects/image2image/图生图分析2.webp",
+        description: `
+          <p>基于 ComfyUI 平台构建从截图到效果图生成的完整工作流。项目系统分析了扩散模型中的关键参数，包括 Steps、CFG、Sampler、Scheduler 与 Denoise，并通过对比实验揭示它们对生成结果的影响机制。</p>
+        `,
+        markdown: "assets/projects/image2image/图生图工作流.md",
+        links: [
+          { text: "Workflow Demo", url: "#" },
+          { text: "Technical Report", url: "#" }
+        ]
+      }
     ];
 
     const CodeData = [

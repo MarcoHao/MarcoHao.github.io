@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="zh" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebGPU Volumetric Engine | Portfolio</title>
+
+	<link rel="stylesheet" href="../test2.css">
+
+    <style>
+        body {
+            background-color: #050505; /* 深色背景适配 Canvas */
+            overflow: hidden;
+            /* 继承全局字体 */
+            font-family: var(--font-sans);
+        }
+
+        /* --- UI 层布局 --- */
+        #ui-layer {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 10;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: flex-start;
+        }
+
+        /* --- 控制面板 (复用 .hero-content 玻璃质感) --- */
+        .glass-panel {
+            pointer-events: auto;
+            backdrop-filter: blur(12px) saturate(110%);
+            -webkit-backdrop-filter: blur(12px) saturate(110%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            color: var(--text-primary);
+            width: 380px;
+            transition: var(--transition);
+        }
+
+        .panel-header {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.75rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* --- 文本与按键样式 --- */
+        .info-row {
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            color: var(--text-secondary);
+        }
+
+        .status-active {
+            color: var(--accent-1); /* 蓝色高亮 */
+            font-weight: 600;
+            text-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
+        }
+
+        /* 键盘按键样式 (微调 kbd) */
+        kbd {
+            font-family: var(--font-mono);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-size: 0.75rem;
+            color: var(--text-primary);
+            box-shadow: 0 2px 0 rgba(0,0,0,0.2);
+        }
+
+        /* --- 按钮样式 (复用 .btn-primary) --- */
+        .control-actions {
+            margin-top: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .action-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 0.6rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+
+        /* 主按钮：上传 */
+        .btn-upload {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+        .btn-upload:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+        }
+
+        /* 次级按钮：HDR */
+        .btn-outline {
+            background: transparent;
+            color: var(--text-primary);
+        }
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--text-tertiary);
+        }
+
+        /* --- Loading Screen --- */
+        #loading-screen {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-primary);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.8s ease;
+        }
+
+        .loader-text {
+            font-family: var(--font-mono);
+            color: var(--accent-1);
+            margin-top: 1.5rem;
+            letter-spacing: 0.1em;
+            font-size: 0.85rem;
+            animation: pulse 1.5s infinite;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-top: 2px solid var(--accent-1);
+            border-radius: 50%;
+            animation: spin 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+
+        /* --- Blocker / Instructions Overlay --- */
+        #blocker {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: 50;
+            display: none; /* JS control */
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .instruction-card {
+            /*background: var(--mask-bg);*/
+            backdrop-filter: blur(12px) saturate(110%);
+            -webkit-backdrop-filter: blur(12px) saturate(110%);
+            border: 1px solid var(--border-color);
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+			width: 30vw;
+        }
+
+        .instruction-title {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .instruction-text {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.8;
+            margin-bottom: 0.5rem;
+        }
+
+        /* --- Drop Zone --- */
+        #drop-zone {
+            position: absolute;
+            inset: 2rem;
+            border: 2px dashed var(--text-tertiary);
+            border-radius: 1.5rem;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 200;
+            color: var(--text-primary);
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            pointer-events: none;
+            backdrop-filter: blur(4px);
+        }
+        body.dragover #drop-zone { display: flex; }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+    </style>
+</head>
+<body>
+
+<div id="loading-screen">
+        <div class="spinner"></div>
+        <div class="loader-text">INITIALIZING ENGINE</div>
+    </div>
+
+    <div id="blocker">
+        <div class="instruction-card">
+            <div id="nav_mode" class="instruction-title">沉浸模式</div>
+            <p class="instruction-text">
+                移动: <kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd><br>
+            </p>
+			<p id="height_control" class="instruction-text">
+				高度: <kbd>Q</kbd> <kbd>E</kbd><br>
+			</p>
+			<p class="instruction-text">
+				按下  <kbd>Shift</kbd>  加速
+			</p>
+            <p class= "btn-primary" style="margin-top: 1.5rem; font-size: 0.8rem; color: var(--text-primary);">
+                点击进入
+            </p>
+        </div>
+    </div>
+
+    <div id="drop-zone">DROP FILE TO LOAD (.glb, .obj)</div>
+
+    <div id="ui-layer" class="hero-content-block">
+        <div id="controls-info" class="glass-panel">
+            <div class="panel-header">
+                <span>仪表台</span>
+                <span style="font-size:10px; opacity: 0.5;"></span>
+            </div>
+
+            <div id="ctrl-orbit" class="info-row">
+                <i class="fa-solid fa-mouse"></i>
+                <span><b>环绕</b>: 左键 旋转 | 右键 平移</span>
+            </div>
+
+            <div id="ctrl-fps" class="info-row">
+                <i class="fa-solid fa-gamepad"></i>
+                <span><b>第一人称视角</b>: WASDQE 移动 | 鼠标锁定</span>
+            </div>
+
+            <div class="info-row">
+                <span style="min-width: 80px;">聚光灯</span>
+                <span id="mode-display" class="status-active">启用</span>
+                <span style="margin-left:auto; opacity:0.6; font-size:0.75rem;">(按下 F 切换)</span>
+            </div>
+
+            <div class="info-row">
+                <span style="min-width: 80px;">物体移动</span>
+                <span id="gizmo-display" style="color: var(--secondary-color);">平移</span>
+                <span style="margin-left:auto; opacity:0.6; font-size:0.75rem;">(按下 T 切换)</span>
+            </div>
+
+			<div class="control-actions">
+				<label for="hdr-input" class="btn-secondary">
+					上传HDR
+				</label>
+				<input type="file" id="hdr-input" hidden accept=".hdr">
+				<label for="file-input" class="btn-secondary">
+					上传模型
+				</label>
+				<input type="file" id="file-input" hidden accept=".glb,.gltf,.obj,.fbx">
+
+			</div>
+
+            <div style="margin-top: 1rem; padding-top: 0.8rem; border-top: 1px solid var(--border-color); font-size: 0.75rem; color: var(--text-tertiary); text-align: center;">
+                按下 <kbd>R</kbd> 重置相机位置
+            </div>
+        </div>
+    </div>
+
+    <script type="importmap">
+        {
+           "imports": {
+              "three": "https://unpkg.com/three@0.182.0/build/three.webgpu.js",
+              "three/webgpu": "https://unpkg.com/three@0.182.0/build/three.webgpu.js",
+              "three/tsl": "https://unpkg.com/three@0.182.0/build/three.tsl.js",
+              "three/addons/": "https://unpkg.com/three@0.182.0/examples/jsm/"
+           }
+        }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three/webgpu';
+        import { vec2, vec3, vec4, Fn, time, texture3D, screenUV, uniform, screenCoordinate, pass, normalWorld, uv} from 'three/tsl';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
+        import { TransformControls } from 'three/addons/controls/TransformControls.js';
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+        import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
+        import { FBXLoader } from 'three/addons/loaders/FBXLoader.js';
+		import { Rhino3dmLoader } from 'three/addons/loaders/3DMLoader.js';
+		import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
+        import { ImprovedNoise } from 'three/addons/math/ImprovedNoise.js';
+        import { TeapotGeometry } from 'three/addons/geometries/TeapotGeometry.js';
+        import { gaussianBlur } from 'https://unpkg.com/three@0.173.0/examples/jsm/tsl/display/GaussianBlurNode.js';
+        import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
+
+        let renderer, scene, camera, postProcessing;
+        let orbitControls, pointerLockControls, transformControls;
+        let ambientLight, pointLight, mainSpotLight, spotLightTarget;
+        let volumetricMesh, gridHelper, debugWireframe, currentModel;
+		let mixer; // 用于管理动画
+		let globalLight;
+
+		let scenePass;
+		let hudScene, hudCamera;
+		let showDebugAtlasUniform;
+
+        // --- TSL Uniforms ---
+        let smokeAmount, fogColorUniform, fogIntensityUniform, fogSpeedNode, iblIntensityNode;
+        let collisionRaycaster = new THREE.Raycaster();
+        let isReady = false;
+
+        const bayer4 = Fn(([uv]) => {
+          const x = floor(fract(uv.x * 4.0) * 4.0);
+          const y = floor(fract(uv.y * 4.0) * 4.0);
+          const index = x.add(y.mul(4.0));
+          return index
+            .add(0.5)
+            .div(16.0);
+        });
+
+        const materialCache = new Map();
+        const params = {
+            navMode: 'Orbit',
+            lightMode: 'Fixed',
+            visualMode: 'Standard',
+            iblIntensity: 0.05,
+            flashlightIntensity: 200,
+            flashlightColor: '#ffffff',
+            isFlashlightOn: true,
+            eyeHeight: 1.3,
+            moveSpeed: 10,
+            collisionRadius: 0.8,
+            showGrid: false,
+            showCone: false,
+            pointLightEnabled: true,
+            pointLightAnimate: true,
+            pointLightSpeed: 1.0,
+            fogSpeed: 0.3,
+			loadFile: () => document.getElementById('file-input').click()
+        };
+
+        const moveState = { forward: false, backward: false, left: false, right: false, up: false, down: false };
+        const clock = new THREE.Clock();
+        const LAYER_VOLUMETRIC = 10;
+
+        const currentSpotPos = new THREE.Vector3();
+        const currentSpotTarget = new THREE.Vector3();
+
+        init();
+
+        async function init() {
+            renderer = new THREE.WebGPURenderer({ antialias: true });
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.toneMapping = THREE.NeutralToneMapping;
+            renderer.shadowMap.enabled = true;
+            document.body.appendChild(renderer.domElement);
+
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x020202);
+
+            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 400);
+            camera.position.set(-10, 5, -8);
+
+			hudScene = new THREE.Scene();
+			hudCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 10);
+			hudCamera.position.z = 1;
+
+            // 1. IBL / 环境初始化
+            setupDefaultIBL();
+            setupEnvironment();
+            setupLights();
+
+            // 2. 体积光
+            setupVolumetric();
+
+            // 3. 后期渲染 (硬绑定图层修复 mask 报错)
+            setupPostProcessing();
+
+            // 4. 控制器与交互
+            setupControls();
+			setNavMode("Orbit");
+			setupGUI();
+            setupEventManager();
+
+			// 5. Debug控件
+            setupDebugWireframe();
+
+			// 6. 加载基础模型
+            loadDefaultModel();
+
+            isReady = true;
+            renderer.setAnimationLoop(animate);
+
+			// 初始化摄像机位置
+			orbitControls.target.set(0, 5, 0);
+            // 隐藏加载页
+            document.getElementById('loading-screen').style.opacity = '0';
+            setTimeout(() => document.getElementById('loading-screen').style.display = 'none', 500);
+
+        }
+
+        async function setupDefaultIBL() {
+            new RGBELoader()
+                .setPath('https://threejs.org/examples/textures/equirectangular/')
+                .load('venice_sunset_1k.hdr', (texture) => {
+                    texture.mapping = THREE.EquirectangularReflectionMapping;
+                    scene.environment = texture;
+                });
+        }
+
+        function setupEnvironment() {
+            gridHelper = new THREE.GridHelper(100, 100, 0x444444, 0x151515);
+            scene.add(gridHelper);
+
+            const floor = new THREE.Mesh(new THREE.PlaneGeometry(100, 100), new THREE.MeshStandardMaterial({ color: 0x111111, roughness: 0.8 }));
+            floor.rotation.x = -Math.PI / 2;
+            floor.receiveShadow = true;
+            scene.add(floor);
+        }
+
+        function setupLights() {
+			// 1. 环境光
+            ambientLight = new THREE.AmbientLight(0xffffff, 0.05);
+            scene.add(ambientLight);
+
+			// 2. 全局平行光
+			globalLight = new THREE.DirectionalLight(0xffffff, 1.0);
+			globalLight.position.set(10, 20, 10);
+			globalLight.castShadow = true;
+			globalLight.shadow.mapSize.width = 2048;
+			globalLight.shadow.mapSize.height = 2048;
+			scene.add(globalLight);
+
+			// 3. 浮动点光源
+            pointLight = new THREE.PointLight(0xffffff, 5, 50);
+			pointLight.intensity = 15;
+            pointLight.castShadow = true;
+            pointLight.layers.enable(LAYER_VOLUMETRIC);
+            scene.add(pointLight);
+
+			// 4. 手电筒
+            mainSpotLight = new THREE.SpotLight(0xffffff, params.flashlightIntensity);
+            mainSpotLight.angle = Math.PI / 7;
+            mainSpotLight.penumbra = 1;
+            mainSpotLight.castShadow = true;
+            mainSpotLight.layers.enable(LAYER_VOLUMETRIC);
+			mainSpotLight.position.set(10, 10, 10);
+			mainSpotLight.lookAt(0, 0, 0);
+            scene.add(mainSpotLight);
+
+            spotLightTarget = new THREE.Object3D();
+            scene.add(spotLightTarget);
+            mainSpotLight.target = spotLightTarget;
+        }
+
+        function setupVolumetric() {
+            const size = 128;
+            const data = new Uint8Array(size**3);
+            const perlin = new ImprovedNoise();
+            let i = 0;
+            for(let z=0; z<size; z++) for(let y=0; y<size; y++) for(let x=0; x<size; x++)
+                data[i++] = 128 + 128 * perlin.noise(x/15, y/15, z/15);
+
+            const tex = new THREE.Data3DTexture(data, size, size, size);
+            tex.format = THREE.RedFormat;
+            tex.minFilter = THREE.LinearFilter;
+            tex.unpackAlignment = 1;
+            tex.needsUpdate = true;
+
+            smokeAmount = uniform(2);
+            fogColorUniform = uniform(new THREE.Color(0xffffff));
+            fogSpeedNode = uniform(params.fogSpeed);
+
+            const volumetricMaterial = new THREE.VolumeNodeMaterial();
+            volumetricMaterial.steps = 15;
+            volumetricMaterial.offsetNode = bayer4(screenCoordinate);
+            volumetricMaterial.scatteringNode = Fn(({ positionRay }) => {
+                // 引入 fogSpeedNode 控制流动速度
+                const t = vec3(time.mul(fogSpeedNode.mul(0.3)), 0, time.mul(fogSpeedNode.mul(0.15)));
+                const sample = (sc) => texture3D(tex, positionRay.add(t).mul(sc).mod(1), 0).r.add(0.5);
+                let d = sample(0.1).mul(sample(0.05));
+                return smokeAmount.mix(1, d).mul(fogColorUniform);
+            });
+
+            volumetricMesh = new THREE.Mesh(new THREE.BoxGeometry(100, 50, 100), volumetricMaterial);
+            volumetricMesh.position.y = 25;
+            volumetricMesh.layers.disableAll();
+            volumetricMesh.layers.enable(LAYER_VOLUMETRIC);
+            scene.add(volumetricMesh);
+        }
+
+		function setupPostProcessing0() {
+			// 基于UV Mask进行控制
+			postProcessing = new THREE.PostProcessing(renderer);
+
+			// --- 1. 正常的主场景渲染流程 ---
+			scenePass = pass(scene, camera);
+			volumetricMesh.material.depthNode = scenePass.getTextureNode('depth').sample(screenUV);
+
+			const vPass = pass(scene, camera, { depthBuffer: false });
+			const vLayers = new THREE.Layers();
+			vLayers.disableAll();
+			vLayers.enable(LAYER_VOLUMETRIC);
+			vPass.pass(vLayers);
+			vPass.setResolutionScale(0.25);
+
+			fogIntensityUniform = uniform(1.0);
+			const blurred = gaussianBlur(vPass, uniform(0.6));
+
+			const mainSceneColor = scenePass.add(blurred.mul(fogIntensityUniform));
+
+			// --- 2. 获取 HUD 颜色节点 ---
+			const hud = setupDebugAtlas();
+
+			const hudColor = vec4(hud.color, 1.0).mul(hud.mask);
+			const baseColor = mainSceneColor.mul(hud.mask.oneMinus());
+
+			postProcessing.outputNode = baseColor.add(hudColor);
+		}
+
+        function setupPostProcessing() {
+          postProcessing = new THREE.PostProcessing(renderer);
+
+          // --- 主场景 pass ---
+          const mainPass = pass(scene, camera);
+
+          volumetricMesh.material.depthNode =
+            mainPass.getTextureNode('depth').sample(screenUV);
+
+          // --- 体积光 scene / pass ---
+          const volumeScene = new THREE.Scene();
+          volumeScene.add(volumetricMesh);
+
+          const volumePass = pass(volumeScene, camera, {
+            depthBuffer: false
+          });
+
+          const blurredVolume = gaussianBlur(
+            volumePass,
+            uniform(0.6)
+          );
+
+          fogIntensityUniform = uniform(1.0);
+          const volumeColor = blurredVolume.mul(fogIntensityUniform);
+
+          const mainColor = mainPass.add(volumeColor);
+          const hud = setupDebugAtlas(mainPass);
+          const hudColor = vec4(hud.color, 1.0).mul(hud.mask);
+          const baseColor = mainColor.mul(hud.mask.oneMinus());
+
+          postProcessing.outputNode = baseColor.add(hudColor);
+        }
+
+
+        function setupControls() {
+            orbitControls = new OrbitControls(camera, renderer.domElement);
+            orbitControls.enableDamping = true;
+
+            pointerLockControls = new PointerLockControls(camera, document.body);
+			const blocker = document.getElementById('blocker');
+
+            // 修复交互死锁：只有在非 Orbit 模式下点击才重新锁定
+			pointerLockControls.addEventListener('lock', () => {
+				document.getElementById('blocker').style.display = 'none';
+			});
+
+			pointerLockControls.addEventListener('unlock', () => {
+				// 只有在非 Orbit 模式下按 ESC 退出锁定，才显示 blocker
+				if (params.navMode !== 'Orbit') {
+					document.getElementById('blocker').style.display = 'flex';
+				}
+			});
+
+			// Blocker 点击事件
+			document.getElementById('blocker').addEventListener('click', () => {
+				if (params.navMode !== 'Orbit') {
+					pointerLockControls.lock();
+				}
+			});
+
+            transformControls = new TransformControls(camera, renderer.domElement);
+            transformControls.addEventListener('dragging-changed', (e) => orbitControls.enabled = !e.value);
+            scene.add(transformControls.getHelper());
+
+            const raycaster = new THREE.Raycaster();
+            const mouse = new THREE.Vector2();
+            window.addEventListener('mousedown', (e) => {
+                if (params.navMode !== 'Orbit' || e.button !== 0) return;
+                mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+                mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+                raycaster.setFromCamera(mouse, camera);
+
+                const targets = [];
+                if (currentModel) targets.push(currentModel);
+                targets.push(debugWireframe);
+
+                const intersects = raycaster.intersectObjects(targets, true);
+                if (intersects.length > 0) {
+                    const obj = intersects[0].object;
+                    if (obj === debugWireframe || obj.parent === debugWireframe) transformControls.attach(mainSpotLight);
+                    else if (currentModel) transformControls.attach(currentModel);
+                } else if (!transformControls.dragging) transformControls.detach();
+            });
+        }
+
+		function createSpotlightDebugCone(light, length = 10) {
+			const angle = light.angle;          // 半角
+			const radius = Math.tan(angle) * length;
+			const geo = new THREE.ConeGeometry(
+				radius,     // 底半径
+				length,     // 高度
+				32,
+				1,
+				true
+			);
+
+			// ConeGeometry 默认是 Y+ 方向
+			geo.translate(0, -length / 2, 0);
+			geo.rotateX(Math.PI / 2);
+
+			const mat = new THREE.MeshBasicMaterial({
+				color: 0x00ff88,
+				wireframe: true,
+				transparent: true,
+				opacity: 0.35,
+				depthTest: false
+			});
+
+			const mesh = new THREE.Mesh(geo, mat);
+			return mesh;
+		}
+
+		function rebuildDebugCone() {
+			if (!debugWireframe) return;
+
+			const parent = debugWireframe.parent;
+			const pos = debugWireframe.position.clone();
+			const quat = debugWireframe.quaternion.clone();
+
+			parent.remove(debugWireframe);
+			debugWireframe.geometry.dispose();
+			debugWireframe.material.dispose();
+
+			debugWireframe = createSpotlightDebugCone(mainSpotLight, 10);
+			debugWireframe.position.copy(pos);
+			debugWireframe.quaternion.copy(quat);
+
+			parent.add(debugWireframe);
+		}
+
+        function setupDebugWireframe() {
+			debugWireframe = createSpotlightDebugCone(mainSpotLight, 10);
+			scene.add(debugWireframe);
+        }
+
+        function setupDebugAtlas(scenePass) {
+
+          showDebugAtlasUniform = uniform(0);
+
+          const hudScale = 0.25;
+          const hudOffset = vec2(0, 0);
+          const localUV = screenUV.sub(hudOffset).div(hudScale);
+
+          const insideX =
+            localUV.x.greaterThanEqual(0).and(localUV.x.lessThanEqual(1));
+          const insideY =
+            localUV.y.greaterThanEqual(0).and(localUV.y.lessThanEqual(1));
+
+          const mask = insideX.and(insideY)
+            .and(showDebugAtlasUniform.greaterThan(0.5))
+            .toFloat();
+
+          // ✅ scenePass 现在一定存在
+          const depthTexture = scenePass.getTextureNode('depth');
+          const depthPixel = depthTexture.sample(localUV.clamp());
+
+          const viewZ =
+            depthPixel.remap(0.9, 1.0).clamp().oneMinus();
+
+          return {
+            color: vec3(viewZ),
+            mask
+          };
+        }
+
+		function setupDebugAtlas2() {
+			// 1. 控制开关
+			showDebugAtlasUniform = uniform(0);
+
+			// 2. 布局计算
+			const hudScale = 0.25;
+			const hudOffset = vec2(0, 0);
+			const localUV = screenUV.sub(hudOffset).div(hudScale);
+
+			// 3. 创建核心遮罩 (Mask)
+			// 判定是否在 0~1 的小窗口区间内
+			const insideX = localUV.x.greaterThanEqual(0).and(localUV.x.lessThanEqual(1));
+ 			const insideY = localUV.y.greaterThanEqual(0).and(localUV.y.lessThanEqual(1));
+			const mask = insideX.and(insideY)
+			.and(showDebugAtlasUniform.greaterThan(0.5))
+			.toFloat();   // ⚠️ 强制 float
+
+			// 4. 内容渲染
+			const depthTexture = scenePass.getTextureNode('depth');
+			const depthPixel = depthTexture.sample(localUV.clamp());
+
+			// 深度可视化 (0.9-1.0 映射到 0-1)
+			const viewZ = depthPixel.remap(0.9, 1.0).clamp().oneMinus();
+
+			// 返回: vec4(HUD内容, 遮罩值)
+			return {color: vec3(viewZ), mask};
+		}
+
+		function createDebugQuad(sourceDepthNode) {
+			// 1. 创建几何体 (宽高 0.5，即占据屏幕长宽的 1/4)
+			const geometry = new THREE.PlaneGeometry(0.5, 0.5);
+
+			// 2. 创建材质 (WebGPU 节点材质)
+			const material = new THREE.MeshBasicNodeMaterial();
+
+			// 3. 处理深度显示逻辑 (和之前一样，只是应用在材质上)
+			const depthSample = sourceDepthNode.sample(uv()); // Mesh 自身的 UV
+
+			// 深度可视化 (0.9-1.0 映射到 0-1)
+			const viewZ = depthSample.remap(0.9, 1.0).clamp().oneMinus();
+
+			// 设置材质颜色
+			material.colorNode = vec4(vec3(viewZ), 1.0);
+			material.depthTest = false;
+			material.transparent = true;
+
+			// 4. 创建 Mesh
+			showDebugAtlasUniform = uniform(0);
+			material.opacityNode = showDebugAtlasUniform;
+
+			const quad = new THREE.Mesh(geometry, material);
+
+			// 5. 定位 (正交相机坐标系: -1 到 1)
+			// X中心 = 1.0 (右边界) - 0.25 (半宽) = 0.75
+			// Y中心 = -1.0 (下边界) + 0.25 (半高) = -0.75
+			quad.position.set(0.75, -0.75, 0);
+
+			return quad;
+		}
+
+		function checkCollision(position, direction, distance) {
+			if (!currentModel) return false; // 修复变量名：从 model 改为 currentModel
+
+			collisionRaycaster.set(position, direction);
+			const intersects = collisionRaycaster.intersectObject(currentModel, true);
+
+			if (intersects.length > 0 && intersects[0].distance < distance) {
+				return true;
+			}
+			return false;
+		}
+
+        function updateMovement(delta) {
+			// 修复 1: 使用正确的指针锁定状态判断
+			if (params.navMode === 'Orbit' || !pointerLockControls.isLocked) return;
+
+			const speed = params.moveSpeed * delta;
+			const forward = new THREE.Vector3();
+			const right = new THREE.Vector3();
+
+			camera.getWorldDirection(forward);
+			right.crossVectors(forward, camera.up).normalize();
+
+			const moveVec = new THREE.Vector3();
+
+			if (params.navMode === 'Walk') {
+				forward.y = 0;
+				// 修复 3: 防止垂直视角导致的归一化失败
+				if (forward.lengthSq() > 0) forward.normalize();
+
+				if (moveState.forward) moveVec.add(forward);
+				if (moveState.backward) moveVec.sub(forward);
+				if (moveState.right) moveVec.add(right);
+				if (moveState.left) moveVec.sub(right);
+
+			} else if (params.navMode === 'Fly') {
+				if (moveState.forward) moveVec.add(forward);
+				if (moveState.backward) moveVec.sub(forward);
+				if (moveState.right) moveVec.add(right);
+				if (moveState.left) moveVec.sub(right);
+				if (moveState.up) moveVec.y += 1;
+				if (moveState.down) moveVec.y -= 1;
+			}
+
+			// 只有在有按键按下时才处理位移
+			if (moveVec.lengthSq() > 0) {
+				moveVec.normalize();
+
+				// 修复 2: 只有在加载了模型的情况下才进行碰撞检测
+				const rayOrigin = camera.position.clone();
+				rayOrigin.y -= 0.5; // 从脚部位置发射射线
+
+				const isBlocked = checkCollision(rayOrigin, moveVec, params.collisionRadius);
+
+				if (!isBlocked) {
+					moveVec.multiplyScalar(speed);
+					camera.position.add(moveVec);
+				}
+			}
+
+			// Walk 模式强制高度固定
+			if (params.navMode === 'Walk') {
+				camera.position.y = params.eyeHeight;
+			}
+		}
+
+        function updateFlashlight(delta) {
+			if (!params.isFlashlightOn) {
+				mainSpotLight.intensity = 0;
+				debugWireframe.visible = false;
+				return;
+			}
+			mainSpotLight.intensity = params.flashlightIntensity;
+			mainSpotLight.color.set(params.flashlightColor);
+			debugWireframe.visible = params.showCone;
+
+			if (params.lightMode === 'Fixed') {
+				debugWireframe.position.copy(mainSpotLight.position);
+				debugWireframe.quaternion.copy(mainSpotLight.quaternion);
+``
+				const dir = new THREE.Vector3(0, 0, -1).applyQuaternion(mainSpotLight.quaternion);
+        		spotLightTarget.position.copy(mainSpotLight.position).add(dir);
+        		spotLightTarget.updateMatrixWorld();spotLightTarget.position.copy(mainSpotLight.position).add(dir);
+				spotLightTarget.updateMatrixWorld();
+			} else {
+				// ===== 1. 计算手持灯光位置 =====
+				const offset = new THREE.Vector3(0.5, -0.4, -0.7)
+					.applyQuaternion(camera.quaternion);
+
+				currentSpotPos.lerp(
+					camera.position.clone().add(offset),
+					12 * delta
+				);
+
+				// ===== 2. 计算真正的 forward（世界空间）=====
+				const forward = new THREE.Vector3(0, 0, -1)
+					.applyQuaternion(camera.quaternion);
+
+				currentSpotTarget.lerp(
+					camera.position.clone().add(forward.multiplyScalar(20)),
+					12 * delta
+				);
+
+				// ===== 3. 设置灯光位置 =====
+				mainSpotLight.position.copy(currentSpotPos);
+
+				// ===== 4. 设置 target（关键）=====
+				spotLightTarget.position.copy(currentSpotTarget);
+				spotLightTarget.updateMatrixWorld(true);
+
+				// ===== 5. debug 完全跟随灯光 =====
+				debugWireframe.position.copy(mainSpotLight.position);
+				debugWireframe.lookAt(spotLightTarget.position);
+				debugWireframe.rotateY(Math.PI);
+			}
+		}
+
+		function setNavMode(mode) {
+			params.navMode = mode;
+			const blocker = document.getElementById('blocker');
+			const ctrlOrbit = document.getElementById('ctrl-orbit');
+			const ctrlFPS = document.getElementById('ctrl-fps');
+
+			if (mode === 'Orbit') {
+				pointerLockControls.unlock();
+				orbitControls.enabled = true;
+				blocker.style.display = 'none'; // Orbit 模式下永远隐藏遮罩
+				ctrlOrbit.style.display = 'block';
+				ctrlFPS.style.display = 'none';
+				if(transformControls.object) transformControls.visible = true;
+			} else {
+				orbitControls.enabled = false;
+				blocker.style.display = 'flex'; // 显示遮罩，等待用户点击锁定
+				ctrlOrbit.style.display = 'none';
+				ctrlFPS.style.display = 'block';
+				transformControls.detach(); // FPS 模式通常不需要变换轴
+			}
+
+			const viewMode = document.getElementById('nav_mode');
+			if (mode === 'Walk') {
+				viewMode.innerText = '沉浸模式（步行）';
+				document.getElementById('height_control').style.display = 'none';
+			} else if (mode === 'Fly') {
+				viewMode.innerText = '沉浸模式（飞行）';
+				document.getElementById('height_control').style.display = 'block';
+			}
+		}
+
+		function handleModel(object, animations = []) {
+            // 1. 清理旧模型和混合器
+            if (currentModel) {
+                scene.remove(currentModel);
+                // 简单的清理逻辑，防止内存泄漏
+                currentModel.traverse(child => {
+                    if (child.isMesh) {
+                        if (child.geometry) child.geometry.dispose();
+                        if (child.material) {
+                            if (Array.isArray(child.material)) child.material.forEach(m => m.dispose());
+                            else child.material.dispose();
+                        }
+                    }
+                });
+            }
+            if (mixer) {
+                mixer.stopAllAction();
+                mixer = null;
+            }
+
+            // 2. 获取原始模型 (如果是 GLTF/FBX，结构可能不同)
+            const rawModel = object.scene || object;
+
+            // 3. 核心修复：创建一个“容器” (Wrapper)
+            // 移动容器比移动模型内部的网格更安全、更稳定。
+            const wrapper = new THREE.Group();
+            wrapper.add(rawModel);
+
+            // 4. 先把容器加到场景中，以便计算正确的世界坐标包围盒
+            // (如果不加到场景，updateMatrixWorld 可能会计算不准)
+            scene.add(wrapper);
+
+            // 5. 自动缩放逻辑
+            // 计算原始包围盒
+            const box = new THREE.Box3().setFromObject(wrapper);
+            const size = box.getSize(new THREE.Vector3());
+            const center = box.getCenter(new THREE.Vector3());
+
+            // 计算缩放比例 (目标大小: 7)
+            const maxDim = Math.max(size.x, size.y, size.z);
+            const scale = 7 / (maxDim || 1);
+
+            // 应用缩放
+            wrapper.scale.setScalar(scale);
+
+            // 6. 关键步骤：落地修正 (Grounding)
+            wrapper.updateMatrixWorld(true);
+            const newBox = new THREE.Box3().setFromObject(wrapper);
+            const newCenter = newBox.getCenter(new THREE.Vector3());
+
+            // 计算偏移量：
+            wrapper.position.x -= newCenter.x;
+            wrapper.position.z -= newCenter.z;
+            wrapper.position.y -= newBox.min.y;
+
+            // 7. 设置阴影
+            wrapper.traverse(n => {
+                if (n.isMesh) {
+                    n.castShadow = true;
+                    n.receiveShadow = true;
+                }
+            });
+
+            // 8. 赋值全局变量
+            currentModel = wrapper;
+            transformControls.attach(currentModel);
+
+            // 9. 动画处理 (注意：动画是在 rawModel 里的，不是 wrapper)
+            const clips = animations.length > 0 ? animations : rawModel.animations || [];
+
+            if (clips.length > 0) {
+                // AnimationMixer 必须绑定到包含骨骼/动画数据的那个原始根节点
+                mixer = new THREE.AnimationMixer(rawModel);
+                const action = mixer.clipAction(clips[0]);
+                action.play();
+                console.log(`🎬 播放动画: ${clips[0].name}`);
+            }
+        }
+
+        function animate() {
+            if (!isReady) return;
+            const delta = clock.getDelta();
+            const t = performance.now() * 0.001;
+
+            if (params.pointLightEnabled) {
+                if (params.pointLightAnimate) {
+                    const speed = params.pointLightSpeed;
+                    pointLight.position.set(15+Math.sin(t*speed)*6, 5+Math.cos(t*speed), Math.cos(t*0.4*speed)*6);
+                }
+            } else { pointLight.intensity = 0; }
+
+            if (scene.environment) scene.environmentIntensity = params.iblIntensity;
+
+			// --- 更新动画混合器 ---
+			if (mixer) {
+				mixer.update(delta);
+			}
+
+            updateMovement(delta);
+            updateFlashlight(delta);
+            if (orbitControls.enabled) orbitControls.update();
+            postProcessing.render();
+        }
+
+        function setupGUI() {
+            const gui = new GUI({ title: 'ENGINE FINAL SETTINGS' });
+
+			gui.add(params, 'navMode', ['Orbit', 'Walk', 'Fly']).name('导航模式').listen().onChange(v => {
+				setNavMode(v);
+			});
+
+			const gFolder = gui.addFolder('🌞 全局照明 (GI)');
+			gFolder.addColor(globalLight, 'color').name('主光颜色');
+			gFolder.add(globalLight, 'intensity', 0, 10).name('主光强度');
+			gFolder.add(params, 'iblIntensity', 0, 2).name('IBL 环境强度');
+
+            const lFolder = gui.addFolder('💡 动态光源');
+            const floatLight = lFolder.addFolder('浮动点光源');
+			floatLight.add(params, 'pointLightEnabled').name('浮动灯开启');
+			floatLight.add(params, 'pointLightAnimate').name('开启动画');
+			floatLight.add(params, 'pointLightSpeed', 0.1, 5).name('动画速度');
+
+			floatLight.addColor(pointLight, 'color').name('颜色');
+			floatLight.add(pointLight, 'intensity', 0, 100).name('强度');
+
+
+			const flashLight = lFolder.addFolder('手电筒');
+			flashLight.add(params, 'lightMode', ['Fixed', 'Handheld']).name('持握模式');
+			flashLight.addColor(mainSpotLight, 'color').name('光色');
+			flashLight.add(params, 'flashlightIntensity', 0, 1000).name('强度').onChange(v => mainSpotLight.intensity = v);
+			flashLight.add(mainSpotLight, 'angle', Math.PI / 32, Math.PI / 3).name('光锥大小').onChange(() => {
+				rebuildDebugCone();
+			});
+			flashLight.add(params, 'showCone').name('显示辅助锥');
+
+            const fFolder = gui.addFolder('体积雾控制');
+            fFolder.add(smokeAmount, 'value', 0, 5).name('雾气密度');
+            fFolder.add(fogIntensityUniform, 'value', 0, 2).name('雾气亮度');
+            fFolder.add(params, 'fogSpeed', 0, 5).name('流动速度').onChange(v => fogSpeedNode.value = v);
+            fFolder.addColor({c:'#ffffff'}, 'c').name('雾气颜色').onChange(v => fogColorUniform.value.set(v));
+
+			// 5. Debug Atlas (新增需求)
+			const dFolder = gui.addFolder('🛠 Debug Views');
+			dFolder.add({ showAtlas: false }, 'showAtlas').name('显示深度遮罩').onChange(v => {
+				showDebugAtlasUniform.value = v ? 1 : 0;
+			});
+
+            gui.add(params, 'visualMode', ['Standard', 'Wireframe', 'Normals']).name('渲染风格').onChange(v => {
+                scene.traverse(node => {
+                    if (node.isMesh && node !== volumetricMesh && node !== gridHelper && node !== debugWireframe) {
+                        if (v === 'Standard') { if (materialCache.has(node)) node.material = materialCache.get(node); }
+                        else {
+                            if (!materialCache.has(node)) materialCache.set(node, node.material);
+                            const m = new THREE.MeshBasicNodeMaterial();
+                            if (v === 'Wireframe') m.wireframe = true;
+                            if (v === 'Normals') m.colorNode = normalWorld;
+                            node.material = m;
+                        }
+                    }
+                });
+            });
+
+            gui.add(params, 'showGrid').name('地面网格').onChange(v => gridHelper.visible = v);
+			gui.add(params, 'loadFile').name('📂 上传新模型');
+        }
+
+		function setupEventManager() {
+            // 1. 键盘按下事件
+            window.addEventListener('keydown', (e) => {
+                // 使用 e.code 获取物理按键，不受 CapsLock 或输入法影响
+                console.log(e.code);
+
+                switch (e.code) {
+                    case 'KeyW':
+                        moveState.forward = true;
+                        e.preventDefault(); // 阻止浏览器滚动
+                        break;
+                    case 'KeyS':
+                        moveState.backward = true;
+                        e.preventDefault();
+                        break;
+                    case 'KeyA':
+                        moveState.left = true;
+                        e.preventDefault();
+                        break;
+                    case 'KeyD':
+                        moveState.right = true;
+                        e.preventDefault();
+                        break;
+                    case 'KeyQ':
+                        moveState.down = true;
+                        e.preventDefault();
+                        break;
+                    case 'KeyE':
+                        moveState.up = true;
+                        e.preventDefault();
+                        break;
+                    case 'ShiftLeft':
+                    case 'ShiftRight':
+                        params.moveSpeed = 15.0;
+                        e.preventDefault();
+                        break;
+                    case 'KeyF':
+                        params.isFlashlightOn = !params.isFlashlightOn;
+						if (params.isFlashlightOn) {document.getElementById('mode-display').innerText = "True"} else {
+							document.getElementById('mode-display').innerText = "False"
+						}
+                        break;
+                    case 'KeyT':
+                        if (params.navMode === 'Orbit') {
+                            const nextMode = transformControls.getMode() === 'translate' ? 'rotate' : 'translate';
+                            transformControls.setMode(nextMode);
+							if (nextMode === 'rotate') {
+								document.getElementById('gizmo-display').innerText = "旋转";
+							} else {
+								document.getElementById('gizmo-display').innerText = "平移";
+							}
+
+                        }
+                        break;
+                    case 'KeyR':
+                        camera.position.set(-8, 4, -8);
+                        orbitControls.target.set(0, 0, 0);
+
+                        break;
+                }
+            });
+
+            // 2. 键盘抬起事件
+            window.addEventListener('keyup', (e) => {
+                switch (e.code) {
+                    case 'KeyW':
+                        moveState.forward = false;
+                        break;
+                    case 'KeyS':
+                        moveState.backward = false;
+                        break;
+                    case 'KeyA':
+                        moveState.left = false;
+                        break;
+                    case 'KeyD':
+                        moveState.right = false;
+                        break;
+                    case 'KeyQ':
+                        moveState.down = false;
+                        break;
+                    case 'KeyE':
+                        moveState.up = false;
+                        break;
+                    case 'ShiftLeft':
+                    case 'ShiftRight':
+                        params.moveSpeed = 8.0; // 恢复默认速度
+                        break;
+                }
+            });
+
+            // 3. 关键修复：窗口失焦保护 (防止切屏后卡死在行走状态)
+            window.addEventListener('blur', () => {
+                moveState.forward = false;
+                moveState.backward = false;
+                moveState.left = false;
+                moveState.right = false;
+                moveState.up = false;
+                moveState.down = false;
+                params.moveSpeed = 8.0;
+            });
+
+            // --- 其他监听保持不变 ---
+            document.getElementById('hdr-input').addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                const url = URL.createObjectURL(file);
+                new RGBELoader().load(url, (tex) => {
+                    tex.mapping = THREE.EquirectangularReflectionMapping;
+                    scene.environment = tex;
+                });
+            });
+
+            const blocker = document.getElementById('blocker');
+            if (blocker) {
+                blocker.addEventListener('click', () => {
+                    if (params.navMode !== 'Orbit') {
+                        pointerLockControls.lock();
+                    }
+                });
+            }
+
+			document.getElementById('file-input').addEventListener('change', (e) => {
+                if(e.target.files[0]) handleFileUpload(e.target.files[0]);
+            });
+
+            window.addEventListener('dragover', (e) => { e.preventDefault(); document.body.classList.add('dragover'); });
+            window.addEventListener('dragleave', () => { document.body.classList.remove('dragover'); });
+            window.addEventListener('drop', (e) => {
+                e.preventDefault();
+                document.body.classList.remove('dragover');
+                if(e.dataTransfer.files[0]) handleFileUpload(e.dataTransfer.files[0]);
+            });
+
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+
+		function loadDefaultModel() {
+			handleModel(new THREE.Mesh(
+				new TeapotGeometry(1, 15),
+				new THREE.MeshStandardMaterial({ color: 0xaaaaaa, metalness: 0.8, roughness: 0.1 })
+			));
+		}
+
+		function handleFileUpload(file) {
+			const url = URL.createObjectURL(file);
+			const fileName = file.name.toLowerCase();
+
+			console.log(`📂 Loading file: ${fileName}`);
+
+			// 显示加载中提示 (可选)
+			document.body.style.cursor = 'wait';
+
+			const cleanUp = () => {
+				URL.revokeObjectURL(url);
+				document.body.style.cursor = 'default';
+				document.getElementById('drop-zone').style.display = 'none';
+			};
+
+			if (fileName.endsWith('.glb') || fileName.endsWith('.gltf')) {
+				const loader = new GLTFLoader();
+				loader.load(url, (gltf) => {
+					// GLTF 包含 scene 和 animations
+					handleModel(gltf.scene, gltf.animations);
+					cleanUp();
+				}, undefined, (err) => {
+					console.error(err);
+					cleanUp();
+				});
+			}
+			else if (fileName.endsWith('.obj')) {
+				const loader = new OBJLoader();
+				loader.load(url, (obj) => {
+					// OBJ 通常没有动画，但结构也是 Group
+					handleModel(obj);
+					cleanUp();
+				}, undefined, (err) => {
+					console.error(err);
+					cleanUp();
+				});
+			}
+			else if (fileName.endsWith('.fbx')) {
+				const loader = new FBXLoader();
+				loader.load(url, (fbx) => {
+					// FBX 加载出来本身就是一个 Group，动画在 fbx.animations 中
+					handleModel(fbx, fbx.animations);
+					cleanUp();
+				}, undefined, (err) => {
+					console.error(err);
+					cleanUp();
+				});
+			}
+			else if (fileName.endsWith('.3dm')) {
+				const loader = new Rhino3dmLoader();
+				loader.setLibraryPath( 'jsm/libs/rhino3dm/' );
+				loader.load(url, (rhino) => {
+					handleModel(rhino);
+					cleanUp();
+				}, undefined, (err) => {
+					console.error(err);
+					cleanUp();
+				});
+			}
+			else {
+				alert('不支持的文件格式。请使用 .glb, .gltf, .obj 或 .fbx');
+				cleanUp();
+			}
+		}
+    </script>
+</body>
+</html>

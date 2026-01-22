@@ -628,6 +628,54 @@ nav {
   background-color: rgba(255, 255, 255, 0.3);
 }
 
+/* ========== WebGPU ========== */
+.gpu-card-wrapper {
+    position: relative;
+    width: 100%;
+    min-height: 60vh;
+
+    border-radius: 1.5rem;
+    overflow: hidden;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    z-index: 2;
+    background: #050505;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#gpu-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* 移动端适配：高度稍微减小 */
+@media (max-width: 768px) {
+    .gpu-card-wrapper {
+        min-height: 50vh;
+    }
+}
+
+/* --- 全屏展开样式 (State 2) --- */
+.gpu-card-wrapper.expanded {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh; /* 全屏铺满 */
+    border-radius: 0;
+    z-index: 9999; /* 确保在最上层 */
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+/* 适配移动端 Navbar (如果你的 Navbar 是固定在顶部的，可以留出空隙) */
+/* 如果你想全屏覆盖 Navbar，保持 top: 0 即可 */
+.gpu-card-wrapper.expanded {
+    top: 0;
+}
+
 /* ========== About Me介绍 ========== */
 /* 图片容器 */
 .section-card-image{

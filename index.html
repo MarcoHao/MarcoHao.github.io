@@ -125,6 +125,60 @@
     </div>
   </section>
 
+  <!-- GPU Section -->
+  <section class="section" id="WebGPU-section">
+    <div class="section-wrapper p-6">
+      <div class="section-grid">
+
+        <div class="section-left">
+          <div class="section-content">
+            <h2 class="section-title">Real-time Engine</h2>
+            <p class="section-subtitle">
+              光影计算，即时渲染；<br>
+              从静态表现到动态交互。<br>
+              Computing light, rendering in real-time.
+            </p>
+            <div class="section-footer">
+              <p class="section-description">
+                基于 <strong>Three.js + WebGPU</strong> 构建的体积光渲染引擎。<br>
+                实现了体积雾、SDF字体碰撞、动态光源与后处理管线。<br>
+                A volumetric rendering engine built on WebGPU.
+              </p>
+              <a href="https://github.com/MarcoHao" target="_blank" class="section-view-all">View Code →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-right-wrapper w-full h-full flex flex-col gap-6">
+
+        <div id="gpu-container" class="gpu-card-wrapper transition-all duration-700 ease-in-out">
+            <div id="gpu-loader" class="absolute inset-0 bg-black z-20 flex items-center justify-center text-white text-xs font-mono">
+                LOADING ENGINE...
+            </div>
+
+            <div class="absolute top-4 left-6 z-30 flex gap-2">
+                <button id="btn-expand-gpu" class="bg-white/10 backdrop-blur hover:bg-white/20 text-white px-3 py-2 rounded text-xs border border-white/20 transition-colors">
+                    <i class="fas fa-expand"></i> Enter Fullscreen
+                </button>
+                <button id="btn-shrink-gpu" class="hidden bg-white/10 backdrop-blur hover:bg-white/20 text-white px-3 py-2 rounded text-xs border border-white/20 transition-colors">
+                    <i class="fas fa-compress"></i> Exit
+                </button>
+            </div>
+
+            <iframe
+                id="gpu-frame"
+                src="webgpu_volume_lighting3.html"
+                class="w-full h-full border-0 rounded-2xl"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                loading="lazy">
+            </iframe>
+        </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
   <!-- AI Section -->
   <section class="section" id="ai-section">
     <div class="section-wrapper p-6">
@@ -990,6 +1044,70 @@
       initViewAllToggle('experience-section', 'viewAllExperienceBtn', 'ExperienceGrid');
     });
 
+    /* ========== 初始化GPU Section ========== */
+    document.addEventListener('DOMContentLoaded', () => {
+      const gpuContainer = document.getElementById('gpu-container');
+      const gpuFrame = document.getElementById('gpu-frame');
+      const btnExpand = document.getElementById('btn-expand-gpu');
+      const btnShrink = document.getElementById('btn-shrink-gpu');
+      const loader = document.getElementById('gpu-loader');
+
+      // 监听 iframe 加载完成，隐藏 loader
+      gpuFrame.onload = () => {
+          setTimeout(() => {
+              loader.style.opacity = '0';
+              setTimeout(() => loader.style.display = 'none', 500);
+          }, 1000);
+      };
+
+      // === 切换到全屏模式 ===
+      function enterFullscreen() {
+          // 1. 修改 CSS 类
+          gpuContainer.classList.add('expanded');
+
+          // 2. 按钮状态切换
+          btnExpand.classList.add('hidden');
+          btnShrink.classList.remove('hidden');
+
+          // 3. 锁定页面滚动 (防止在 3D 界面滚动时主页跟着滚)
+          document.body.style.overflow = 'hidden';
+
+          // 4. (可选) 通知 iframe 窗口大小变了，强制 Three.js 重绘
+          // 虽然 WebGPU 页面里有 resize 监听，但有时 transition 动画会导致延迟
+          setTimeout(() => {
+             gpuFrame.contentWindow.dispatchEvent(new Event('resize'));
+             // 聚焦 iframe，以便键盘立即生效
+             gpuFrame.contentWindow.focus();
+          }, 750); // 等 CSS transition 结束
+      }
+
+      // === 退出全屏模式 ===
+      function exitFullscreen() {
+          gpuContainer.classList.remove('expanded');
+
+          btnExpand.classList.remove('hidden');
+          btnShrink.classList.add('hidden');
+
+          document.body.style.overflow = '';
+
+          // 强制失焦，避免键盘事件继续传给 iframe
+          window.focus();
+
+          setTimeout(() => {
+             gpuFrame.contentWindow.dispatchEvent(new Event('resize'));
+          }, 750);
+      }
+
+      btnExpand.addEventListener('click', enterFullscreen);
+      btnShrink.addEventListener('click', exitFullscreen);
+
+      // ESC 键退出全屏
+      window.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && gpuContainer.classList.contains('expanded')) {
+              exitFullscreen();
+          }
+      });
+    });
     // === 元素引用 ===
     const modalOverlay = document.getElementById('modalOverlay');
     const closeModalBtn = document.getElementById('closeModal');
@@ -1532,7 +1650,7 @@
   </script>
 
   <script>
-    console.log("📌 WebP loader initialized...");
+    // console.log("📌 WebP loader initialized...");
 
     // Helper: 尝试替换为 WebP
     function tryReplaceWithWebP(el) {
@@ -1548,10 +1666,10 @@
         fetch(encodedWebpSrc, { method: 'HEAD' })
           .then(response => {
             if (response.ok) {
-              console.log(`✅ WebP found and used: ${encodedWebpSrc}`);
+              // console.log(`✅ WebP found and used: ${encodedWebpSrc}`);
               el.setAttribute("src", encodedWebpSrc);
             } else {
-              console.log(`❌ WebP not found, keeping original: ${src}`);
+              // console.log(`❌ WebP not found, keeping original: ${src}`);
             }
           })
           .catch(err => {

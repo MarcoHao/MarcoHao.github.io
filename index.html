@@ -47,6 +47,8 @@
         </div>
         <div class="flex items-center space-x-4">
           <div class="nav-button md:flex space-x-6 text-sm">
+            <a href="#webGPU-section" class="nav-link">RG</a>
+            <a href="#ta-section" class="nav-link">TA</a>
             <a href="#ai-section" class="nav-link">AI</a>
             <a href="#code-section" class="nav-link">Code</a>
             <a href="#design-section" class="nav-link">Design</a>
@@ -70,6 +72,8 @@
       <!-- 移动端导航弹窗 -->
       <div id="mobileNavPopup" class="mobile-nav-popup">
         <a href="index.html" class="mobile-nav-link nav-link">Home</a>
+        <a href="#webGPU-section" class="mobile-nav-link nav-link">RG</a>
+        <a href="#ta-section" class="mobile-nav-link nav-link">TA</a>
         <a href="#ai-section" class="mobile-nav-link nav-link">AI</a>
         <a href="#code-section" class="mobile-nav-link nav-link">Code</a>
         <a href="#design-section" class="mobile-nav-link nav-link">Design</a>
@@ -126,7 +130,7 @@
   </section>
 
   <!-- GPU Section -->
-  <section class="section" id="WebGPU-section">
+  <section class="section" id="webGPU-section">
     <div class="section-wrapper p-6">
       <div class="section-grid">
 
@@ -144,7 +148,7 @@
                 实现了体积雾、SDF字体碰撞、动态光源与后处理管线。<br>
                 A volumetric rendering engine built on WebGPU.
               </p>
-              <a href="https://github.com/MarcoHao" target="_blank" class="section-view-all">View Code →</a>
+              <a href="https://github.com/MarcoHao/MarcoHao.github.io/blob/main/webgpu_volume_lighting3.html" target="_blank" class="section-view-all">View Code →</a>
             </div>
           </div>
         </div>
@@ -178,6 +182,42 @@
     </div>
   </section>
 
+  <!-- TA Section -->
+  <section class="section" id="ta-section">
+    <div class="section-wrapper p-6">
+      <div class="section-grid">
+        <!-- 左侧描述 -->
+        <div class="section-left">
+          <div class="section-content">
+            <h2 class="section-title">TA</h2>
+            <p class="section-subtitle">
+              从表现出发，构建高效管线与极致美学的桥梁。<br />
+              Bridging efficient pipelines with ultimate visual performance.
+            </p>
+            <div class="section-footer">
+              <p class="section-description">
+              致力于图形技术与艺术表现的深度融合。
+              <br><br>
+              <strong>· 自动化管线  (Pipeline):</strong>
+              <br>
+              <strong>· 视觉表现  (Rendering):</strong>
+              <br>
+              <strong>· 程序化生成  (PCG):</strong>
+              <br><br>
+              <em>Dedicated to the fusion of graphics tech and artistic expression. </em>
+            </p>
+              <a href="#" class="section-view-all" id="viewAllTABtn">View All →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 右侧卡片区（由 JS 渲染） -->
+        <div class="section-card">
+          <div class="section-right" id="TAGrid"></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- AI Section -->
   <section class="section" id="ai-section">
@@ -311,6 +351,7 @@
 
             <!-- 精简文本内容 -->
             <div class="space-y-4 mb-6 text-slate-600 dark:text-slate-400">
+              <p>25.12–Now 东南大学建筑学院 · 建筑运算与应用团队</p>
               <p>2024–Now 东南大学建筑学院 · 建筑运算与应用团队</p>
               <p>2019–2024 华南理工大学建筑学院 · 建筑学</p>
               <p>2016–2019 佛山市第一中学</p>
@@ -325,7 +366,7 @@
               </div>
               <div>
                 <h3 class="font-bold text-green-600 dark:text-green-400 mb-1">Practice</h3>
-                <p class="text-sm">2024.10–11 国际工作营<br>2023.09–11 设计师助理<br>班长 / 学创部部长</p>
+                <p class="text-sm">2025.12 技术美术实习生<br>2023.09–11 设计师助理<br>班长 / 学创部部长</p>
               </div>
               <div>
                 <h3 class="font-bold text-purple-600 dark:text-purple-400 mb-1">Vision</h3>
@@ -497,6 +538,39 @@
 
   <script>
     // === 数据定义 ===
+    const TAData = [
+      {
+        id: 'web_GPU',
+        title: "Real Time rendering by Three.js",
+        tag: "TA",
+        meta: "Three.js × Volumetric Lighting",
+        image: "assets/projects/webGPU/1月24日.gif",
+        description: `
+          <p>基于Three.JS开发的线上渲染引擎，使用VolumetricMaterial与PostPossessing的分层渲染方式，实现实时体积光，支持多种交互方式与环境光照自定义。</p>
+        `,
+        markdown: "assets/projects/webGPU/WebGPU 体积雾渲染引擎：踩坑记录.md",
+        links: [
+          { text: "Project Video", url: "#" },
+          { text: "Technical Report", url: "https://github.com/MarcoHao/MarcoHao.github.io/blob/main/webgpu_volume_lighting3.html" }
+        ]
+      },
+      {
+        id: 'aigc-PBR-gen',
+        title: "Blender + AIGC PBR Generation Workflow",
+        tag: "TA",
+        meta: "Hunyuan3D × Blender",
+        image: "assets/projects/aigc-pbr/Cover.png",
+        description: `
+          <p>基于Hunyuan3D与Blender，初步实现从可拆分美术PBR资产制作的全过程。项目聚焦于AIGC组件拆分与贴图映射的核心问题，通过顶点着色与UV互换，一定程度上解决了本地PBR资产生成流程。</p>
+        `,
+        markdown: "assets/projects/aigc-pbr/Blender 与AI3D PBR模型生成管线.md",
+        links: [
+          { text: "Project Video", url: "#" },
+          { text: "Technical Report", url: "https://github.com/MarcoHao/2026-01-23-AIGC_PBR" }
+        ]
+      },
+    ];
+
     const AIData = [
       {
         id: '3d-model-generation-workflow',
@@ -660,6 +734,15 @@
     {
       year: "2025",
       items: [
+        {
+          id: "exp2025-12",
+          title: "群核科技AIGC技术美术实习生",
+          subtitle: "AIRender",
+          tag: "Internship",
+          date: "2025-12",
+          // markdown: "assets/projects/multi-agent-system/multi-agents-system.md",
+          image: "https://placehold.co/800x600/1e293b/f1f5f9?text=Internship"
+        },
         {
           id: "exp2025-01",
           title: "基于分层行为控制的多智能体系统生成与优化方法研究",
@@ -917,6 +1000,7 @@
       });
     }
 
+    renderCards('TAGrid', TAData);
     renderCards('AIGrid', AIData);
     renderCards('CodeGrid', CodeData);
     renderCards('DesignGrid', DesignData);
@@ -1038,6 +1122,7 @@
 
     /* ========== 初始化多个 Section ========== */
     document.addEventListener('DOMContentLoaded', () => {
+      initViewAllToggle('ta-section', 'viewAllTABtn', 'TAGrid');
       initViewAllToggle('ai-section', 'viewAllAIBtn', 'AIGrid');
       initViewAllToggle('code-section', 'viewAllCodeBtn', 'CodeGrid');
       initViewAllToggle('design-section', 'viewAllDesignBtn', 'DesignGrid');
@@ -1460,7 +1545,7 @@
 
     // === 标签滚动高亮 ===
     const navLinks = document.querySelectorAll('.nav-link');
-    const sections = ['home', 'ai-section', 'code-section', 'design-section', 'experience-section', 'about'];
+    const sections = ['home', 'webGPU-section', 'ta-section', 'ai-section', 'code-section', 'design-section', 'experience-section', 'about'];
 
     window.addEventListener('scroll', () => {
       const viewportCenter = window.scrollY + window.innerHeight / 2;
@@ -1525,9 +1610,9 @@
     document.addEventListener('DOMContentLoaded', function () {
       const backgrounds = [
         'assets/images/background/01.mp4',
-        'assets/images/background/02.png',
-        'assets/images/background/03.jpg',
-        'assets/images/background/04.png',
+        'assets/images/background/02.mp4',
+        'assets/images/background/03.png',
+        'assets/images/background/04.jpg',
         'assets/images/background/05.jpg',
       ];
 

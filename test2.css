@@ -1410,6 +1410,17 @@ nav {
   color: rgb(221, 214, 254);
 }
 
+/* TA */
+.tag-ta {
+  background-color: rgb(232, 255, 247); /* bg-purple-100 */
+  color: rgb(33, 168, 127); /* text-purple-800 */
+}
+.dark .tag-ta {
+  background-color: rgba(33, 168, 127, 0.3);
+  color: rgb(180, 254, 223);
+}
+
+
 /* AI */
 .tag-ai {
   background-color: rgba(243, 232, 255, 1); /* bg-purple-100 */

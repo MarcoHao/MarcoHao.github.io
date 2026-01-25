@@ -45,41 +45,60 @@
         }
 
         /* 1. 当高度较小时（嵌入在作品集卡片中时） */
-        @media (max-height: 700px) {
+        .ui-hidden {
+            display: none !important;
+        }
+
+        /* 1. 紧凑模式：针对平板或较小的窗口 (宽度 < 900px 且 高度 < 800px) */
+        @media (max-width: 900px) and (max-height: 800px) {
             .glass-panel {
-                transform: scale(0.8);
-                margin-bottom: -10px;
+                width: 320px; /* 缩小宽度 */
+                transform: scale(0.9);
+                transform-origin: left bottom;
+            }
+            .info-row { font-size: 0.85rem; margin-bottom: 0.5rem; }
+        }
+
+        /* 2. 极小模式：针对手机横屏或嵌入式小卡片 (宽度 < 600px 或 高度 < 500px) */
+        @media (max-width: 600px), (max-height: 550px) {
+            #controls-info {
+                width: 280px;
+                padding: 1rem;
             }
 
-            .panel-header span:nth-child(2),
-            #gizmo-display, /* 次要状态 */
-            .info-row span[style*="font-size:0.75rem"]
-            {
-                display: none !important;
-            }
-
-            /* 调整按钮间距 */
+            /* 按钮堆叠 */
             .control-actions {
-                margin-top: 0.5rem;
-                gap: 0.5rem;
+                flex-direction: row;
+                gap: 0.4rem;
             }
+            .btn-secondary { padding: 0.4rem; font-size: 0.7rem; }
+        }
 
-            .info-row {
-                margin-bottom: 0.4rem;
-                font-size: 0.9rem;
+        /* 针对超窄屏幕（手机竖屏） */
+        @media (max-width: 480px) {
+            #ui-layer {
+                padding: 0.5rem;
+            }
+            .glass-panel {
+                width: calc(100vw - 1rem);
+                transform: none;
             }
         }
 
-        /* 2. 当高度极小时（比如手机端嵌入视图） */
-        @media (max-height: 500px) {
-            .glass-panel {
-                display: none;
-            }
+        .body-hidden {
+            display: none !important;
+        }
 
-            /* 在极小视图下，也许只保留最核心的几个按钮 */
-            #controls-info {
-                background: rgba(0,0,0,0.6); /* 加深背景 */
-            }
+        /* 缩窄面板宽度 */
+        .panel-collapsed .panel-header {
+            border-bottom: 0;
+            padding-bottom: 0;
+            margin-bottom: 0;
+        }
+        .panel-collapsed {
+            width: 120px !important;
+            padding: 0.8rem 1rem !important;
+            transition: all 0.3s ease;
         }
 
         .panel-header {
@@ -129,43 +148,6 @@
             display: flex;
             flex-direction: column;
             gap: 0.75rem;
-        }
-
-        .action-label {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            padding: 0.6rem 1rem;
-            font-size: 0.8rem;
-            font-weight: 600;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-align: center;
-            border: 1px solid var(--border-color);
-        }
-
-        /* 主按钮：上传 */
-        .btn-upload {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            border: none;
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-        }
-        .btn-upload:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
-        }
-
-        /* 次级按钮：HDR */
-        .btn-outline {
-            background: transparent;
-            color: var(--text-primary);
-        }
-        .btn-outline:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: var(--text-tertiary);
         }
 
         /* --- Loading Screen --- */
@@ -293,47 +275,52 @@
 
     <div id="ui-layer" class="hero-content-block">
         <div id="controls-info" class="glass-panel">
-            <div class="panel-header">
+            <div class="panel-header" style="display: flex; justify-content: space-between; align-items: center;">
                 <span>仪表台</span>
-                <span style="font-size:10px; opacity: 0.5;"></span>
+                <div id="ui-toggle-btn" style="cursor: pointer; padding: 5px; font-family: monospace; font-weight: bold; font-size: 1.2rem; pointer-events: auto;">
+                    -
+                </div>
             </div>
 
-            <div id="ctrl-orbit" class="info-row">
-                <i class="fa-solid fa-mouse"></i>
-                <span><b>环绕</b>: 左键 旋转 | 右键 平移</span>
-            </div>
+            <div id="info-body">
+                <div id="ctrl-orbit" class="info-row">
+                    <i class="fa-solid fa-mouse"></i>
+                    <span><b>环绕</b>: 左键 旋转 | 右键 平移</span>
+                </div>
 
-            <div id="ctrl-fps" class="info-row">
-                <i class="fa-solid fa-gamepad"></i>
-                <span><b>第一人称视角</b>: WASDQE 移动 | 鼠标锁定</span>
-            </div>
+                <div id="ctrl-fps" class="info-row">
+                    <i class="fa-solid fa-gamepad"></i>
+                    <span><b>第一人称视角</b>: WASDQE 移动 | 鼠标锁定</span>
+                </div>
 
-            <div class="info-row">
-                <span style="min-width: 80px;">聚光灯</span>
-                <span id="mode-display" class="status-active">启用</span>
-                <span style="margin-left:auto; opacity:0.6; font-size:0.75rem;">(按下 F 切换)</span>
-            </div>
+                <div class="info-row">
+                    <span style="min-width: 80px;">聚光灯</span>
+                    <span id="mode-display" class="status-active">启用</span>
+                    <span style="margin-left:auto; opacity:0.6; font-size:0.75rem;">(按下 F 切换)</span>
+                </div>
 
-            <div class="info-row">
-                <span style="min-width: 80px;">物体移动</span>
-                <span id="gizmo-display" style="color: var(--secondary-color);">平移</span>
-                <span style="margin-left:auto; opacity:0.6; font-size:0.75rem;">(按下 T 切换)</span>
-            </div>
+                <div class="info-row">
+                    <span style="min-width: 80px;">物体移动</span>
+                    <span id="gizmo-display" style="color: var(--secondary-color);">平移</span>
+                    <span style="margin-left:auto; opacity:0.6; font-size:0.75rem;">(按下 T 切换)</span>
+                </div>
 
-			<div class="control-actions">
-				<label for="hdr-input" class="btn-secondary">
-					上传HDR
-				</label>
-				<input type="file" id="hdr-input" hidden accept=".hdr">
-				<label for="file-input" class="btn-secondary">
-					上传模型
-				</label>
-				<input type="file" id="file-input" hidden accept=".glb,.gltf,.obj,.fbx">
+                <div class="control-actions">
+                    <label for="hdr-input" class="btn-secondary">
+                        上传HDR
+                    </label>
+                    <input type="file" id="hdr-input" hidden accept=".hdr">
+                    <label for="file-input" class="btn-secondary">
+                        上传模型
+                    </label>
+                    <input type="file" id="file-input" hidden accept=".glb,.gltf,.obj,.fbx">
 
-			</div>
+                </div>
 
-            <div style="margin-top: 1rem; padding-top: 0.8rem; border-top: 1px solid var(--border-color); font-size: 0.75rem; color: var(--text-tertiary); text-align: center;">
-                按下 <kbd>R</kbd> 重置相机位置
+                <div style="margin-top: 1rem; padding-top: 0.8rem; border-top: 1px solid var(--border-color); font-size: 0.75rem; color: var(--text-tertiary); text-align: center;">
+                    按下 <kbd>R</kbd> 重置相机位置
+                    按下 <kbd>P</kbd> 截图
+                </div>
             </div>
         </div>
     </div>
@@ -372,15 +359,24 @@
         let volumetricMesh, gridHelper, debugWireframe, currentModel;
 		let mixer; // 用于管理动画
 		let globalLight;
+        let lastPointIntensity;
 
 		let scenePass;
 		let hudScene, hudCamera;
 		let showDebugAtlasUniform;
 
+        let volumetricTex;
+		let debugHUD;
+
+
         // --- TSL Uniforms ---
         let smokeAmount, fogColorUniform, fogIntensityUniform, fogSpeedNode, iblIntensityNode;
         let collisionRaycaster = new THREE.Raycaster();
         let isReady = false;
+
+        // --- 状态管理 ---
+        let userInteracted = false;
+        let userdashBroadInteracted = false;
 
         const materialCache = new Map();
         const params = {
@@ -499,6 +495,7 @@
 			// 3. 浮动点光源
             pointLight = new THREE.PointLight(0xffffff, 5, 50);
 			pointLight.intensity = 15;
+            lastPointIntensity = pointLight.intensity;
             pointLight.castShadow = true;
             pointLight.layers.enable(LAYER_VOLUMETRIC);
             scene.add(pointLight);
@@ -537,6 +534,12 @@
             tex.unpackAlignment = 1;
             tex.needsUpdate = true;
 
+            volumetricTex = new THREE.Data3DTexture(data, size, size, size);
+            volumetricTex.format = THREE.RedFormat;
+            volumetricTex.minFilter = THREE.LinearFilter;
+            volumetricTex.unpackAlignment = 1;
+            volumetricTex.needsUpdate = true;
+
             smokeAmount = uniform(2);
             fogColorUniform = uniform(new THREE.Color(0xffffff));
             fogSpeedNode = uniform(params.fogSpeed);
@@ -559,39 +562,6 @@
             scene.add(volumetricMesh);
         }
 
-        function setupPostProcessing0() {
-			// 使用贴图进行呈现
-            postProcessing = new THREE.PostProcessing(renderer);
-
-			// --- Pass 1: 主场景 ---
-			scenePass = pass(scene, camera);
-            volumetricMesh.material.depthNode = scenePass.getTextureNode('depth').sample(screenUV);
-
-            const vPass = pass(scene, camera, { depthBuffer: false });
-            vPass.name = 'VolumetricPass';
-
-            const vLayers = new THREE.Layers();
-            vLayers.disableAll();
-            vLayers.enable(LAYER_VOLUMETRIC);
-            vPass.setLayers(vLayers);
-            vPass.setResolutionScale(0.5);
-
-            fogIntensityUniform = uniform(1.0);
-            const blurred = gaussianBlur(vPass, uniform(0.6));
-
-			// 主场景颜色
-    		const mainSceneColor = scenePass.add(blurred.mul(fogIntensityUniform));
-
-			// --- Pass 2: 构建 HUD ---
-			const depthTextureNode = scenePass.getTextureNode('depth');
-			if (hudScene && hudScene.children.length === 0) {
-				const quad = createDebugQuad(depthTextureNode);
-				hudScene.add(quad);
-			}
-			const hudPassNode = pass(hudScene, hudCamera);
-			postProcessing.outputNode = mainSceneColor.add(hudPassNode, hudPassNode);
-        }
-
 		function setupPostProcessing() {
 			// 基于UV Mask进行控制
 			postProcessing = new THREE.PostProcessing(renderer);
@@ -609,14 +579,17 @@
 
 			fogIntensityUniform = uniform(1.0);
 			const blurred = gaussianBlur(vPass, uniform(0.6));
+			const blurredTex = blurred.textureNode;
 
 			const mainSceneColor = scenePass.add(blurred.mul(fogIntensityUniform));
 
 			// --- 2. 获取 HUD 颜色节点 ---
-			const hud = setupDebugAtlas();
+			debugHUD = setupDebugAtlas({
+				blurredVolumeTex: blurredTex
+			});
 
-			const hudColor = vec4(hud.color, 1.0).mul(hud.mask);
-			const baseColor = mainSceneColor.mul(hud.mask.oneMinus());
+			const hudColor = vec4(debugHUD.color, 1.0).mul(debugHUD.mask);
+			const baseColor = mainSceneColor.mul(debugHUD.mask.oneMinus());
 
 			postProcessing.outputNode = baseColor.add(hudColor);
 		}
@@ -722,64 +695,81 @@
 			scene.add(debugWireframe);
         }
 
-		function setupDebugAtlas() {
-			// 1. 控制开关
-			showDebugAtlasUniform = uniform(0);
+		function setupDebugAtlas({ blurredVolumeTex }) {
+			// === 1. Debug Mode 定义 ===
+			// 0 = off
+			// 1 = DEPTH
+			// 2 = RAW_VOLUME_BAYER  未模糊体积（Raw Volume）+ 采样噪声
+			// 3 = BLURRED_VOLUME  模糊后的体积（无环境混合） ——> 把噪声变成“连续介质”
+			const debugMode = uniform(0);
 
-			// 2. 布局计算
-			const hudScale = 0.25;
-			const hudOffset = vec2(0, 0);
-			const localUV = screenUV.sub(hudOffset).div(hudScale);
+			const hudScale = 0.3;
+			const localUV = screenUV.div(hudScale);
 
-			// 3. 创建核心遮罩 (Mask)
-			// 判定是否在 0~1 的小窗口区间内
-			const insideX = localUV.x.greaterThanEqual(0).and(localUV.x.lessThanEqual(1));
- 			const insideY = localUV.y.greaterThanEqual(0).and(localUV.y.lessThanEqual(1));
-			const mask = insideX.and(insideY)
-			.and(showDebugAtlasUniform.greaterThan(0.5))
-			.toFloat();   // ⚠️ 强制 float
+			const insideHUD =
+				localUV.x.greaterThanEqual(0)
+				.and(localUV.x.lessThanEqual(1))
+				.and(localUV.y.greaterThanEqual(0))
+				.and(localUV.y.lessThanEqual(1));
 
-			// 4. 内容渲染
-			const depthTexture = scenePass.getTextureNode('depth');
-			const depthPixel = depthTexture.sample(localUV.clamp());
+			// === 2. Depth Debug ===
+			const depthTex = scenePass.getTextureNode('depth');
+			const depthVal = depthTex
+				.sample(localUV.clamp())
+				.remap(0.9, 1.0)
+				.clamp()
+				.oneMinus();
 
-			// 深度可视化 (0.9-1.0 映射到 0-1)
-			const viewZ = depthPixel.remap(0.9, 1.0).clamp().oneMinus();
+			const depthColor = vec3(depthVal);
 
-			// 返回: vec4(HUD内容, 遮罩值)
-			return {color: vec3(viewZ), mask};
-		}
+			// === 3. 未模糊体积 + Bayer 噪声 ===
+			const rawVolumeVal = texture3D(
+				volumetricTex,
+				vec3(localUV, time.mul(0.1)).mod(1),
+				0
+			).r;
 
-		function createDebugQuad(sourceDepthNode) {
-			// 1. 创建几何体 (宽高 0.5，即占据屏幕长宽的 1/4)
-			const geometry = new THREE.PlaneGeometry(0.5, 0.5);
+			// Bayer 4x4（示意，假设你已有 bayer4x4() 或同类函数）
+			const bayer = bayer16(screenCoordinate);
+			const rawBayerVal = rawVolumeVal.add(bayer.mul(0.05));
 
-			// 2. 创建材质 (WebGPU 节点材质)
-			const material = new THREE.MeshBasicNodeMaterial();
+			const rawBayerColor = vec3(rawBayerVal);
 
-			// 3. 处理深度显示逻辑 (和之前一样，只是应用在材质上)
-			const depthSample = sourceDepthNode.sample(uv()); // Mesh 自身的 UV
+			// === 4. 仅模糊体积 ===
+			const blurredVolumeVal = blurredVolumeTex
+				.sample(localUV.clamp())
+				.r;
 
-			// 深度可视化 (0.9-1.0 映射到 0-1)
-			const viewZ = depthSample.remap(0.9, 1.0).clamp().oneMinus();
+			const blurredColor = vec3(blurredVolumeVal);
 
-			// 设置材质颜色
-			material.colorNode = vec4(vec3(viewZ), 1.0);
-			material.depthTest = false;
-			material.transparent = true;
+			// === 5. 模式选择 ===
+			const isDepth   = debugMode.equal(1);
+			const isRaw     = debugMode.equal(2);
+			const isBlurred = debugMode.equal(3);
 
-			// 4. 创建 Mesh
-			showDebugAtlasUniform = uniform(0);
-			material.opacityNode = showDebugAtlasUniform;
+			const color =
+				isDepth.select(
+					depthColor,
+					isRaw.select(
+						rawBayerColor,
+						isBlurred.select(
+							blurredColor,
+							vec3(0)
+						)
+					)
+				);
 
-			const quad = new THREE.Mesh(geometry, material);
+			// === 6. HUD Mask ===
+			const mask =
+				insideHUD
+				.and(debugMode.greaterThan(0))
+				.toFloat();
 
-			// 5. 定位 (正交相机坐标系: -1 到 1)
-			// X中心 = 1.0 (右边界) - 0.25 (半宽) = 0.75
-			// Y中心 = -1.0 (下边界) + 0.25 (半高) = -0.75
-			quad.position.set(0.75, -0.75, 0);
-
-			return quad;
+			return {
+				color,
+				mask,
+				mode: debugMode
+			};
 		}
 
 		function checkCollision(position, direction, distance) {
@@ -861,11 +851,9 @@
 			if (params.lightMode === 'Fixed') {
 				debugWireframe.position.copy(mainSpotLight.position);
 				debugWireframe.quaternion.copy(mainSpotLight.quaternion);
-``
 				const dir = new THREE.Vector3(0, 0, -1).applyQuaternion(mainSpotLight.quaternion);
         		spotLightTarget.position.copy(mainSpotLight.position).add(dir);
         		spotLightTarget.updateMatrixWorld();spotLightTarget.position.copy(mainSpotLight.position).add(dir);
-				spotLightTarget.updateMatrixWorld();
 			} else {
 				// ===== 1. 计算手持灯光位置 =====
 				const offset = new THREE.Vector3(0.5, -0.4, -0.7)
@@ -1009,6 +997,31 @@
             }
         }
 
+        function captureScreenshot(filename = 'webgpu_capture.png') {
+            // 强制渲染一帧，确保是最新画面
+            postProcessing.render();
+
+            const canvas = renderer.domElement;
+
+            try {
+                const dataURL = canvas.toDataURL('image/png');
+
+                // 创建临时下载链接
+                const link = document.createElement('a');
+                link.href = dataURL;
+                link.download = filename;
+
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                console.log('📸 Screenshot saved:', filename);
+            } catch (e) {
+                console.error('Screenshot failed:', e);
+                alert('截图失败（可能是跨域贴图导致 Canvas 被污染）');
+            }
+        }
+
         function animate() {
             if (!isReady) return;
             const delta = clock.getDelta();
@@ -1037,28 +1050,53 @@
         function setupGUI() {
             const gui = new GUI({ title: 'ENGINE FINAL SETTINGS' });
 
+            // --- 响应式自动折叠逻辑 ---
+            gui.onChange(() => {
+                userInteracted = true;
+            });
+            const handleResponsive = () => {
+                if (userInteracted && window.innerWidth > 600 ) return;
+                if (window.innerWidth < 768 || window.innerHeight < 600) {
+                    gui.close();
+                } else {
+                    gui.open();
+                }
+            };
+            handleResponsive();
+            window.addEventListener('resize', handleResponsive);
+
 			gui.add(params, 'navMode', ['Orbit', 'Walk', 'Fly']).name('导航模式').listen().onChange(v => {
 				setNavMode(v);
 			});
 
 			const gFolder = gui.addFolder('🌞 全局照明 (GI)');
-			gFolder.addColor(globalLight, 'color').name('主光颜色');
-			gFolder.add(globalLight, 'intensity', 0, 10).name('主光强度');
+            gFolder.addColor(ambientLight, 'color').name('环境光颜色');
+			gFolder.add(ambientLight, 'intensity', 0, 10).name('环境光强度');
+			gFolder.addColor(globalLight, 'color').name('全局平行光颜色');
+			gFolder.add(globalLight, 'intensity', 0, 10).name('全局平行光强度');
 			gFolder.add(params, 'iblIntensity', 0, 2).name('IBL 环境强度');
 
             const lFolder = gui.addFolder('💡 动态光源');
             const floatLight = lFolder.addFolder('浮动点光源');
-			floatLight.add(params, 'pointLightEnabled').name('浮动灯开启');
-			floatLight.add(params, 'pointLightAnimate').name('开启动画');
+			floatLight.add(params, 'pointLightEnabled').name('浮动灯开启').onChange(v => {
+                if (v) {
+                    pointLight.intensity = lastPointIntensity; // 恢复之前的强度
+                } else {
+                    lastPointIntensity = pointLight.intensity; // 记住当前强度
+                    pointLight.intensity = 0; // 关闭
+                }
+            });
+            floatLight.add(params, 'pointLightAnimate').name('开启动画');
 			floatLight.add(params, 'pointLightSpeed', 0.1, 5).name('动画速度');
 
 			floatLight.addColor(pointLight, 'color').name('颜色');
-			floatLight.add(pointLight, 'intensity', 0, 100).name('强度');
-
+			floatLight.add(pointLight, 'intensity', 0, 100).name('强度').onChange(v => {
+                if (params.pointLightEnabled) lastPointIntensity = v;
+            });
 
 			const flashLight = lFolder.addFolder('手电筒');
 			flashLight.add(params, 'lightMode', ['Fixed', 'Handheld']).name('持握模式');
-			flashLight.addColor(mainSpotLight, 'color').name('光色');
+			flashLight.addColor(params, 'flashlightColor').name('光色');
 			flashLight.add(params, 'flashlightIntensity', 0, 1000).name('强度').onChange(v => mainSpotLight.intensity = v);
 			flashLight.add(mainSpotLight, 'angle', Math.PI / 32, Math.PI / 3).name('光锥大小').onChange(() => {
 				rebuildDebugCone();
@@ -1071,10 +1109,15 @@
             fFolder.add(params, 'fogSpeed', 0, 5).name('流动速度').onChange(v => fogSpeedNode.value = v);
             fFolder.addColor({c:'#ffffff'}, 'c').name('雾气颜色').onChange(v => fogColorUniform.value.set(v));
 
-			// 5. Debug Atlas (新增需求)
+            // 5. Debug Atlas (新增需求)
 			const dFolder = gui.addFolder('🛠 Debug Views');
-			dFolder.add({ showAtlas: false }, 'showAtlas').name('显示深度遮罩').onChange(v => {
-				showDebugAtlasUniform.value = v ? 1 : 0;
+			dFolder.add({ mode: '关闭' }, 'mode',
+				['关闭', '深度遮挡层', '3D噪声场', '仅模糊体积']
+			).onChange(v => {
+				if (v === '关闭') debugHUD.mode.value = 0;
+				if (v === '深度遮挡层') debugHUD.mode.value = 1;
+				if (v === '3D噪声场') debugHUD.mode.value = 2;
+				if (v === '仅模糊体积') debugHUD.mode.value = 3;
 			});
 
             gui.add(params, 'visualMode', ['Standard', 'Wireframe', 'Normals']).name('渲染风格').onChange(v => {
@@ -1097,6 +1140,43 @@
         }
 
 		function setupEventManager() {
+            const infoBody = document.getElementById('info-body');
+            const infoPanel = document.getElementById('controls-info');
+            const toggleBtn = document.getElementById('ui-toggle-btn');
+
+            // --- 1. 统一的显示/隐藏函数 ---
+            const setUIVisibility = (isVisible) => {
+                if (isVisible) {
+                    infoBody.classList.remove('body-hidden');
+                    infoPanel.classList.remove('panel-collapsed');
+                    toggleBtn.innerText = '-';
+                    if (typeof gui !== 'undefined') gui.open();
+                } else {
+                    infoBody.classList.add('body-hidden');
+                    infoPanel.classList.add('panel-collapsed');
+                    toggleBtn.innerText = '+';
+                    if (typeof gui !== 'undefined') gui.close();
+                }
+            };
+
+            // --- 2. 响应式自动监控 ---
+            const handleResize = () => {
+                if (userInteracted) return; // 用户手动点过了，Resize 就不再自动操作
+                const isSmall = window.innerWidth < 900 || window.innerHeight < 700;
+                setUIVisibility(!isSmall); // 小屏自动隐藏，大屏自动展开
+            };
+
+            // 持续监控窗口变化
+            window.addEventListener('resize', handleResize);
+            handleResize(); // 初始化执行
+
+            // --- 3. 手动按钮事件绑定 ---
+            toggleBtn.addEventListener('click', () => {
+                userInteracted = true; // 锁定自动 Resize
+                const currentlyHidden = infoBody.classList.contains('body-hidden');
+                setUIVisibility(currentlyHidden); // 如果当前隐藏，则展开；反之亦然
+            });
+
             // 1. 键盘按下事件
             window.addEventListener('keydown', (e) => {
                 // 使用 e.code 获取物理按键，不受 CapsLock 或输入法影响
@@ -1155,7 +1235,12 @@
                         orbitControls.target.set(0, 0, 0);
 
                         break;
+                    case 'KeyP':
+                        captureScreenshot(`capture_${Date.now()}.png`);
+                        e.preventDefault();
+                        break;
                 }
+
             });
 
             // 2. 键盘抬起事件
@@ -1202,7 +1287,7 @@
                 const file = e.target.files[0];
                 if (!file) return;
                 const url = URL.createObjectURL(file);
-                new RGBELoader().load(url, (tex) => {
+                new HDRLoader().load(url, (tex) => {
                     tex.mapping = THREE.EquirectangularReflectionMapping;
                     scene.environment = tex;
                 });
